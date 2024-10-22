@@ -43,8 +43,15 @@ dependencies:
   local_auth:
   provider:
   permission_handler:
+  flutter_animate:
   background_sms:
   easy_sms_receiver: ^0.0.2
+  motion_tab_bar:
+  quickalert:
+  percent_indicator:
+  table_calendar:
+  google_nav_bar:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

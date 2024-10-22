@@ -50,6 +50,13 @@ class ScheduledProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  void inactivateAllAssistants() {
+    for (var assistant in contactAssistant) {
+      assistant.status = "Inactive"; // Set status to Inactive
+    }
+    notifyListeners(); // Notify the listeners to rebuild the UI
+  }
+
   void current(int index) {
     _currentIndex = index;
     notifyListeners();
@@ -204,7 +211,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
       create: (_) =>
           ScheduledProvider()..fetchContactAssistent(widget.contactid),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff121212),
         body: Consumer<ScheduledProvider>(
           builder: (context, provider, child) {
             if (provider.isLoading) {
@@ -220,9 +227,9 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
             } else {
               return Container(
                 height: 532,
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: const BorderRadius.only(
+                decoration: const BoxDecoration(
+                  color: Color(0xff121212),
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   ),
@@ -235,7 +242,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                       SmallText(
                         text: MyStrings.selectTheAssistant,
                         fontFamily: MyStrings.outfit,
-                        color: primaryColor,
+                        color: whiteColor,
                       ),
                       const SizedBox(height: 10),
                       Expanded(
@@ -260,6 +267,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                     userContact.status == "Active";
                             return GestureDetector(
                               onTap: () {
+                                provider.select(index);
                                 _onItemTap(
                                     index, userContact, provider, !isActive);
                               },
@@ -268,11 +276,12 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                 alignment: Alignment.center,
                                 margin: const EdgeInsets.only(bottom: 15),
                                 padding:
-                                    const EdgeInsets.fromLTRB(15.5, 0, 15.5, 0),
+                                    const EdgeInsets.fromLTRB(15.5, 12, 15.5, 12),
                                 decoration: BoxDecoration(
-                                    color: const Color(0xffE7FDF1),
+                                    color: const Color(0xffE8E4FF),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
                                       userContact.assistantName.toString(),
@@ -281,16 +290,19 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                           fontWeight: FontWeight.w500,
                                           fontSize: 13,
                                           color: provider.currentIndex == index
-                                              ? blackColor
+                                              ? primaryColor
                                               : const Color(0xff8B8E8C)),
                                     ),
                                     const Spacer(),
                                     isActive == true
-                                        ? SizedBox(
-                                            height: 20,
-                                            width: 20,
-                                            child: Icon(Icons.check_circle,
-                                                color: primaryColor),
+                                        ? Container(
+                                            height: 16.67,
+                                            width: 16.67,
+                                            decoration: BoxDecoration(shape:BoxShape.circle,color:primaryColor),
+                                            child: Center(
+                                              child: Icon(Icons.check,size: 16.67,
+                                                  color: whiteColor),
+                                            ),
                                           )
                                         : const SizedBox(),
                                   ],
@@ -303,15 +315,17 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                       // const SizedBox(height: 20),
                       GestureDetector(
                         onTap: () {
-                          widget.onSave;
                           Navigator.pop(context);
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            widget.onSave(); // Ensure this is called after pop
+                          });
                         },
                         child: Container(
                           height: 45,
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(top: 30),
                           decoration: BoxDecoration(
-                              color: primaryColor,
+                              color: Colors.grey,
                               borderRadius: BorderRadius.circular(12)),
                           child: Center(
                             child: Text('Save',
@@ -324,20 +338,26 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          provider.inactivateAllAssistants();
+                          Navigator.pop(context);
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            widget.onSave(); // Ensure this is called after pop
+                          });
+                        },
                         child: Container(
                           height: 45,
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(top: 20),
                           decoration: BoxDecoration(
-                              color: whiteColor,
+                              color: blackColor,
                               borderRadius: BorderRadius.circular(12),
                               border:
-                                  Border.all(width: 1, color: primaryColor)),
-                          child: Center(
+                                  Border.all(width: 1, color: Colors.grey)),
+                          child: const Center(
                             child: Text('Turn Off Assistance',
                                 style: TextStyle(
-                                    color: primaryColor,
+                                    color: Colors.grey,
                                     fontFamily: MyStrings.outfit,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400)),

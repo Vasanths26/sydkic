@@ -38,4 +38,7 @@ class MyStrings {
   static const String activate = 'Activate';
   static const String totalAssistant = 'Total Assistant';
   static const String totalCampaigns = 'Total Campaigns';
+
+//Inbox
+  static const String inbox = 'Inbox';
 }

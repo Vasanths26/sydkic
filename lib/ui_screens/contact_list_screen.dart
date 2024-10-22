@@ -109,7 +109,7 @@ class ContactProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         ContactAssistentModel contactAssistentModel =
-        ContactAssistentModel.fromJson(jsonData);
+            ContactAssistentModel.fromJson(jsonData);
         _contactAssistant = contactAssistentModel.contactAssistant!;
       } else {
         if (kDebugMode) {
@@ -163,359 +163,323 @@ class _ContactListScreenState extends State<ContactListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: primaryColor.withOpacity(0.3),
-      body: Consumer<ContactProvider>(
-        builder: (context, contactProvider, child) {
-          return contactProvider.isLoading
-              ? Center(
-            child: CircularProgressIndicator(
-              backgroundColor: primaryColor,
-              color: Colors.grey,
-            ),
-          )
-              : Stack(
-            children: [
-              Column(
-                children: [
-                  // Container(
-                  //   height: 30,
-                  //   alignment: Alignment.center,
-                  //   margin: const EdgeInsets.only(
-                  //       left: 20, right: 19.99, top: 40),
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.end,
-                  //     children: [
-                  //       Container(
-                  //         padding:
-                  //         const EdgeInsets.only(top: 2, bottom: 6),
-                  //         child: Icon(
-                  //           Icons.menu,
-                  //           size: 30,
-                  //           color: primaryColor,
-                  //         ),
-                  //       ),
-                  //       const SizedBox(width: 20),
-                  //       Text(
-                  //         "Contact",
-                  //         style: TextStyle(
-                  //             color: primaryColor,
-                  //             fontSize: 22,
-                  //             fontWeight: FontWeight.w500,
-                  //             fontFamily: MyStrings.outfit),
-                  //       ),
-                  //       const Spacer(),
-                  //       Container(
-                  //         height: 24,
-                  //         width: 24,
-                  //         margin: const EdgeInsets.only(right: 20),
-                  //         padding: const EdgeInsets.only(
-                  //             top: 3.38,
-                  //             left: 3.4,
-                  //             right: 3.4,
-                  //             bottom: 3.42),
-                  //         child: Icon(Icons.search, color: blackColor),
-                  //       ),
-                  //       Container(
-                  //         height: 24,
-                  //         width: 24,
-                  //         padding: const EdgeInsets.only(
-                  //             top: 2.24, bottom: 2.25),
-                  //         child: Icon(Icons.cached_outlined,
-                  //             color: primaryColor),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Card(
-                  //     color: Colors.white,
-                  //     child: Container(
-                  //       height: 50,
-                  //       width: MediaQuery.of(context).size.width,
-                  //       decoration: BoxDecoration(
-                  //         color: Colors.white,
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //       child: TextFormField(
-                  //         onChanged: (value) {
-                  //           contactProvider.setSearchQuery(value);
-                  //         },
-                  //         cursorColor: primaryColor,
-                  //         decoration: const InputDecoration(
-                  //           prefixIcon: Icon(
-                  //             Icons.search,
-                  //             color: Color(0xffBBB2B2),
-                  //             size: 25,
-                  //           ),
-                  //           hintText: 'Search Contacts...',
-                  //           hintStyle: TextStyle(
-                  //               color: Color(0xffBBB2B2),
-                  //               fontFamily: MyStrings.outfit),
-                  //           enabledBorder: UnderlineInputBorder(
-                  //               borderSide: BorderSide.none),
-                  //           focusedBorder: UnderlineInputBorder(
-                  //               borderSide: BorderSide.none),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: contactProvider.userContacts.length,
-                      itemBuilder: (context, index) {
-                        UserContacts userContact =
-                        contactProvider.userContacts[index];
-                        return GestureDetector(
-                          onTap: () {
-                            // print('id:${userContact.id}');
-                            showContactAssistantModal(
-                                context, userContact.id);
-                            contactProvider.selected(index);
-                          },
-                          child: Container(
-                            height:70,
-                            // margin: const EdgeInsets.only(top:10,left:10,right:10),
-                            // padding:const EdgeInsets.all(10),
-                            // decoration:BoxDecoration(color:whiteColor,borderRadius: BorderRadius.circular(25)),
-                            decoration: BoxDecoration(color: whiteColor),
-                            padding: const EdgeInsets.all(12),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: primaryColor,
-                                  child: ClipOval(
-                                    child: userContact.profileImg != null
-                                        ? CachedNetworkImage(
-                                      imageUrl:
-                                      userContact.profileImg!,
-                                      placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                      errorWidget: (context, url,
-                                          error) =>
-                                      const Icon(Icons.error),
-                                      fit: BoxFit.cover,
-                                      width: 50.0,
-                                      height: 50.0,
-                                    )
-                                        : Center(
-                                      child: Text(
-                                        userContact.name != null
-                                            ? userContact.name![0]
-                                            .toUpperCase()
-                                            : '+91',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: whiteColor,
-                                          fontFamily:
-                                          MyStrings.outfit,
-                                          letterSpacing: 3,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
+    return Consumer<ContactProvider>(
+      builder: (context, contactProvider, child) {
+        return contactProvider.isLoading
+            ? Scaffold(
+                backgroundColor: Color(0xff121212),
+                body: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: whiteColor,
+                    color: Colors.grey,
+                  ),
+                ))
+            : Scaffold(
+                appBar: AppBar(
+                    backgroundColor: Color(0xff121212),
+                    elevation: 0,
+                    leading: Icon(
+                      Icons.menu,
+                      size: 30,
+                      color: whiteColor,
+                    ),
+                    title: Text(
+                      "Contact",
+                      style: TextStyle(
+                          color: whiteColor,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: MyStrings.outfit),
+                    ),
+                    actions: [
+                      Container(
+                        height: 24,
+                        width: 24,
+                        margin: const EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.only(
+                            top: 3.38, left: 3.4, right: 3.4, bottom: 3.42),
+                        child: Icon(Icons.search, color: whiteColor),
+                      ),
+                      Container(
+                        height: 24,
+                        width: 24,
+                        padding: const EdgeInsets.only(top: 2.24, bottom: 2.25),
+                        child: Icon(Icons.cached_outlined, color: whiteColor),
+                      ),
+                    ]),
+                backgroundColor: Color(0xff121212),
+                body: Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: contactProvider.userContacts.length,
+                            itemBuilder: (context, index) {
+                              UserContacts userContact =
+                                  contactProvider.userContacts[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  showContactAssistantModal(
+                                      context, userContact.id);
+                                  contactProvider.selected(index);
+                                },
+                                child: Container(
+                                  height: 70,
+                                  decoration: const BoxDecoration(
+                                      color: Color(0xff121212)),
+                                  padding: const EdgeInsets.all(12),
+                                  child: Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      userContact.name != null
-                                          ? Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                          Text(
-                                            userContact.name!,
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: blackColor,
-                                                fontWeight:
-                                                FontWeight.w400,
-                                                fontFamily:
-                                                MyStrings
-                                                    .outfit),
-                                          ),
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '+${userContact.phone ?? 'No Phone'}',
-                                                style: const TextStyle(
-                                                    fontSize: 13,
-                                                    color: Color(
-                                                        0xff8B8E8C),
-                                                    fontWeight:
-                                                    FontWeight
-                                                        .w400,
-                                                    fontFamily:
-                                                    MyStrings
-                                                        .outfit),
-                                              ),
-                                              userContact.assistantContact !=
-                                                  null &&
-                                                  userContact
-                                                      .assistantContact
-                                                      ?.status ==
-                                                      "Active"
-                                                  ? Row(
-                                                children: [
-                                                  Container(
-                                                    height:
-                                                    12,
-                                                    width: 0,
-                                                    margin: const EdgeInsets
-                                                        .only(
-                                                        left:
-                                                        8,
-                                                        right:
-                                                        8),
-                                                    decoration:
-                                                    BoxDecoration(
-                                                      border:
-                                                      Border.all(
-                                                        color:
-                                                        const Color(0xffD2D2D2),
+                                      CircleAvatar(
+                                        radius: 25,
+                                        backgroundColor: Colors.grey,
+                                        child: ClipOval(
+                                          child: userContact.profileImg != null
+                                              ? CachedNetworkImage(
+                                                  imageUrl:
+                                                      userContact.profileImg!,
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Center(
+                                                    child: Text(
+                                                      userContact.name != null
+                                                          ? userContact.name![0]
+                                                              .toUpperCase()
+                                                          : '+91',
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: whiteColor,
+                                                        fontFamily:
+                                                            MyStrings.outfit,
+                                                        letterSpacing: 3,
                                                       ),
                                                     ),
                                                   ),
-                                                  Icon(
-                                                      Icons
-                                                          .smart_toy,
-                                                      size:
-                                                      16,
-                                                      color:
-                                                      primaryColor),
-                                                  const SizedBox(
-                                                    width: 9,
-                                                  ),
-                                                  Text(
-                                                    userContact
-                                                        .assistantContact
-                                                        ?.assistantName ??
-                                                        '',
+                                                  fit: BoxFit.cover,
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                )
+                                              : Center(
+                                                  child: Text(
+                                                    userContact.name != null
+                                                        ? userContact.name![0]
+                                                            .toUpperCase()
+                                                        : '+91',
                                                     style: TextStyle(
-                                                        color:
-                                                        primaryColor,
-                                                        fontSize:
-                                                        13,
-                                                        fontWeight: FontWeight
-                                                            .w400,
-                                                        fontFamily:
-                                                        MyStrings.outfit),
+                                                      fontSize: 16,
+                                                      color: whiteColor,
+                                                      fontFamily:
+                                                          MyStrings.outfit,
+                                                      letterSpacing: 3,
+                                                    ),
                                                   ),
-                                                ],
-                                              )
-                                                  : const SizedBox(),
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                          : Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                          Text(
-                                            '+${userContact.phone ?? 'No Phone'}',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: blackColor,
-                                                fontWeight:
-                                                FontWeight.w400,
-                                                fontFamily:
-                                                MyStrings
-                                                    .outfit),
-                                          ),
-                                          userContact.assistantContact !=
-                                              null &&
-                                              userContact
-                                                  .assistantContact
-                                                  ?.status ==
-                                                  "Active"
-                                              ? Row(
-                                            children: [
-                                              Icon(
-                                                  Icons
-                                                      .smart_toy,
-                                                  size: 16,
-                                                  color:
-                                                  primaryColor),
-                                              const SizedBox(
-                                                width: 9,
-                                              ),
-                                              Text(
-                                                userContact
-                                                    .assistantContact
-                                                    ?.assistantName ??
-                                                    '',
-                                                style: TextStyle(
-                                                    color:
-                                                    primaryColor,
-                                                    fontSize:
-                                                    13,
-                                                    fontWeight:
-                                                    FontWeight
-                                                        .w400,
-                                                    fontFamily:
-                                                    MyStrings
-                                                        .outfit),
-                                              ),
-                                            ],
-                                          )
-                                              : Container(),
-                                        ],
+                                                ),
+                                        ),
                                       ),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            userContact.name != null
+                                                ? Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        userContact.name!,
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: whiteColor,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontFamily:
+                                                                MyStrings
+                                                                    .outfit),
+                                                      ),
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            '+${userContact.phone ?? 'No Phone'}',
+                                                            style: const TextStyle(
+                                                                fontSize: 13,
+                                                                color: Color(
+                                                                    0xff8B8E8C),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                fontFamily:
+                                                                    MyStrings
+                                                                        .outfit),
+                                                          ),
+                                                          userContact.assistantContact !=
+                                                                      null &&
+                                                                  userContact
+                                                                          .assistantContact
+                                                                          ?.status ==
+                                                                      "Active"
+                                                              ? Row(
+                                                                  children: [
+                                                                    Container(
+                                                                      height:
+                                                                          12,
+                                                                      width: 0,
+                                                                      margin: const EdgeInsets
+                                                                          .only(
+                                                                          left:
+                                                                              8,
+                                                                          right:
+                                                                              8),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        border:
+                                                                            Border.all(
+                                                                          color:
+                                                                              const Color(0xffD2D2D2),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Icon(
+                                                                        Icons
+                                                                            .smart_toy,
+                                                                        size:
+                                                                            16,
+                                                                        color:
+                                                                            primaryColor),
+                                                                    const SizedBox(
+                                                                      width: 9,
+                                                                    ),
+                                                                    Text(
+                                                                      userContact
+                                                                              .assistantContact
+                                                                              ?.assistantName ??
+                                                                          '',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              primaryColor,
+                                                                          fontSize:
+                                                                              13,
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          fontFamily:
+                                                                              MyStrings.outfit),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              : const SizedBox(),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )
+                                                : Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        '+${userContact.phone ?? 'No Phone'}',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: whiteColor,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontFamily:
+                                                                MyStrings
+                                                                    .outfit),
+                                                      ),
+                                                      userContact.assistantContact !=
+                                                                  null &&
+                                                              userContact
+                                                                      .assistantContact
+                                                                      ?.status ==
+                                                                  "Active"
+                                                          ? Row(
+                                                              children: [
+                                                                Icon(
+                                                                    Icons
+                                                                        .smart_toy,
+                                                                    size: 16,
+                                                                    color:
+                                                                        primaryColor),
+                                                                const SizedBox(
+                                                                  width: 9,
+                                                                ),
+                                                                Text(
+                                                                  userContact
+                                                                          .assistantContact
+                                                                          ?.assistantName ??
+                                                                      '',
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          primaryColor,
+                                                                      fontSize:
+                                                                          13,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      fontFamily:
+                                                                          MyStrings
+                                                                              .outfit),
+                                                                ),
+                                                              ],
+                                                            )
+                                                          : Container(),
+                                                    ],
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
                                     ],
                                   ),
                                 ),
-                                const SizedBox(width: 10),
-                              ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      right: 10,
+                      bottom: 40,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SmsExample()));
+                        },
+                        child: Container(
+                          height: 60,
+                          width: 60,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              color: Color(0xff121212),
+                              shape: BoxShape.circle),
+                          child: Center(
+                            child: Icon(
+                              Icons.messenger_outline,
+                              color: Colors.grey,
+                              size: 30,
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                right: 10,
-                bottom: 90,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SmsExample()));
-                  },
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                        color: primaryColor, shape: BoxShape.circle),
-                    child: Center(
-                      child: Icon(
-                        Icons.messenger,
-                        color: whiteColor,
-                        size: 30,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
+                  ],
+                ));
+      },
     );
   }
 

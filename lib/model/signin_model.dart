@@ -34,7 +34,7 @@ class User {
   String? wallet;
   String? role;
   String? email;
-  // String? phone;
+  String? phone;
   // String? address;
   // String? emailVerifiedAt;
   // int? status;
@@ -57,7 +57,7 @@ class User {
         this.wallet,
         this.role,
         this.email,
-        // this.phone,
+        this.phone,
         // this.address,
         // this.emailVerifiedAt,
         // this.status,
@@ -81,7 +81,7 @@ class User {
     wallet = json['wallet'];
     role = json['role'];
     email = json['email'];
-    // phone = json['phone'];
+    phone = json['phone'];
     // address = json['address'];
     // emailVerifiedAt = json['email_verified_at'];
     // status = json['status'];
@@ -106,7 +106,7 @@ class User {
     data['wallet'] = wallet;
     data['role'] = role;
     data['email'] = email;
-    // data['phone'] = this.phone;
+    data['phone'] = phone;
     // data['address'] = this.address;
     // data['email_verified_at'] = this.emailVerifiedAt;
     // data['status'] = this.status;
