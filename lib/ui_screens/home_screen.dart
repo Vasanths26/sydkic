@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sydkic/ui_screens/profile_screen.dart';
@@ -11,7 +12,6 @@ import 'package:http/http.dart' as http;
 import '../../model/dashboard_model.dart';
 import '../../utils/api_constant.dart';
 import 'package:quickalert/quickalert.dart';
-
 import '../widget/bottom_navigation.dart';
 
 class HomePageProvider extends ChangeNotifier {
@@ -107,100 +107,67 @@ class _HomePagesState extends State<HomePages> {
     return ChangeNotifierProvider(
       create: (_) => HomePageProvider()..fetchDashboardDetails(),
       child: Consumer<HomePageProvider>(builder: (context, provider, _) {
+        SystemChrome.setSystemUIOverlayStyle(
+          const SystemUiOverlayStyle(
+            statusBarColor: Colors.black, // Status bar background color
+            statusBarIconBrightness:
+                Brightness.light, // Light icons for dark background
+          ),
+        );
         return provider.isloading == true
             ? Scaffold(
-            backgroundColor: Color(0xff121212),
-            body:Center(
-                child: CircularProgressIndicator(
-                  color: whiteColor,
+                backgroundColor: const Color(0xff121212),
+                body: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey[300],
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Colors.black),
+                  ),
                 ),
-              ))
+              )
             : Scaffold(
                 backgroundColor: const Color(0xff121212),
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
                       Container(
-                        height: 30,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(
-                            left: 20, right: 19.99, top: 58),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(top: 2, bottom: 6),
-                              child: Icon(
-                                Icons.menu,
-                                size: 30,
-                                color: whiteColor,
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Text(
-                              "Dashboard",
-                              style: TextStyle(
-                                  color: whiteColor,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: MyStrings.outfit),
-                            ),
-                            const Spacer(),
-                            Container(
-                              padding: const EdgeInsets.only(top: 2, bottom: 6),
-                              child: Icon(Icons.cached_outlined,
-                                  size: 30, color: whiteColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
                         margin:
-                            const EdgeInsets.only(top: 29, left: 20, right: 20),
-                        height: 230,
+                            const EdgeInsets.only(top: 34, left: 20, right: 20),
+                        height: 220,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(blurRadius: 70, color: Color(0xff121212))
-                            ],
-                            border: Border.all(
-                              color: Colors.grey.shade800,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(18),
-                            // gradient: LinearGradient(
-                            //   colors: [
-                            //     const Color(0xffFFFFFF).withOpacity(0),
-                            //     const Color(0xffFFFFFF).withOpacity(0.4),
-                            //   ],
-                            //   begin: Alignment.topCenter, // Start from the top
-                            //   end: Alignment.bottomCenter, // End at the bottom
-                            // )
-                          color:Colors.grey.shade800,
+                          color: const Color(0xff1A1C1A),
+                          borderRadius: BorderRadius.circular(18),
                         ),
                         child: Column(
                           children: [
                             const SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
-                            Text(
-                              'Active Devices',
-                              style: TextStyle(
-                                  color: whiteColor,
-                                  fontSize: 13,
-                                  fontFamily: MyStrings.outfit,
-                                  fontWeight: FontWeight.w500),
+                            SizedBox(
+                              height: 16,
+                              child: Text(
+                                'Active Devices',
+                                style: TextStyle(
+                                    color: whiteColor,
+                                    fontSize: 13,
+                                    fontFamily: MyStrings.outfit,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                             const SizedBox(
                               height: 6,
                             ),
-                            Text(
-                                '${provider.dashboardDetails.activeDevice}/${provider.dashboardDetails.totalDevice}',
-                                style: TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 24,
-                                    fontFamily: MyStrings.outfit,
-                                    fontWeight: FontWeight.w700)),
+                            SizedBox(
+                              height: 30,
+                              child: Text(
+                                  '${provider.dashboardDetails.activeDevice}/${provider.dashboardDetails.totalDevice}',
+                                  style: TextStyle(
+                                      color: whiteColor,
+                                      fontSize: 24,
+                                      fontFamily: MyStrings.outfit,
+                                      fontWeight: FontWeight.w700)),
+                            ),
                             const SizedBox(
                               height: 15,
                             ),
@@ -211,88 +178,49 @@ class _HomePagesState extends State<HomePages> {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 0.5,
-                                  color: const Color(0xff121212),
+                                  color: const Color(0xffFFFFFF),
                                 ),
                               ),
                             ),
                             Container(
-                                height: 70,
-                                width: 299,
-                                margin: const EdgeInsets.only(
-                                    top: 23, left: 27, right: 27,bottom: 30),
-                                // child: ListView.builder(
-                                //     itemCount: icons.length,
-                                //     shrinkWrap: true,
-                                //     physics: const NeverScrollableScrollPhysics(),
-                                //     scrollDirection: Axis.horizontal,
-                                //     itemBuilder: (context, index) {
-                                //       return GestureDetector(
-                                //         onTap: (){
-                                //           index==1?Navigator.push(context, MaterialPageRoute(builder: (context)=> const ProfilePage())):null;
-                                //         },
-                                //         child: Container(
-                                //           margin: const EdgeInsets.only(right: 31),
-                                //           height: 80,
-                                //           width: 56,
-                                //           child: Column(
-                                //             children: [
-                                //               Container(
-                                //                 height: 50,
-                                //                 width: 50,
-                                //                 alignment: Alignment.center,
-                                //                 margin: const EdgeInsets.only(
-                                //                     bottom: 10),
-                                //                 decoration: BoxDecoration(
-                                //                     borderRadius:
-                                //                         BorderRadius.circular(10),
-                                //                     color: whiteColor),
-                                //                 child: Icon(
-                                //                   icons[index],
-                                //                   color: primaryColor,
-                                //                 ),
-                                //               ),
-                                //               SizedBox(
-                                //                 height: 20,
-                                //                 child: Text(
-                                //                   text[index],
-                                //                   style: TextStyle(
-                                //                       color: whiteColor,
-                                //                       fontSize: 10,
-                                //                       fontWeight: FontWeight.w500,
-                                //                       fontFamily: MyStrings.outfit),
-                                //                 ),
-                                //               ),
-                                //             ],
-                                //           ),
-                                //         ),
-                                //       );
-                                //     }),
-                                child: Row(
-                                  children: [
+                              height: 80,
+                              width: MediaQuery.of(context).size.width,
+                              margin: const EdgeInsets.only(
+                                  top: 23, left: 27, right: 27, bottom: 30),
+                              child: Row(
+                                children: [
                                   Expanded(
-                                    child: contain(0, Icons.card_membership_outlined,
+                                    child: contain(
+                                        0,
+                                        Icons.card_membership_outlined,
                                         'Subscription'),
                                   ),
-                                    const SizedBox(width:31),
-                                    Expanded(
-                                      child: contain(1, Icons.person_outline,
-                                          'Profile'),
-                                    ),
-                                    const SizedBox(width:31),
-                                    Expanded(child:contain(2, Icons.help_outline_rounded,
-                                        'Support')),
-                                    const SizedBox(width:31),
-                                    Expanded(child:contain(3, Icons.more_horiz,
-                                        'More')),
-                                ],),),
+                                  const SizedBox(width: 31),
+                                  Expanded(
+                                    child: contain(
+                                        1, Icons.person_outline, 'Profile'),
+                                  ),
+                                  const SizedBox(width: 31),
+                                  Expanded(
+                                      child: contain(
+                                          2,
+                                          Icons.help_outline_rounded,
+                                          'Support')),
+                                  const SizedBox(width: 31),
+                                  Expanded(
+                                      child:
+                                          contain(3, Icons.more_horiz, 'More')),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       Container(
                         height: 468,
                         width: MediaQuery.of(context).size.width,
-                        padding:
-                            const EdgeInsets.only( left: 20, right: 20),
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, top: 20, bottom: 20),
                         margin: const EdgeInsets.only(top: 15),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -321,11 +249,11 @@ class _HomePagesState extends State<HomePages> {
                                 left: 20,
                               ),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18),
-                                  color:  Colors.grey.shade800,
-                                  // border: Border.all(
-                                  //     width: 1,
-                                  //     color: const Color(0xffF0F0F0))
+                                borderRadius: BorderRadius.circular(18),
+                                color: const Color(0xff1A1C1A),
+                                // border: Border.all(
+                                //     width: 1,
+                                //     color: const Color(0xffF0F0F0))
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,16 +268,16 @@ class _HomePagesState extends State<HomePages> {
                                         bottom: 10.5),
                                     margin: const EdgeInsets.only(bottom: 20),
                                     decoration: BoxDecoration(
-                                      color: color2[index],
+                                      color: const Color(0xffFFFFFF),
                                       borderRadius: BorderRadius.circular(18),
-                                      border: Border.all(
-                                        width: 1,
-                                        color: color[index],
-                                      ),
+                                      // border: Border.all(
+                                      //   width: 1,
+                                      //   color: color[index],
+                                      // ),
                                     ),
                                     child: Icon(
                                       icons1[index],
-                                      color: color1[index],
+                                      color: const Color(0xff121212),
                                     ),
                                   ),
                                   Text(
@@ -386,50 +314,50 @@ class _HomePagesState extends State<HomePages> {
   Widget contain(int index, IconData icon, String text) {
     return GestureDetector(
       onTap: () {
-        if(index == 1) {
+        if (index == 1) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const ProfilePage()));
         }
-        if(index==3){
+        if (index == 3) {
           _showAddServiceDialog(context);
         }
       },
       child: SizedBox(
-        height: 82,
-        width: 58,
+        height: 80,
+        // width: 58,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-              Container(
-                height: 50,
-                width: 50,
-                alignment: Alignment.center,
-                // margin: const EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10), color: whiteColor),
-                child: Icon(
-                  icon,
-                  color: Color(0xff121212),
-                ),
+            Container(
+              height: 50,
+              width: 50,
+              alignment: Alignment.center,
+              // margin: const EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10), color: whiteColor),
+              child: Icon(
+                icon,
+                color: const Color(0xff121212),
               ),
-              const SizedBox(height:10),
-              Expanded(
-                child: SizedBox(
-                  height: 12,
-                  width:58,
-                  child: Center(
-                    child: Text(
-                      text,
-                      maxLines:1,
-                      style: TextStyle(
-                          color: whiteColor,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: MyStrings.outfit),
-                    ),
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: SizedBox(
+                // height: 12,
+                // width:58,
+                child: Center(
+                  child: Text(
+                    text,
+                    maxLines: 1,
+                    style: TextStyle(
+                        color: whiteColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: MyStrings.outfit),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),
@@ -466,5 +394,4 @@ class _HomePagesState extends State<HomePages> {
       borderRadius: 20,
     );
   }
-
 }

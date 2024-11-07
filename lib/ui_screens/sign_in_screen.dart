@@ -1,7 +1,8 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../service/service.dart';
@@ -35,32 +36,53 @@ class _SignInScreenState extends State<SignInScreen> {
   ];
   bool isloading = false;
 
-  // List<String> text = [
-  //   MyStrings.whatsapp,
-  //   MyStrings.business,
-  //   MyStrings.instagram
-  // ];
   bool isPasswordVisible = false;
+  String? errorMessage;
+
+  void login() {
+    setState(() {
+      errorMessage = "Invalid Email or Password";
+    });
+  }
 
   @override
-  @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.black, // Status bar background color
+        statusBarIconBrightness:
+            Brightness.light, // Light icons for dark background
+      ),
+    );
     return Scaffold(
       backgroundColor: const Color(0xff121212),
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.only(top:22.86,left:29,right:29,bottom:66),
+            padding: const EdgeInsets.only(
+                top: 22.86, left: 29, right: 29, bottom: 66),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset("asset/image/Vector.png",height: 18.92,width:20.1,),
+                  Image.asset(
+                    "asset/image/Vector.png",
+                    height: 18.92,
+                    width: 20.1,
+                  ),
                   const SizedBox(
                     height: 3,
                   ),
-                  Image.asset("asset/image/image2.png",height: 52.2,width:28.79,),
-                  Image.asset("asset/image/Vector (1).png",height: 27.85,width:95.7,),
+                  Image.asset(
+                    "asset/image/image2.png",
+                    height: 52.2,
+                    width: 28.79,
+                  ),
+                  Image.asset(
+                    "asset/image/Vector (1).png",
+                    height: 27.85,
+                    width: 95.7,
+                  ),
                   Text(
                     "Let's sign you in",
                     style: TextStyle(
@@ -93,6 +115,19 @@ class _SignInScreenState extends State<SignInScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (errorMessage != null)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Center(
+                            child: Text(
+                              errorMessage!,
+                              style: const TextStyle(
+                                color: Colors.red, // Error text color
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
                       const Text(
                         "Email",
                         style: TextStyle(
@@ -116,8 +151,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         style: const TextStyle(
-                          color: Colors.white, // Set your desired text color here
-                          fontSize: 16, // Optional: Set the font size or other text properties
+                          color:
+                              Colors.white, // Set your desired text color here
+                          fontSize:
+                              16, // Optional: Set the font size or other text properties
                         ),
                         // onFieldSubmitted: (){},
                       ),
@@ -158,8 +195,10 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         style: const TextStyle(
-                          color: Colors.white, // Set your desired text color here
-                          fontSize: 16, // Optional: Set the font size or other text properties
+                          color:
+                              Colors.white, // Set your desired text color here
+                          fontSize:
+                              16, // Optional: Set the font size or other text properties
                         ),
                       ),
                       const SizedBox(
@@ -194,15 +233,15 @@ class _SignInScreenState extends State<SignInScreen> {
                           } else {
                             _logIn(context, emailController.text,
                                 passwordController.text);
+                            login();
+                            // emailController.clear();
+                            // passwordController.clear();
                           }
                         },
                         child: Center(
                           child: Container(
                             height: 55,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
+                            width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               color: whiteColor,
@@ -224,105 +263,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       const SizedBox(
                         height: 8,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                              child: Divider(
-                                  thickness: 1.5, color: dividerLineColor)),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text("or",
-                              style: TextStyle(
-                                  fontFamily: MyStrings.outfit,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16,
-                                  color: dividerLineColor)),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Expanded(
-                              child: Divider(
-                                  thickness: 1.5, color: dividerLineColor)),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Center(
-                        child: Container(
-                          height: 55,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
-                          decoration: BoxDecoration(
-                              border:
-                              Border.all(color: Colors.white, width: 1),
-                              borderRadius: BorderRadius.circular(30),
-                              color: const Color(0xff121212)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "asset/image/google trasprant.png",
-                                height: 25,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Center(
-                                  child: Text(
-                                    "Sign in with Google",
-                                    style: TextStyle(
-                                        fontFamily: MyStrings.outfit,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 18),
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: Container(
-                          height: 55,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
-                          decoration: BoxDecoration(
-                              border:
-                              Border.all(color: Colors.white, width: 1),
-                              borderRadius: BorderRadius.circular(30),
-                              color:const Color(0xff121212)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "asset/image/facebook.png",
-                                height: 30,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Center(
-                                  child: Text(
-                                    "Sign in with Facebook",
-                                    style: TextStyle(
-                                        fontFamily: MyStrings.outfit,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 18),
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
                     ],
                   )
                 ],
@@ -333,31 +273,34 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-  _logIn(BuildContext context, String email, String password) async {
 
+  _logIn(BuildContext context, String email, String password) async {
     try {
       final response = await Webservice().callLoginService(
           email: email, password: password, showSnackBar: (SnackBar) {});
 
-      // stopLoader();
 
       if (response != null && response.status == "success") {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('email', email);
         await prefs.setString('password', password);
         await prefs.setString('name', response.user!.name.toString());
-        await prefs.setString('number',response.user!.phone.toString());
+        await prefs.setString('number', response.user!.phone.toString());
         await prefs.setString(
             'authorization', response.authorization?.token ?? '');
         await prefs.setBool('isLoggedIn', true);
+        await prefs.setString(
+            'loginDate', DateFormat("yyyy-MM-dd").format(DateTime.now()));
 
         // Cache user profile data
         final userData = {
           'email': email,
           'name': response.user!.name.toString(),
           'authorization': response.authorization?.token ?? '',
+          'loginDate': DateFormat("yyyy-MM-dd").format(DateTime.now()),
         };
-        final dataBytes = utf8.encode(jsonEncode(userData)); // Convert user data to bytes
+        final dataBytes =
+            utf8.encode(jsonEncode(userData)); // Convert user data to bytes
         await customCacheManager.putFile(
           'userProfileData',
           dataBytes, // Data to be cached as bytes

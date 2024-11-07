@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import '../utils/constant.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+// import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +23,18 @@ class SignInProvider with ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
 
-    _isSignedIn = isLoggedIn;
+    if (isLoggedIn) {
+      DateTime? loginDate =
+          DateTime.tryParse(prefs.getString("loginDate") ?? "");
+      if (loginDate != null &&
+          DateTime.now().difference(loginDate).inDays < 7) {
+        _isSignedIn = true;
+      } else {
+        await prefs.remove("isLoggedIn");
+        await prefs.remove("loginDate");
+        _isSignedIn = false;
+      }
+    }
     notifyListeners();
   }
 
@@ -50,46 +61,48 @@ class FadeInAndSlide extends StatefulWidget {
 }
 
 class _FadeInAndSlideState extends State<FadeInAndSlide> {
-  String logo = "asset/image/4.png";
+  String logo = "asset/image/2.png";
   String logoText = "SYDKIC";
   bool isDone = false;
-  bool? value; // Use nullable bool
-  final customCacheManager = CacheManager(
-    Config(
-      'customCacheKey',
-      stalePeriod: const Duration(days: 7),
-      maxNrOfCacheObjects: 100,
-    ),
-  );
+  // bool? value; // Use nullable bool
+  // final customCacheManager = CacheManager(
+  //   Config(
+  //     'customCacheKey',
+  //     stalePeriod: const Duration(days: 7),
+  //     maxNrOfCacheObjects: 100,
+  //   ),
+  // );
 
-  @override
-  void initState() {
-    super.initState();
-    _initializeState();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _initializeState();
+  // }
 
-  // Helper function to handle async initialization
-  void _initializeState() async {
-    bool cacheValid = await _checkCacheExpiration();
-    setState(() {
-      value = cacheValid; // Update state with cache check result
-    });
-  }
+  // // Helper function to handle async initialization
+  // void _initializeState() async {
+  //   bool cacheValid = await _checkCacheExpiration();
+  //   setState(() {
+  //     value = cacheValid; // Update state with cache check result
+  //   });
+  // }
 
-  Future<bool> _checkCacheExpiration() async {
-    final cacheFile = await customCacheManager.getFileFromCache('userProfileData');
+  // Future<bool> _checkCacheExpiration() async {
+  //   final cacheFile =
+  //       await customCacheManager.getFileFromCache('userProfileData');
 
-    if (cacheFile != null) {
-      final file = cacheFile.file;
-      final lastModified = await file.lastModified();
-      final now = DateTime.now();
-      final difference = now.difference(lastModified).inDays;
+  //   if (cacheFile != null) {
+  //     final file = cacheFile.file;
+  //     final lastModified = await file.lastModified();
+  //     final now = DateTime.now();
+  //     final difference = now.difference(lastModified).inDays;
 
-      return difference < 7; // Return true if cache is still valid, false otherwise
-    } else {
-      return false; // No cache data available
-    }
-  }
+  //     return difference <
+  //         7; // Return true if cache is still valid, false otherwise
+  //   } else {
+  //     return false; // No cache data available
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,53 +110,60 @@ class _FadeInAndSlideState extends State<FadeInAndSlide> {
       create: (_) => SignInProvider(),
       child: Consumer<SignInProvider>(builder: (context, provider, _) {
         return Scaffold(
+          backgroundColor: const Color(0xff121212),
           body: Stack(
             alignment: Alignment.center,
             children: [
               isDone
                   ? Center(
-                child: Text(
-                  logoText,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayMedium
-                      ?.copyWith(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 24,fontFamily: MyStrings.outfit,letterSpacing: 1,
-                      color: primaryColor),
-                ),
-              )
-                  .animate()
-                  .fadeIn(duration: 1000.ms)
-                  .then(delay: 600.ms)
-                  .slideX(begin: 0)
-                  .then(delay: 1000.ms)
+                      child: Text(
+                        logoText,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.copyWith(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 24,
+                                fontFamily: MyStrings.outfit,
+                                letterSpacing: 1,
+                                color: whiteColor),
+                      ),
+                    )
+                      .animate()
+                      .fadeIn(duration: 1000.ms)
+                      .then(delay: 600.ms)
+                      .slideX(begin: 0)
+                      .then(delay: 1000.ms)
                   : Container(),
               Center(
-                  child: Image.asset(
-                    logo,
-                    width: 50,
-                  ))
+                      child: SizedBox(
+                height: 50,
+                width: 50,
+                child: Image.asset(
+                  logo,
+                  fit: BoxFit.fitHeight,
+                ),
+              ))
                   .animate()
                   .fadeIn(duration: 1000.ms)
                   .then(delay: 1200.ms)
                   .slideX(end: -0.17, duration: 2000.ms)
                   .callback(
-                  duration: 600.ms,
-                  callback: (_) {
-                    setState(() {
-                      isDone = true;
-                    });
-                  })
+                      duration: 600.ms,
+                      callback: (_) {
+                        setState(() {
+                          isDone = true;
+                        });
+                      })
                   .then(delay: 1500.ms)
                   .callback(callback: (_) {
                 if (provider.isSignedIn) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BottomNavigationScreen(),
-                      ),
-                    );
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BottomNavigationScreen(),
+                    ),
+                  );
                 } else {
                   Navigator.pushReplacement(
                     context,

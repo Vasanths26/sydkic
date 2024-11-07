@@ -12,7 +12,7 @@ import '../utils/small_text.dart';
 import '../utils/string.dart';
 import 'package:http/http.dart' as http;
 
-class ScheduledProvider extends ChangeNotifier{
+class ScheduledProvider extends ChangeNotifier {
   List<UserContacts> _userContacts = [];
   List<ContactAssistant> _contactAssistant = [];
   int _selectedIndex = 0;
@@ -38,7 +38,6 @@ class ScheduledProvider extends ChangeNotifier{
     _isActive = value;
     notifyListeners();
   }
-
 
   void assistantValues(value) {
     _assistant = value;
@@ -83,7 +82,7 @@ class ScheduledProvider extends ChangeNotifier{
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
         ContactAssistentModel contactAssistentModel =
-        ContactAssistentModel.fromJson(jsonData);
+            ContactAssistentModel.fromJson(jsonData);
         _contactAssistant = contactAssistentModel.contactAssistant!;
       } else {
         if (kDebugMode) {
@@ -101,7 +100,6 @@ class ScheduledProvider extends ChangeNotifier{
     return _contactAssistant;
   }
 
-
   // for status changes from api
 
   Future<void> fetchData(int? id, String? assistantId, String? status) async {
@@ -118,7 +116,9 @@ class ScheduledProvider extends ChangeNotifier{
           'Authorization': 'Bearer $token',
         },
       );
-      print('id:$id,assistId:$assistantId,status:$status');
+      if (kDebugMode) {
+        print('id:$id,assistId:$assistantId,status:$status');
+      }
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonData = json.decode(response.body);
         _createAssistant = CreateAssistantModel.fromJson(jsonData);
@@ -189,13 +189,11 @@ class ScheduledProvider extends ChangeNotifier{
     data;
     notifyListeners();
   }
-
 }
 
 class ContactAssitentComponent extends StatefulWidget {
   const ContactAssitentComponent(
-      {Key? key, required this.contactid, required this.onSave})
-      : super(key: key);
+      {super.key, required this.contactid, required this.onSave});
   final int? contactid;
   final VoidCallback onSave;
 
@@ -211,12 +209,13 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
       create: (_) =>
           ScheduledProvider()..fetchContactAssistent(widget.contactid),
       child: Scaffold(
-        backgroundColor: Color(0xff121212),
+        backgroundColor: const Color(0xffFFFFFF),
         body: Consumer<ScheduledProvider>(
           builder: (context, provider, child) {
             if (provider.isLoading) {
               return Center(
-                  child: CircularProgressIndicator(color: primaryColor));
+                child: CircularProgressIndicator(color: blackColor),
+              );
             } else if (provider.contactAssistant.isEmpty) {
               return Center(
                 child: Image.asset(
@@ -228,21 +227,37 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
               return Container(
                 height: 532,
                 decoration: const BoxDecoration(
-                  color: Color(0xff121212),
+                  color: Color(0xffFFFFFF),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 36, right: 36),
+                  padding: const EdgeInsets.only(
+                      top: 10, left: 36, right: 36, bottom: 52),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Center(
+                        child: Container(
+                          height: 5,
+                          width: 62,
+                          margin: const EdgeInsets.only(
+                            // left: 127.5,
+                            bottom: 15,
+                            // right: 131.5,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: const Color(0xffECECEC),
+                          ),
+                        ),
+                      ),
                       SmallText(
                         text: MyStrings.selectTheAssistant,
                         fontFamily: MyStrings.outfit,
-                        color: whiteColor,
+                        color: blackColor,
                       ),
                       const SizedBox(height: 10),
                       Expanded(
@@ -275,10 +290,10 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                 height: 40,
                                 alignment: Alignment.center,
                                 margin: const EdgeInsets.only(bottom: 15),
-                                padding:
-                                    const EdgeInsets.fromLTRB(15.5, 12, 15.5, 12),
+                                padding: const EdgeInsets.fromLTRB(
+                                    15.5, 12, 15.5, 12),
                                 decoration: BoxDecoration(
-                                    color: const Color(0xffE8E4FF),
+                                    color: const Color(0xffF0F2F5),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -290,7 +305,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                           fontWeight: FontWeight.w500,
                                           fontSize: 13,
                                           color: provider.currentIndex == index
-                                              ? primaryColor
+                                              ? blackColor
                                               : const Color(0xff8B8E8C)),
                                     ),
                                     const Spacer(),
@@ -298,9 +313,12 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                         ? Container(
                                             height: 16.67,
                                             width: 16.67,
-                                            decoration: BoxDecoration(shape:BoxShape.circle,color:primaryColor),
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: blackColor),
                                             child: Center(
-                                              child: Icon(Icons.check,size: 16.67,
+                                              child: Icon(Icons.check,
+                                                  size: 16.67,
                                                   color: whiteColor),
                                             ),
                                           )
@@ -325,7 +343,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(top: 30),
                           decoration: BoxDecoration(
-                              color: Colors.grey,
+                              color: const Color(0xff000000),
                               borderRadius: BorderRadius.circular(12)),
                           child: Center(
                             child: Text('Save',
@@ -350,17 +368,19 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(top: 20),
                           decoration: BoxDecoration(
-                              color: blackColor,
+                              color: whiteColor,
                               borderRadius: BorderRadius.circular(12),
                               border:
-                                  Border.all(width: 1, color: Colors.grey)),
+                                  Border.all(width: 1, color: Colors.black)),
                           child: const Center(
-                            child: Text('Turn Off Assistance',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontFamily: MyStrings.outfit,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400)),
+                            child: Text(
+                              'Turn Off Assistance',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: MyStrings.outfit,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            ),
                           ),
                         ),
                       ),
@@ -393,19 +413,27 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
       provider.assistantValues(provider.contactAssistant[index].assistantId);
       provider.statusUpdate(userContact.status = "Inactive");
       // Create a new assistant (assuming widget.contactid is valid)
-      print('id:${widget.contactid}');
-      print('id:${userContact.assistantId}');
+      if (kDebugMode) {
+        print('id:${widget.contactid}');
+      }
+      if (kDebugMode) {
+        print('id:${userContact.assistantId}');
+      }
       provider
           .fetchCreateAssistant(
-          widget.contactid, userContact.assistantId, "Active")
+              widget.contactid, userContact.assistantId, "Active")
           .then((newAssistant) {
-            print('new:$newAssistant');
+        if (kDebugMode) {
+          print('new:$newAssistant');
+        }
         if (newAssistant != null) {
           provider.updatedStauts(index, int.parse('${newAssistant.contactId}'),
               '${newAssistant.status}');
         } else {
           // Handle the null case, e.g., show an error message or take other actions
-          print('value:${newAssistant?.status}');
+          if (kDebugMode) {
+            print('value:${newAssistant?.status}');
+          }
         }
       });
 

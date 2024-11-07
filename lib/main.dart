@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sydkic/ui_screens/appointment_page.dart';
+import 'package:sydkic/ui_screens/appointment_screen.dart';
 import 'package:sydkic/ui_screens/contact_assitent.dart';
 import 'package:sydkic/ui_screens/contact_list_screen.dart';
 import 'package:sydkic/ui_screens/home_screen.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers:[
+      providers: [
         ChangeNotifierProvider(
           create: (_) => ScheduledProvider(),
         ),
@@ -53,4 +53,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

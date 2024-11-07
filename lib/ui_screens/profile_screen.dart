@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../utils/constant.dart';
@@ -75,15 +76,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         hintText: user.name.isNotEmpty ? user.name : 'Name not available',
                         hintStyle: const TextStyle(color: Colors.grey,fontFamily: MyStrings.outfit),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color:Colors.white),
+                          borderSide: const BorderSide(color:Colors.white),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white), // White border when enabled
+                          borderSide: const BorderSide(color: Colors.white), // White border when enabled
                           borderRadius: BorderRadius.circular(15),
                         ),
                         disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white), // White border when disabled
+                          borderSide: const BorderSide(color: Colors.white), // White border when disabled
                           borderRadius: BorderRadius.circular(15),
                         ),
                         prefixIcon: Icon(Icons.person_outlined,
@@ -98,15 +99,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         hintText: user.email.isNotEmpty ? user.email : 'Email not available',
                         hintStyle: const TextStyle(color: Colors.grey,fontFamily: MyStrings.outfit),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color:Colors.white),
+                          borderSide: const BorderSide(color:Colors.white),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white), // White border when enabled
+                          borderSide: const BorderSide(color: Colors.white), // White border when enabled
                           borderRadius: BorderRadius.circular(15),
                         ),
                         disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white), // White border when disabled
+                          borderSide: const BorderSide(color: Colors.white), // White border when disabled
                           borderRadius: BorderRadius.circular(15),
                         ),
                         prefixIcon:
@@ -123,15 +124,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         hintText: user.number.isNotEmpty ? user.number : 'phone number not available',
                         hintStyle: const TextStyle(color: Colors.grey,fontFamily: MyStrings.outfit),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color:Colors.white),
+                          borderSide: const BorderSide(color:Colors.white),
                           borderRadius: BorderRadius.circular(15),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white), // White border when enabled
+                          borderSide: const BorderSide(color: Colors.white), // White border when enabled
                           borderRadius: BorderRadius.circular(15),
                         ),
                         disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white), // White border when disabled
+                          borderSide: const BorderSide(color: Colors.white), // White border when disabled
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
@@ -174,11 +175,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                     showNewPasswordError ? Colors.red : Colors.grey,
                               ),),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white), // White border when enabled
+                            borderSide: const BorderSide(color: Colors.white), // White border when enabled
                             borderRadius: BorderRadius.circular(15),
                           ),
                           disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white), // White border when disabled
+                            borderSide: const BorderSide(color: Colors.white), // White border when disabled
                             borderRadius: BorderRadius.circular(15),
                           ),
                           prefixIcon: Icon(Icons.lock_outline,
@@ -215,11 +216,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white), // White border when enabled
+                            borderSide: const BorderSide(color: Colors.white), // White border when enabled
                             borderRadius: BorderRadius.circular(15),
                           ),
                           disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white), // White border when disabled
+                            borderSide: const BorderSide(color: Colors.white), // White border when disabled
                             borderRadius: BorderRadius.circular(15),
                           ),
                           prefixIcon: Icon(Icons.lock_outline,
@@ -258,16 +259,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                     confirmPasswordController.text.isNotEmpty &&
                                     newPasswordController.text ==
                                         confirmPasswordController.text) {
-                                  print("Password updated successfully!");
+                                 
+                                 if (kDebugMode) {
+                                   print("Password updated successfully!");
+                                 }
+                                 
                                   // Hide password fields after success
                                   isEditingPassword = false;
                                 } else if (newPasswordController.text.isEmpty ||
                                     confirmPasswordController.text.isEmpty) {
                                   // If either field is empty, print error message
-                                  print('Please enter and confirm the password.');
+                                  if (kDebugMode) {
+                                    print('Please enter and confirm the password.');
+                                  }
                                 } else {
                                   // If passwords do not match
-                                  print("Passwords do not match.");
+                                  if (kDebugMode) {
+                                    print("Passwords do not match.");
+                                  }
                                 }
                               });
                             },

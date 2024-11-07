@@ -16,7 +16,7 @@ class SmallText extends StatelessWidget {
   final TextDecoration? letterspcing; // New property
 
   const SmallText({
-    Key? key,
+    super.key,
     required this.text,
     this.color,
     this.size = 16,
@@ -30,7 +30,7 @@ class SmallText extends StatelessWidget {
     this.fontFamily,
     this.decoration,
     this.letterspcing// New constructor parameter
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,7 +54,9 @@ class _SmsScreenState extends State<SmsScreen> {
       ),
       body: Consumer<MessageProvider>(
         builder: (context, messageProvider, child) {
-          print('length:${messageProvider.messages.length}');
+          if (kDebugMode) {
+            print('length:${messageProvider.messages.length}');
+          }
           return ListView.builder(
             itemCount: messageProvider.messages.length,
             itemBuilder: (context, index) {

@@ -167,7 +167,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
       builder: (context, contactProvider, child) {
         return contactProvider.isLoading
             ? Scaffold(
-                backgroundColor: Color(0xff121212),
+                backgroundColor: const Color(0xff121212),
                 body: Center(
                   child: CircularProgressIndicator(
                     backgroundColor: whiteColor,
@@ -176,7 +176,7 @@ class _ContactListScreenState extends State<ContactListScreen> {
                 ))
             : Scaffold(
                 appBar: AppBar(
-                    backgroundColor: Color(0xff121212),
+                    backgroundColor: const Color(0xff121212),
                     elevation: 0,
                     leading: Icon(
                       Icons.menu,
@@ -203,11 +203,12 @@ class _ContactListScreenState extends State<ContactListScreen> {
                       Container(
                         height: 24,
                         width: 24,
+                        margin: const EdgeInsets.only(right: 25),
                         padding: const EdgeInsets.only(top: 2.24, bottom: 2.25),
                         child: Icon(Icons.cached_outlined, color: whiteColor),
                       ),
                     ]),
-                backgroundColor: Color(0xff121212),
+                backgroundColor: const Color(0xff121212),
                 body: Stack(
                   children: [
                     Column(
@@ -465,9 +466,9 @@ class _ContactListScreenState extends State<ContactListScreen> {
                           width: 60,
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
-                              color: Color(0xff121212),
+                              color: const Color(0xff121212),
                               shape: BoxShape.circle),
-                          child: Center(
+                          child: const Center(
                             child: Icon(
                               Icons.messenger_outline,
                               color: Colors.grey,

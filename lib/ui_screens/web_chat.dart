@@ -1,5 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shimmer/shimmer.dart';
+// import 'package:flutter/widgets.dart';
+import 'dart:ui' as ui;
 import 'package:sydkic/utils/constant.dart';
 import '../utils/string.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/contact_assistent_model.dart';
 import '../model/contactlist_model.dart';
 import '../utils/api_constant.dart';
+import '../Chat/chat_screen.dart';
 import 'contact_assitent.dart';
 
 class WebChatProvider with ChangeNotifier {
@@ -126,15 +131,41 @@ class WebChatProvider with ChangeNotifier {
   }
 
   List<UserContacts> getMatchedContacts(
-      WebChatProvider WebChatProvider,
+      WebChatProvider webChatProvider,
       String assistantId,
       String selectedAssistantName,
       String selectedAssistantID) {
-    List<UserContacts> userContacts = WebChatProvider.userContacts;
+    List<UserContacts> userContacts = webChatProvider.userContacts;
     return userContacts.where((contact) {
       return contact.assistantContact?.assistantName == selectedAssistantName &&
           contact.assistantContact?.status == "Active";
     }).toList();
+  }
+
+  double getTextWidth(String text, TextStyle style) {
+    // Use TextPainter to calculate the width of the text
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      maxLines: 1,
+      textDirection: ui.TextDirection.ltr,
+    )..layout(minWidth: 0, maxWidth: double.infinity);
+
+    return textPainter.size.width;
+  }
+
+  double namelength(String? name, double containerWidth, {String? number}) {
+    // Use the number if name is null
+    final displayName = name ?? number;
+    if (displayName == null || displayName.isEmpty) {
+      return containerWidth;
+    }
+    if (containerWidth < 100) {
+      return containerWidth - 10;
+    }
+    // if (containerWidth < 100) {
+    //   return containerWidth - 10;
+    // }
+    return containerWidth;
   }
 }
 
@@ -146,7 +177,7 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
-  List<bool> switchStates = List.generate(10, (index) => false);
+  // List<bool> switchStates = List.generate(10, (index) => false);
   @override
   void initState() {
     super.initState();
@@ -154,234 +185,279 @@ class _ContactPageState extends State<ContactPage> {
       Provider.of<WebChatProvider>(context, listen: false)
           .fetchContactDetails();
     });
+    Provider.of<WebChatProvider>(context, listen: false)._isLoading;
   }
 
   void refreshContacts() {
     Provider.of<WebChatProvider>(context, listen: false).fetchContactDetails();
   }
 
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<WebChatProvider>(
         builder: (context, webChatProvider, child) {
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: Colors.black, // Status bar background color
+          statusBarIconBrightness:
+              Brightness.light, // Light icons for dark background
+        ),
+      );
       return webChatProvider.isLoading
           ? Scaffold(
-              backgroundColor: Color(0xff121212),
-              body: Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: whiteColor,
-                  color: Colors.grey,
-                ),
+              backgroundColor: const Color(0xff000000),
+              body: Shimmer.fromColors(
+                baseColor: const Color(0xff1A1C1A),
+                highlightColor: Colors.grey[700]!,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: webChatProvider.userContacts.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        height: 80,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.only(
+                            left: 20, top: 12.5, bottom: 12.5, right: 20),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff1A1C1A),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      );
+                    }),
               ),
             )
           : Scaffold(
-              backgroundColor: Color(0xff121212),
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 20, top: 58),
-                    child: const Text(MyStrings.inbox,
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                            fontFamily: MyStrings.outfit)),
-                  ),
-                  Container(
-                    height: 48,
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.only(
-                        left: 20, top: 15, right: 20, bottom: 5),
-                    decoration: BoxDecoration(
-                      // color: Colors.white,
-                      border: Border.all(width: 1, color: whiteColor),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: TextFormField(
-                      onChanged: (value) {
-                        // WebChatProvider.setSearchQuery(value);
-                      },
-                      style: TextStyle(color:whiteColor,fontFamily:MyStrings.outfit),
-                      cursorColor: Colors.white,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                        hintText: 'Search Contacts...',
-                        hintStyle: TextStyle(
-                            color: Colors.white, fontFamily: MyStrings.outfit),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 12), // Adjust padding
-                        enabledBorder:
-                            UnderlineInputBorder(borderSide: BorderSide.none),
-                        focusedBorder:
-                            UnderlineInputBorder(borderSide: BorderSide.none),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: webChatProvider.userContacts.length,
-                        itemBuilder: (context, index) {
-                          UserContacts userContact =
-                              webChatProvider.userContacts[index];
-                          return Container(
-                            height: 78,
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.only(
-                                left: 20, top: 15, bottom: 15, right: 20),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 48,
-                                  width: 48,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: userContact.profileImg != null &&
+              backgroundColor: const Color(0xff000000),
+              body: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: webChatProvider.userContacts.length,
+                  itemBuilder: (context, index) {
+                    UserContacts userContact =
+                        webChatProvider.userContacts[index];
+                    return Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.only(
+                          left: 20, top: 12.5, bottom: 12.5, right: 20),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ChatScreen(),
+                                ),
+                              );
+                            },
+                            child: SizedBox(
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 48,
+                                    width: 48,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: userContact.profileImg != null &&
+                                              userContact.profileImg!.isNotEmpty
+                                          ? Colors.white
+                                          : const Color(0xffFFFFFF),
+                                    ),
+                                    child: userContact.profileImg != null &&
                                             userContact.profileImg!.isNotEmpty
-                                        ? Colors.white
-                                        : const Color(0xff5548B1),
+                                        ? ClipOval(
+                                            child: CachedNetworkImage(
+                                              imageUrl: userContact.profileImg!,
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Center(
+                                                child: Text(
+                                                  userContact.name != null &&
+                                                          userContact
+                                                              .name!.isNotEmpty
+                                                      ? userContact.name!
+                                                          .substring(0, 1)
+                                                          .toUpperCase() // First letter of the name
+                                                      : "+${userContact.phone!.substring(0, 2)}", // + and first two digits of phone number
+                                                  style: const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors
+                                                          .black, // Text color
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontFamily:
+                                                          MyStrings.outfit),
+                                                ),
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          )
+                                        : Center(
+                                            child: Text(
+                                              userContact.name != null &&
+                                                      userContact
+                                                          .name!.isNotEmpty
+                                                  ? userContact.name!
+                                                      .substring(0, 1)
+                                                      .toUpperCase() // First letter of the name
+                                                  : "+${userContact.phone!.substring(0, 2)}", // + and first two digits of phone number
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors
+                                                      .black, // Text color
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: MyStrings.outfit),
+                                            ),
+                                          ),
                                   ),
-                                  child: userContact.profileImg != null &&
-                                          userContact.profileImg!.isNotEmpty
-                                      ? ClipOval(
-                                          child: CachedNetworkImage(
-                                            imageUrl: userContact.profileImg!,
-                                            placeholder: (context, url) =>
-                                                const CircularProgressIndicator(),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    const Icon(Icons.error),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        )
-                                      : Center(
-                                          child: Text(
-                                            userContact.name != null &&
-                                                    userContact.name!.isNotEmpty
-                                                ? userContact.name!
-                                                    .substring(0, 1)
-                                                    .toUpperCase() // First letter of the name
-                                                : "+${userContact.phone!.substring(0, 2)}", // + and first two digits of phone number
-                                            style: const TextStyle(
-                                                fontSize: 16,
-                                                color:
-                                                    Colors.white, // Text color
-                                                fontWeight: FontWeight.w400,
-                                                fontFamily: MyStrings.outfit),
-                                          ),
-                                        ),
-                                ),
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 18,
-                                      width: 151,
-                                      child: Text(
-                                          userContact.name ??
-                                              '+${userContact.phone ?? 'No Phone'}',
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.white,
-                                              fontFamily: MyStrings.outfit)),
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Row(
-                                      children: [
-                                        logo('asset/image/whatsapp-logo.png'),
-                                        const SizedBox(width: 5),
-                                        logo('asset/image/instagram.png'),
-                                        const SizedBox(width: 5),
-                                        logo('asset/image/mail-logo.png'),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                SizedBox(
-                                  width: 60,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        height: 18,
-                                        width: 32,
-                                        alignment: Alignment.centerRight,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: const Color(0xffE0DCFF),
-                                            width: 1.0,
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            height: 24,
+                                            alignment: Alignment.centerLeft,
+                                            // width: containerWidth,
+                                            // width: webChatProvider
+                                            //     .namelength(
+                                            //         userContact.name,
+                                            //         containerWidth,
+                                            //         number: userContact
+                                            //             .phone),
+                                            child: Text(
+                                              userContact.name ??
+                                                  '+${userContact.phone ?? 'No Phone'}',
+                                              style: const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.white,
+                                                  fontFamily: MyStrings.outfit),
+                                            ),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                        ),
-                                        child: Transform.scale(
-                                          scale: 0.75,
-                                          child: Switch(
-                                            value: userContact
-                                                            .assistantContact !=
-                                                        null &&
-                                                    userContact.assistantContact
-                                                            ?.status ==
-                                                        "Active"
-                                                ? true
-                                                : false,
-                                            onChanged: (value) {
-                                              showContactAssistantModal(
-                                                  context,
-                                                  userContact.id,
-                                                  refreshContacts);
-                                            },
-                                            inactiveTrackColor:
-                                                const Color(0xffFFFFFF),
-                                            inactiveThumbColor:
-                                                const Color(0xff121212),
-                                            trackOutlineColor:
-                                                WidgetStateProperty.resolveWith<
-                                                        Color?>(
-                                                    (Set<WidgetState> states) {
-                                              return const Color(0xffE0DCFF);
-                                            }),
-                                            activeTrackColor:
-                                                const Color(0xff121212),
-                                          ),
-                                        ),
+                                          const SizedBox(width: 5),
+                                          index >= 1 && index <= 10
+                                              ? Container(
+                                                  height: 20,
+                                                  width: 20,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color:
+                                                              Color(0xffFFFFFF),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '55',
+                                                      style: TextStyle(
+                                                        color: blackColor,
+                                                        fontSize: 8,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container(),
+                                        ],
                                       ),
-                                      Container(
-                                        height: 16,
-                                        width: 60,
-                                        alignment: Alignment.centerRight,
-                                        margin: const EdgeInsets.only(top: 14),
-                                        child: Text(
-                                          userContact.assistantContact
-                                                  ?.assistantName ??
-                                              '',
-                                          style: const TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xff8B8E8C),
-                                              fontFamily: MyStrings.outfit),
-                                        ),
+                                      const SizedBox(height: 6),
+                                      Row(
+                                        children: [
+                                          logo('asset/image/whatsapp-logo.png'),
+                                          const SizedBox(width: 5),
+                                          logo(
+                                              'asset/image/instagram-device 1.png'),
+                                          const SizedBox(width: 5),
+                                          logo(
+                                              'asset/image/envelope-device 1.png'),
+                                          index == 3
+                                              ? logo(
+                                                  'asset/image/web-chat 1.png')
+                                              : const SizedBox()
+                                        ],
                                       ),
                                     ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          SizedBox(
+                            width: 60,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  height: 18,
+                                  width: 32,
+                                  alignment: Alignment.centerRight,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: const Color(0xffE0DCFF),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: Transform.scale(
+                                    scale: 0.75,
+                                    child: Switch(
+                                      value: userContact.assistantContact !=
+                                                  null &&
+                                              userContact.assistantContact
+                                                      ?.status ==
+                                                  "Active"
+                                          ? true
+                                          : false,
+                                      onChanged: (value) {
+                                        showContactAssistantModal(context,
+                                            userContact.id, refreshContacts);
+                                      },
+                                      inactiveTrackColor:
+                                          const Color(0xffF0F2F5),
+                                      inactiveThumbColor:
+                                          const Color(0xff121212),
+                                      trackOutlineColor: WidgetStateProperty
+                                          .resolveWith<Color?>(
+                                              (Set<WidgetState> states) {
+                                        return const Color(0xffE0DCFF);
+                                      }),
+                                      activeTrackColor: const Color(0xff121212),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 16,
+                                  width: 60,
+                                  alignment: Alignment.centerRight,
+                                  margin: const EdgeInsets.only(top: 14),
+                                  child: const Text(
+                                    // userContact.assistantContact
+                                    //         ?.assistantName ??
+                                    '7.00pm',
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff8B8E8C),
+                                        fontFamily: MyStrings.outfit),
                                   ),
                                 ),
                               ],
                             ),
-                          );
-                        }),
-                  ),
-                ],
-              ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
             );
     });
   }
@@ -393,9 +469,9 @@ class _ContactPageState extends State<ContactPage> {
           height: 24,
           width: 24,
           padding: const EdgeInsets.all(5.52),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(width: 1, color: Colors.grey),
+            color: Color(0xff393939),
           ),
           child: Image.asset(
             image,
@@ -403,18 +479,18 @@ class _ContactPageState extends State<ContactPage> {
             height: 13.6,
           ),
         ),
-        Positioned(
-          top: 0,
-          right: 3,
-          child: Container(
-            height: 4.8,
-            width: 4.8,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-          ),
-        ),
+        // Positioned(
+        //   top: 0,
+        //   right: 3,
+        //   child: Container(
+        //     height: 4.8,
+        //     width: 4.8,
+        //     decoration: const BoxDecoration(
+        //       shape: BoxShape.circle,
+        //       color: Colors.white,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -425,13 +501,58 @@ class _ContactPageState extends State<ContactPage> {
       context: context,
       builder: (BuildContext context) {
         return ClipRRect(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-            child: ContactAssitentComponent(
-              contactid: contactId,
-              onSave: onSave,
-            ));
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          child: ContactAssitentComponent(
+            contactid: contactId,
+            onSave: onSave,
+          ),
+        );
       },
     );
   }
 }
+
+
+                  // Container(
+                  //   height: 103,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   padding: const EdgeInsets.only(top: 56, bottom: 17),
+                  //   decoration: const BoxDecoration(
+                  //     color: Colors.black,
+                  //     borderRadius: BorderRadius.only(
+                  //       bottomLeft: Radius.circular(18),
+                  //       bottomRight: Radius.circular(18),
+                  //     ),
+                  //   ),
+                  //   child: Row(
+                  //     children: [
+                  //       Padding(
+                  //         padding: const EdgeInsets.only(left: 20),
+                  //         child: Icon(
+                  //           Icons.menu,
+                  //           size: 30,
+                  //           color: whiteColor,
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 20),
+                  //       const Text(
+                  //         MyStrings.inbox,
+                  //         style: TextStyle(
+                  //             fontSize: 24,
+                  //             fontWeight: FontWeight.w600,
+                  //             color: Colors.white,
+                  //             fontFamily: MyStrings.outfit),
+                  //       ),
+                  //       const Spacer(),
+                  //       Container(
+                  //         height: 24,
+                  //         width: 24,
+                  //         margin: const EdgeInsets.only(right: 20),
+                  //         padding:
+                  //             const EdgeInsets.only(top: 2.24, bottom: 2.25),
+                  //         child: Icon(Icons.cached_outlined, color: whiteColor),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
