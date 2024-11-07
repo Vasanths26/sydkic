@@ -5,7 +5,7 @@ import 'package:sydkic/ui_screens/web_chat.dart';
 import 'package:sydkic/ui_screens/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../ui_screens/appointment_screen.dart';
-import '../ui_screens/home_screen.dart';
+import '../ui_screens/Home/home_screen.dart';
 import '../ui_screens/Assistant/assistant_screen.dart';
 import '../utils/constant.dart';
 import '../utils/string.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../utils/constant.dart';
-import '../utils/string.dart';
-import '../widget/bottom_navigation.dart';
+import '../../utils/constant.dart';
+import '../../utils/string.dart';
+import '../../widget/bottom_navigation.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

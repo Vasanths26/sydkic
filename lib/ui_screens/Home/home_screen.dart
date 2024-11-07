@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sydkic/ui_screens/profile_screen.dart';
-import '../utils/constant.dart';
-import '../utils/string.dart';
+import 'package:sydkic/ui_screens/Home/profile_screen.dart';
+import '../../utils/constant.dart';
+import '../../utils/string.dart';
 import 'package:http/http.dart' as http;
-import '../../model/dashboard_model.dart';
-import '../../utils/api_constant.dart';
+import '../../../model/dashboard_model.dart';
+import '../../../utils/api_constant.dart';
 import 'package:quickalert/quickalert.dart';
-import '../widget/bottom_navigation.dart';
+import '../../widget/bottom_navigation.dart';
 
 class HomePageProvider extends ChangeNotifier {
   bool _isloading = false;
