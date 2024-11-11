@@ -196,29 +196,24 @@ class _ChatPageState extends State<ChatPage> {
           child: Container(
             height: 55,
             decoration: BoxDecoration(
-                color: const Color(0xffF4F4F4),
-                borderRadius: BorderRadius.circular(12)),
-            padding:
-                const EdgeInsets.only(bottom: 12, left: 12, right: 13, top: 13),
+              color: const Color(0xffF4F4F4),
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center, // Align vertically centered
               children: [
-                const SizedBox(
-                  height: 15.83,
-                  width: 15.83,
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Icon(
                     Icons.mood_outlined,
                     color: Color(0xff121212),
+                    size: 25,
                   ),
                 ),
                 const SizedBox(width: 10),
-                Container(
-                  // height: 18,
-                  width: 130,
-                  alignment: Alignment.topCenter,
+                Expanded(
                   child: TextFormField(
                     controller: _controller,
-                    // textAlignVertical: TextAlignVertical.center,
                     keyboardType: TextInputType.multiline,
                     maxLines: 6,
                     minLines: 1,
@@ -228,29 +223,25 @@ class _ChatPageState extends State<ChatPage> {
                       fontFamily: MyStrings.outfit,
                       color: blackColor,
                     ),
-                    // cursorColor: const Color(0xff000000),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Message...',
                       hintStyle: TextStyle(
-                          color: Color(0xff8B8E8C),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: MyStrings.outfit),
-                      contentPadding: EdgeInsets.only(top: 1.5, bottom: 0.5),
+                        color: Color(0xff8B8E8C),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: MyStrings.outfit,
+                      ),
+                      contentPadding: EdgeInsets.symmetric(vertical: 15),
                     ),
                   ),
                 ),
-                const Spacer(),
-                Container(
-                  height: 20,
-                  width: 20,
-                  padding: const EdgeInsets.only(
-                      left: 5.02, right: 5.27, top: 2.08, bottom: 2.08),
-                  child:
-                      const Icon(Icons.attach_file, color: Color(0xff1C1B1F)),
+                IconButton(
+                  icon: const Icon(Icons.attach_file, color: Color(0xff1C1B1F)),
+                  iconSize: 18,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  onPressed: () {},
                 ),
-                const SizedBox(width: 15),
                 InkWell(
                   onTap: () {
                     showBottomSheet();
@@ -260,9 +251,14 @@ class _ChatPageState extends State<ChatPage> {
                     width: 30,
                     padding: const EdgeInsets.all(5),
                     decoration: const BoxDecoration(
-                        color: Color(0xffFFFFFF), shape: BoxShape.circle),
-                    child: Image.asset('asset/image/whatsapp-logo.png',
-                        height: 20, width: 20),
+                      color: Color(0xffFFFFFF),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Image.asset(
+                      'asset/image/whatsapp-logo.png',
+                      height: 20,
+                      width: 20,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -274,17 +270,17 @@ class _ChatPageState extends State<ChatPage> {
                     height: 30,
                     width: 30,
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0xff121212)),
-                    child: Container(
-                      height: 16,
-                      width: 16,
-                      padding: const EdgeInsets.only(
-                          left: 2, right: 1.33, top: 2.67, bottom: 2.67),
-                      child: Icon(Icons.send_outlined,
-                          size: 18, color: whiteColor),
+                      shape: BoxShape.circle,
+                      color: Color(0xff121212),
+                    ),
+                    child: const Icon(
+                      Icons.send_outlined,
+                      size: 18,
+                      color: Colors.white,
                     ),
                   ),
                 ),
+                const SizedBox(width: 8),
               ],
             ),
           ),
