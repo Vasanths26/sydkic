@@ -4,6 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:sydkic/ui_screens/web_chat.dart';
 import 'package:sydkic/ui_screens/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../ui_screens/Buckets/bucket_screen.dart';
 import '../ui_screens/appointment_screen.dart';
 import '../ui_screens/Home/home_screen.dart';
 import '../ui_screens/Assistant/assistant_screen.dart';
@@ -132,7 +133,9 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
                     ? MyStrings.inbox
                     : _currentIndex == 2
                         ? 'Appointment'
-                        : 'Assistant',
+                        : _currentIndex == 3
+                            ? 'Assistant'
+                            : 'Buckets',
             style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -180,6 +183,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
             GButton(
               icon: Icons.person_outlined,
               // text: 'Web chat',
+            ),
+            GButton(
+              icon: Icons.inventory_2_outlined,
+              // text: 'Web chat',
             )
           ],
         ),
@@ -197,7 +204,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
               HomePages(),
               ContactPage(),
               AppointmentPage(),
-              AssistantScreen()
+              AssistantScreen(),
+              BucketScreen(),
             ],
           ),
         ],
