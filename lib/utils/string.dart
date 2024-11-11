@@ -2,10 +2,11 @@ class MyStrings {
   static const img1 = "assets/home/img1.png";
   static const img2 = "assets/home/img2.png";
   static const img3 = "assets/home/sampleimg1.png";
+  static const String image = 'assets/google trasprant.png';
 
   // font Family
 
-  static const String outfit = 'Outfit';
+  static const String outfit = 'outfit';
 
   // Login Screen
   static const String login = 'Login';
@@ -38,6 +39,9 @@ class MyStrings {
   static const String activate = 'Activate';
   static const String totalAssistant = 'Total Assistant';
   static const String totalCampaigns = 'Total Campaigns';
+  static const String or = 'or';
+  static const String continueWithGoogle = 'Continue with Google';
+  static const String continueWithFaceBook = 'Continue with facebook';
 
 //Inbox
   static const String inbox = 'Inbox';

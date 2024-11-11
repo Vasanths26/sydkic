@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../service/service.dart';
+import '../utils/small_text.dart';
 import '../widget/bottom_navigation.dart';
-
 import '../utils/constant.dart';
 import '../utils/string.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -39,12 +39,6 @@ class _SignInScreenState extends State<SignInScreen> {
   bool isPasswordVisible = false;
   String? errorMessage;
 
-  void login() {
-    setState(() {
-      errorMessage = "Invalid Email or Password";
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -58,58 +52,77 @@ class _SignInScreenState extends State<SignInScreen> {
       backgroundColor: const Color(0xff121212),
       body: SafeArea(
         child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(
-                top: 22.86, left: 29, right: 29, bottom: 66),
-            child: SingleChildScrollView(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "asset/image/Vector.png",
-                    height: 18.92,
-                    width: 20.1,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "asset/image/logo.png",
+                        height: 30,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "SYDKIC",
+                        style: TextStyle(
+                          fontFamily: MyStrings.outfit,
+                          fontWeight: FontWeight.w400,
+                          color: whiteColor,
+                          fontSize: 25,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
-                    height: 3,
+                    height: 20,
                   ),
-                  Image.asset(
-                    "asset/image/image2.png",
-                    height: 52.2,
-                    width: 28.79,
-                  ),
-                  Image.asset(
-                    "asset/image/Vector (1).png",
-                    height: 27.85,
-                    width: 95.7,
-                  ),
-                  Text(
-                    "Let's sign you in",
-                    style: TextStyle(
-                      fontFamily: MyStrings.outfit,
-                      fontWeight: FontWeight.w500,
-                      color: whiteColor,
-                      fontSize: 25,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Welcome Back to",
+                        style: TextStyle(
+                          fontFamily: MyStrings.outfit,
+                          fontWeight: FontWeight.w500,
+                          color: whiteColor,
+                          fontSize: 24,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "SYDKIC",
+                        style: TextStyle(
+                          fontFamily: MyStrings.outfit,
+                          fontWeight: FontWeight.w500,
+                          color: primaryColor,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    "Here are some contents based",
+                    "Securely access your account and enjoy",
                     style: TextStyle(
-                      fontFamily: MyStrings.outfit,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff8B8E8C),
-                    ),
+                        fontFamily: MyStrings.outfit,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
                   ),
-                  const Text(
-                    "on your preference",
+                  Text(
+                    "our exclusive feature",
                     style: TextStyle(
-                      fontFamily: MyStrings.outfit,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
+                        fontFamily: MyStrings.outfit,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
                   ),
                   const SizedBox(height: 20),
                   Column(
@@ -128,35 +141,46 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                         ),
-                      const Text(
-                        "Email",
-                        style: TextStyle(
-                          fontFamily: MyStrings.outfit,
-                          fontSize: 16,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      TextFormField(
-                        cursorColor: whiteColor,
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                        decoration: const InputDecoration(
-                          labelStyle: TextStyle(color: Colors.grey),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Email",
+                            style: TextStyle(
+                              fontFamily: MyStrings.outfit,
+                              fontSize: 16,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
+                          SizedBox(
+                            height: 15,
                           ),
-                        ),
-                        style: const TextStyle(
-                          color:
-                              Colors.white, // Set your desired text color here
-                          fontSize:
-                              16, // Optional: Set the font size or other text properties
-                        ),
-                        // onFieldSubmitted: (){},
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0), // Adds space on both sides
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors
+                                  .grey[850], // Use a slightly darker color
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: TextFormField(
+                              cursorColor: Colors.white,
+                              keyboardType: TextInputType.emailAddress,
+                              controller: emailController,
+                              decoration: const InputDecoration(
+                                labelStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder
+                                    .none, // Removes default border to rely on Container styling
+                              ),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       const Text(
@@ -168,54 +192,51 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      TextFormField(
-                        cursorColor: whiteColor,
-                        controller: passwordController,
-                        obscureText: !isPasswordVisible,
-                        decoration: InputDecoration(
-                          labelStyle: const TextStyle(color: Colors.grey),
-                          enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              isPasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isPasswordVisible = !isPasswordVisible;
-                              });
-                            },
-                          ),
-                        ),
-                        style: const TextStyle(
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0), // Adds space on both sides
+                        height: 50,
+                        decoration: BoxDecoration(
                           color:
-                              Colors.white, // Set your desired text color here
-                          fontSize:
-                              16, // Optional: Set the font size or other text properties
+                              Colors.grey[850], // Use a slightly darker color
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: TextFormField(
+                          cursorColor: whiteColor,
+                          controller: passwordController,
+                          obscureText: !isPasswordVisible,
+                          decoration: InputDecoration(
+                            border: InputBorder
+                                .none, // Removes the underline border
+
+                            labelStyle: const TextStyle(color: Colors.grey),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isPasswordVisible = !isPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                          style: const TextStyle(
+                            color: Colors
+                                .white, // Set your desired text color here
+                            fontSize:
+                                17, // Optional: Set the font size or other text properties
+                          ),
                         ),
                       ),
                       const SizedBox(
                         height: 15,
-                      ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Forget password?",
-                            style: TextStyle(
-                                fontFamily: MyStrings.outfit,
-                                fontSize: 15,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
                       ),
                       const SizedBox(
                         height: 30,
@@ -227,23 +248,30 @@ class _SignInScreenState extends State<SignInScreen> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
-                                    'Both phone number and password are required.'),
+                                    'Both email and password are required.'),
                               ),
                             );
                           } else {
-                            _logIn(context, emailController.text,
-                                passwordController.text);
-                            login();
-                            // emailController.clear();
-                            // passwordController.clear();
+                            bool isLoginSuccessful = await _logIn(context,
+                                emailController.text, passwordController.text);
+                            if (!isLoginSuccessful) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Incorrect email or password.',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              );
+                            }
                           }
                         },
                         child: Center(
                           child: Container(
-                            height: 55,
+                            height: 50,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(12),
                               color: whiteColor,
                             ),
                             child: const Center(
@@ -261,7 +289,116 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 8,
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: signinorColor, // Color of the divider
+                              thickness: 0.5, // Thickness of the divider
+                              endIndent: 8, // Space at the end of the divider
+                            ),
+                          ),
+                          SmallText(
+                            text: MyStrings.or,
+                            size: 16,
+                            color: secondaryColor,
+                            fontWeight: FontWeight.w500,
+                            textAlign: TextAlign.center,
+                            fontFamily: MyStrings.outfit,
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: signinorColor,
+                              thickness: 0.5,
+                              indent: 8, // Space at the start of the divider
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[850],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: Center(
+                                child: Image.asset(
+                                  "asset/image/google trasprant.png",
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              height: 28,
+                              child: Center(
+                                child: SmallText(
+                                  color: secondaryColor,
+                                  text: MyStrings.continueWithGoogle,
+                                  size: 16,
+                                  fontWeight: FontWeight.w400,
+                                  textAlign: TextAlign.center,
+                                  fontFamily: MyStrings.outfit,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[850],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 25,
+                              width: 25,
+                              child: Center(
+                                child: Image.asset(
+                                  "asset/image/facebook.png",
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              height: 28,
+                              child: Center(
+                                child: SmallText(
+                                  color: secondaryColor,
+                                  text: MyStrings.continueWithFaceBook,
+                                  size: 16,
+                                  fontWeight: FontWeight.w400,
+                                  textAlign: TextAlign.center,
+                                  fontFamily: MyStrings.outfit,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   )
@@ -278,7 +415,6 @@ class _SignInScreenState extends State<SignInScreen> {
     try {
       final response = await Webservice().callLoginService(
           email: email, password: password, showSnackBar: (SnackBar) {});
-
 
       if (response != null && response.status == "success") {
         SharedPreferences prefs = await SharedPreferences.getInstance();
