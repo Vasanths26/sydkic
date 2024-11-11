@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:sydkic/ui_screens/sms_sender_page.dart';
 import '../utils/constant.dart';
 import '../utils/string.dart';
-
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
