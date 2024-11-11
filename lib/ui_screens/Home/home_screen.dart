@@ -126,7 +126,7 @@ class _HomePagesState extends State<HomePages> {
                 ),
               )
             : Scaffold(
-                backgroundColor: const Color(0xff121212),
+                backgroundColor: const Color(0xff000000),
                 body: SingleChildScrollView(
                   child: Column(
                     children: [

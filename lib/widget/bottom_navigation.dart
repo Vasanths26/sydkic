@@ -111,7 +111,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       appBar: AppBar(
         backgroundColor: _currentIndex == 2
             ? const Color(0xff1A1C1A)
-            : const Color(0xff121212),
+            : const Color(0xff000000),
         leading: Padding(
           padding: const EdgeInsets.only(left: 20),
           child: IconButton(

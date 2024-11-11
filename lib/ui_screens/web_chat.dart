@@ -408,30 +408,58 @@ class _ContactPageState extends State<ContactPage> {
                                     ),
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
-                                  child: Transform.scale(
-                                    scale: 0.75,
-                                    child: Switch(
-                                      value: userContact.assistantContact !=
-                                                  null &&
-                                              userContact.assistantContact
-                                                      ?.status ==
-                                                  "Active"
-                                          ? true
-                                          : false,
-                                      onChanged: (value) {
-                                        showContactAssistantModal(context,
-                                            userContact.id, refreshContacts);
-                                      },
-                                      inactiveTrackColor:
-                                          const Color(0xffF0F2F5),
-                                      inactiveThumbColor:
-                                          const Color(0xff121212),
-                                      trackOutlineColor: WidgetStateProperty
-                                          .resolveWith<Color?>(
-                                              (Set<WidgetState> states) {
-                                        return const Color(0xffE0DCFF);
+                                  child: SwitchTheme(
+                                    data: SwitchThemeData(
+                                      thumbColor: WidgetStateProperty
+                                          .resolveWith<Color?>((states) {
+                                        if (states
+                                            .contains(WidgetState.selected)) {
+                                          return const Color(
+                                              0xffFFFFFF); // Active thumb color
+                                        }
+                                        return const Color(
+                                            0xff121212); // Inactive thumb color
                                       }),
-                                      activeTrackColor: const Color(0xff121212),
+                                      trackColor: WidgetStateProperty
+                                          .resolveWith<Color?>((states) {
+                                        if (states
+                                            .contains(WidgetState.selected)) {
+                                          return const Color(
+                                              0xff121212); // Active track color
+                                        }
+                                        return const Color(
+                                            0xffF0F2F5); // Inactive track color
+                                      }),
+                                      // Custom size: active thumb will appear smaller
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    ),
+                                    child: Transform.scale(
+                                      scale: 0.75,
+                                      child: Switch(
+                                        value: userContact.assistantContact !=
+                                                    null &&
+                                                userContact.assistantContact
+                                                        ?.status ==
+                                                    "Active"
+                                            ? true
+                                            : false,
+                                        onChanged: (value) {
+                                          showContactAssistantModal(context,
+                                              userContact.id, refreshContacts);
+                                        },
+                                        inactiveTrackColor:
+                                            const Color(0xffF0F2F5),
+                                        inactiveThumbColor:
+                                            const Color(0xff121212),
+                                        trackOutlineColor: WidgetStateProperty
+                                            .resolveWith<Color?>(
+                                                (Set<WidgetState> states) {
+                                          return const Color(0xffE0DCFF);
+                                        }),
+                                        activeTrackColor:
+                                            const Color(0xff121212),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -443,7 +471,7 @@ class _ContactPageState extends State<ContactPage> {
                                   child: const Text(
                                     // userContact.assistantContact
                                     //         ?.assistantName ??
-                                    '7.00pm',
+                                    '7:00pm',
                                     style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.w400,

@@ -1,12 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sydkic/ui_screens/Assistant/assistant.dart';
+import '../../model/assistant_model.dart';
+import '../../utils/api_constant.dart';
 import '../../utils/constant.dart';
 import '../../utils/string.dart';
-
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AssistantProvider extends ChangeNotifier{
+  void setIsSelected(int index) {
+    _isSelected = index;
+    notifyListeners();
+  }
 
+  int _isSelected = 0;
+  bool _isloading = false;
+  List<AssistantList> _assistantList = [];
+  List<AssistantList> _originalAssistantList = [];
+  List<AssistantList> get assistantList => _assistantList;
+  List<AssistantList> get originalAssistantList => _originalAssistantList;
+  int get isSelected => _isSelected;
+  bool get isloading => _isloading;
+  void setAssistantList(List<AssistantList> assistants) {
+    _assistantList = assistants;
+    _originalAssistantList = List.from(assistants);
+    notifyListeners();
+  }
+
+  Future<void> fetchAssistantList() async {
+    _isloading = true;
+    notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('authorization');
+    if (kDebugMode) {
+      print("access token $token");
+    }
+    try {
+      var response = await http.get(
+        Uri.parse(ApiConstants.getAssistantList),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body);
+        AssistantModel assistantListModel =
+            AssistantModel.fromJson(jsonData);
+        setAssistantList(assistantListModel.assistantList ?? []);
+      } else {
+        if (kDebugMode) {
+          print('Failed to fetch assistant: ${response.statusCode}');
+        }
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print('Error fetching assistant: $error');
+      }
+    } finally {
+      _isloading = false;
+      notifyListeners();
+    }
+  }
 }
 
 

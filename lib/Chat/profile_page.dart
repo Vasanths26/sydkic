@@ -26,11 +26,11 @@ class _PersonProfileState extends State<PersonProfile> {
                 Padding(
                   padding: const EdgeInsets.only(left: 3.0),
                   child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child:
-                          Icon(Icons.arrow_back, size: 20, color: whiteColor)),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Icons.arrow_back, size: 20, color: whiteColor),
+                  ),
                 ),
                 const SizedBox(width: 22),
                 Container(
@@ -113,7 +113,7 @@ class _PersonProfileState extends State<PersonProfile> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: whiteColor,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: Row(
                 children: [
@@ -157,18 +157,19 @@ class _PersonProfileState extends State<PersonProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  details(Icons.email, 'Mail', 'praveenkumara@gmail.com'),
-                  const SizedBox(height: 30),
                   details(
-                      Icons.smart_toy, 'Active Assistant', 'Professional Chat'),
+                      Icons.email_outlined, 'Mail', 'praveenkumara@gmail.com'),
+                  const SizedBox(height: 30),
+                  details(Icons.smart_toy_outlined, 'Active Assistant',
+                      'Professional Chat'),
                   const SizedBox(height: 30),
                   details(Icons.language_outlined, 'Nation', 'India'),
                   const SizedBox(height: 30),
-                  details(Icons.access_time, 'Time', '03:00 PM'),
+                  details(Icons.access_time_outlined, 'Time', '03:00 PM'),
                   const SizedBox(height: 30),
-                  details(Icons.work, 'Empty', ''),
+                  details(Icons.work_outline, 'Empty', ''),
                   const SizedBox(height: 30),
-                  details(Icons.person, 'Empty', ''),
+                  details(Icons.person_outline, 'Empty', ''),
                 ],
               ),
             ),

@@ -15,31 +15,34 @@ class _LeadHistoryState extends State<LeadHistory> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 25),
-            steps(
-                'Customer inquiring about appointment booking', '1', 16, 25.5),
-            const SizedBox(height: 20),
-            steps(
-                'Successfully booked appointments for customer and customer\'s cousin',
-                '2',
-                32,
-                33.5),
-            const SizedBox(height: 20),
-            steps(
-                'Successfully booked appointments for customer and customer\'s cousin',
-                '3',
-                32,
-                33.5),
-            const SizedBox(height: 20),
-            steps(
-                'Successfully booked appointments for customer and customer\'s cousin',
-                '4',
-                32,
-                33.5),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 25),
+              steps('Customer inquiring about appointment booking', '1', 16,
+                  25.5),
+              const SizedBox(height: 20),
+              steps(
+                  'Successfully booked appointments for customer and customer\'s cousin',
+                  '2',
+                  32,
+                  33.5),
+              const SizedBox(height: 20),
+              steps(
+                  'Successfully booked appointments for customer and customer\'s cousin',
+                  '3',
+                  32,
+                  33.5),
+              const SizedBox(height: 20),
+              steps(
+                  'Successfully booked appointments for customer and customer\'s cousin',
+                  '4',
+                  32,
+                  33.5),
+            ],
+          ),
         ),
         Positioned(
           left: 33,
@@ -94,7 +97,7 @@ class _LeadHistoryState extends State<LeadHistory> {
               height: 30,
               width: 30,
               margin: EdgeInsets.only(left: 20, bottom: 5, top: stick),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color(0xff242824),
               ),
@@ -110,10 +113,9 @@ class _LeadHistoryState extends State<LeadHistory> {
               ),
             ),
             const SizedBox(width: 20),
-            Container(
+            SizedBox(
               // height: 81,
               width: 315,
-              // padding: const EdgeInsets.only(top: 15, bottom: 15),
               child: Column(
                 children: [
                   Container(

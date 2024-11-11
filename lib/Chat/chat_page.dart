@@ -40,6 +40,23 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
   String? _selectedOption = 'Option 1';
   int selectedIndex = 0;
+  // double _containerHeight = 55; // Initial height
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _controller.addListener(_updateHeight);
+  // }
+
+  // void _updateHeight() {
+  //   final int lineCount = '\n'.allMatches(_controller.text).length + 1;
+  //   setState(() {
+  //     // Update height, allowing up to 6 lines
+  //     _containerHeight =
+  //         55 + ((lineCount - 1) * 20).clamp(0, 20 * 5).toDouble();
+  //   });
+  // }
+
   void _handleRadioValueChange(String? value) {
     setState(() {
       _selectedOption = value;
@@ -56,187 +73,220 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+  // @override
+  // void dispose() {
+  //   _controller.removeListener(_updateHeight);
+  //   _controller.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height - 233,
+          height: 639,
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.only(left: 20, right: 20),
-          child: ListView.builder(
-            reverse: true,
-            shrinkWrap: true,
-            // padding: const EdgeInsets.all(8),
-            itemCount: messages.length,
-            itemBuilder: (context, index) {
-              int reverseIndex = messages.length - 1 - index;
-              bool isSentByUser = messages[reverseIndex]["isUser"];
-              bool showInfo = true;
-              if (reverseIndex < messages.length - 1 &&
-                  messages[reverseIndex + 1]["isUser"] == isSentByUser) {
-                showInfo = false;
-              }
-              return Column(
-                crossAxisAlignment: isSentByUser
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: isSentByUser
-                        ? Alignment.centerRight
-                        : Alignment.centerLeft,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 14),
-                      margin: const EdgeInsets.symmetric(vertical: 4),
-                      constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width * 0.7),
-                      decoration: BoxDecoration(
-                        color: isSentByUser
-                            ? const Color(0xff242824)
-                            : const Color(0xffF0F2F5),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Text(
-                        messages[reverseIndex]["text"],
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontFamily: MyStrings.outfit,
-                            fontWeight: FontWeight.w400,
-                            color: isSentByUser ? whiteColor : Colors.black),
-                      ),
-                    ),
-                  ),
-                  if (showInfo)
-                    Row(
-                      mainAxisAlignment: isSentByUser
-                          ? MainAxisAlignment.end
-                          : MainAxisAlignment.start,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  reverse: true,
+                  shrinkWrap: true,
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    int reverseIndex = messages.length - 1 - index;
+                    bool isSentByUser = messages[reverseIndex]["isUser"];
+                    bool showInfo = true;
+                    if (reverseIndex < messages.length - 1 &&
+                        messages[reverseIndex + 1]["isUser"] == isSentByUser) {
+                      showInfo = false;
+                    }
+                    return Column(
+                      crossAxisAlignment: isSentByUser
+                          ? CrossAxisAlignment.end
+                          : CrossAxisAlignment.start,
                       children: [
-                        isSentByUser
-                            ? Container()
-                            : Container(
-                                height: 15,
-                                width: 15,
-                                margin: const EdgeInsets.only(right: 5),
-                                child: Image.asset(
-                                  'asset/image/whatsapp-logo.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                        const SizedBox(
-                          height: 10,
-                          width: 38,
-                          child: Text(
-                            '10.00am',
-                            style: TextStyle(
-                              fontSize: 8,
-                              fontFamily: MyStrings.outfit,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff8B8E8C),
+                        Align(
+                          alignment: isSentByUser
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 14),
+                            margin: const EdgeInsets.symmetric(vertical: 4),
+                            constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.of(context).size.width * 0.7),
+                            decoration: BoxDecoration(
+                              color: isSentByUser
+                                  ? const Color(0xff242824)
+                                  : const Color(0xffF0F2F5),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              messages[reverseIndex]["text"],
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontFamily: MyStrings.outfit,
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      isSentByUser ? whiteColor : Colors.black),
                             ),
                           ),
                         ),
-                        isSentByUser
-                            ? Container(
-                                height: 15,
-                                width: 15,
-                                margin: const EdgeInsets.only(right: 5),
-                                child: Image.asset(
-                                  'asset/image/whatsapp-logo.png',
-                                  fit: BoxFit.cover,
+                        if (showInfo)
+                          Row(
+                            mainAxisAlignment: isSentByUser
+                                ? MainAxisAlignment.end
+                                : MainAxisAlignment.start,
+                            children: [
+                              isSentByUser
+                                  ? Container()
+                                  : Container(
+                                      height: 15,
+                                      width: 15,
+                                      margin: const EdgeInsets.only(right: 5),
+                                      child: Image.asset(
+                                        'asset/image/whatsapp-logo.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                              const SizedBox(
+                                height: 10,
+                                width: 38,
+                                child: Text(
+                                  '10:00am',
+                                  style: TextStyle(
+                                    fontSize: 8,
+                                    fontFamily: MyStrings.outfit,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color(0xff8B8E8C),
+                                  ),
                                 ),
-                              )
-                            : Container(),
+                              ),
+                              isSentByUser
+                                  ? Container(
+                                      height: 15,
+                                      width: 15,
+                                      margin: const EdgeInsets.only(right: 5),
+                                      child: Image.asset(
+                                        'asset/image/whatsapp-logo.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Container(),
+                            ],
+                          ),
                       ],
-                    ),
-                ],
-              );
-            },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 70),
+            ],
           ),
         ),
-        Container(
-          height: 55,
-          decoration: BoxDecoration(
-              color: const Color(0xffF4F4F4),
-              borderRadius: BorderRadius.circular(12)),
-          margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
-          padding:
-              const EdgeInsets.only(bottom: 12, left: 12, right: 13, top: 13),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 15.83,
-                width: 15.83,
-                child: Icon(
-                  Icons.mood_outlined,
-                  color: Color(0xff121212),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Container(
-                height: 18,
-                width: 58,
-                alignment: Alignment.bottomCenter,
-                margin: const EdgeInsets.only(top: 1.5, bottom: 0.5),
-                child: TextFormField(
-                  cursorColor: const Color(0xff000000),
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Message...',
-                    hintStyle: TextStyle(
-                        color: Color(0xff8B8E8C),
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: MyStrings.outfit),
+        Positioned(
+          left: 20,
+          right: 20,
+          bottom: 10,
+          child: Container(
+            height: 55,
+            decoration: BoxDecoration(
+                color: const Color(0xffF4F4F4),
+                borderRadius: BorderRadius.circular(12)),
+            padding:
+                const EdgeInsets.only(bottom: 12, left: 12, right: 13, top: 13),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 15.83,
+                  width: 15.83,
+                  child: Icon(
+                    Icons.mood_outlined,
+                    color: Color(0xff121212),
                   ),
                 ),
-              ),
-              const Spacer(),
-              Container(
-                height: 20,
-                width: 20,
-                padding: const EdgeInsets.only(
-                    left: 5.02, right: 5.27, top: 2.08, bottom: 2.08),
-                child: const Icon(Icons.attach_file, color: Color(0xff1C1B1F)),
-              ),
-              const SizedBox(width: 15),
-              InkWell(
-                onTap: () {
-                  showBottomSheet();
-                },
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: const BoxDecoration(
-                      color: Color(0xffFFFFFF), shape: BoxShape.circle),
-                  child: Image.asset('asset/image/whatsapp-logo.png'),
+                const SizedBox(width: 10),
+                Container(
+                  // height: 18,
+                  width: 130,
+                  alignment: Alignment.topCenter,
+                  child: TextFormField(
+                    controller: _controller,
+                    // textAlignVertical: TextAlignVertical.center,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 6,
+                    minLines: 1,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: MyStrings.outfit,
+                      color: blackColor,
+                    ),
+                    // cursorColor: const Color(0xff000000),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Message...',
+                      hintStyle: TextStyle(
+                          color: Color(0xff8B8E8C),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: MyStrings.outfit),
+                      contentPadding: EdgeInsets.only(top: 1.5, bottom: 0.5),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              InkWell(
-                onTap: () {
-                  _sendMessage();
-                },
-                child: Container(
-                  height: 30,
-                  width: 30,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xff121212)),
+                const Spacer(),
+                Container(
+                  height: 20,
+                  width: 20,
+                  padding: const EdgeInsets.only(
+                      left: 5.02, right: 5.27, top: 2.08, bottom: 2.08),
+                  child:
+                      const Icon(Icons.attach_file, color: Color(0xff1C1B1F)),
+                ),
+                const SizedBox(width: 15),
+                InkWell(
+                  onTap: () {
+                    showBottomSheet();
+                  },
                   child: Container(
-                    height: 16,
-                    width: 16,
-                    padding: const EdgeInsets.only(
-                        left: 2, right: 1.33, top: 2.67, bottom: 2.67),
-                    child:
-                        Icon(Icons.send_outlined, size: 18, color: whiteColor),
+                    height: 30,
+                    width: 30,
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                        color: Color(0xffFFFFFF), shape: BoxShape.circle),
+                    child: Image.asset('asset/image/whatsapp-logo.png',
+                        height: 20, width: 20),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 10),
+                InkWell(
+                  onTap: () {
+                    _sendMessage();
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Color(0xff121212)),
+                    child: Container(
+                      height: 16,
+                      width: 16,
+                      padding: const EdgeInsets.only(
+                          left: 2, right: 1.33, top: 2.67, bottom: 2.67),
+                      child: Icon(Icons.send_outlined,
+                          size: 18, color: whiteColor),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
