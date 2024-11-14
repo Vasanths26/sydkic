@@ -116,7 +116,7 @@ class _HomePagesState extends State<HomePages> {
         );
         return provider.isloading == true
             ? Scaffold(
-                backgroundColor: const Color(0xff121212),
+                backgroundColor: const Color(0xff000000),
                 body: Center(
                   child: CircularProgressIndicator(
                     backgroundColor: Colors.grey[300],
@@ -226,7 +226,7 @@ class _HomePagesState extends State<HomePages> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(18),
                                 topRight: Radius.circular(18)),
-                            color: Color(0xff121212)),
+                            color: Color(0xff000000)),
                         child: GridView.builder(
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(

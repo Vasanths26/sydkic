@@ -107,7 +107,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
         child: DrawerScreen(),
       ),
       drawerScrimColor: Colors.transparent,
-      backgroundColor: whiteColor,
+      backgroundColor: blackColor,
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: _currentIndex == 2
@@ -127,20 +127,21 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
           ),
         ),
         title: Text(
-            _currentIndex == 0
-                ? 'Dashboard'
-                : _currentIndex == 1
-                    ? MyStrings.inbox
-                    : _currentIndex == 2
-                        ? 'Appointment'
-                        : _currentIndex == 3
-                            ? 'Assistant'
-                            : 'Buckets',
-            style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-                fontFamily: MyStrings.outfit)),
+          _currentIndex == 0
+              ? 'Dashboard'
+              : _currentIndex == 1
+                  ? MyStrings.inbox
+                  : _currentIndex == 2
+                      ? 'Appointment'
+                      : _currentIndex == 3
+                          ? 'Chatbot'
+                          : 'Campaign',
+          style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              fontFamily: MyStrings.outfit),
+        ),
         actions: [
           Container(
             height: 24,
@@ -152,7 +153,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: Color(0xff121212)),
+        decoration: const BoxDecoration(color: Color(0xff000000)),
         padding: const EdgeInsets.only(left: 10, right: 10),
         height: 80,
         child: GNav(
@@ -166,7 +167,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
           color: Colors.grey[800], // unselected icon color
           activeColor: Colors.white, // selected icon and text color
           iconSize: 24, // tab button icon size
-          backgroundColor: const Color(0xff121212),
+          backgroundColor: const Color(0xff000000),
           tabs: const [
             GButton(
               icon: Icons.home_filled,
