@@ -10,7 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class AssistantProvider extends ChangeNotifier{
+class AssistantProvider extends ChangeNotifier {
   void setIsSelected(int index) {
     _isSelected = index;
     notifyListeners();
@@ -47,8 +47,7 @@ class AssistantProvider extends ChangeNotifier{
       );
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body);
-        AssistantModel assistantListModel =
-            AssistantModel.fromJson(jsonData);
+        AssistantModel assistantListModel = AssistantModel.fromJson(jsonData);
         setAssistantList(assistantListModel.assistantList ?? []);
       } else {
         if (kDebugMode) {
@@ -65,7 +64,6 @@ class AssistantProvider extends ChangeNotifier{
     }
   }
 }
-
 
 class AssistantScreen extends StatefulWidget {
   const AssistantScreen({super.key});
@@ -97,7 +95,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
     return Scaffold(
       backgroundColor: const Color(0xff000000),
       body: Padding(
-        padding: const EdgeInsets.only(top: 32),
+        padding: const EdgeInsets.only(top: 22),
         child: ListView.builder(
           shrinkWrap: true, // Allows ListView to take only the required space
           physics:
@@ -147,7 +145,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   Widget group(String text, bool value, bool switchValue, int index) {
     return Container(
       height: 125,
-      width: 353,
+      // width: 353,
       decoration: BoxDecoration(
         color: const Color(0xff1A1C1A),
         borderRadius: BorderRadius.circular(5),
@@ -272,13 +270,17 @@ class _AssistantScreenState extends State<AssistantScreen> {
           child: value == false
               ? Image.asset('asset/image/round_profile.webp', fit: BoxFit.cover)
               : const Center(
-                  child: Text(
-                    '+245',
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontFamily: MyStrings.outfit,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff5548B1),
+                  child: SizedBox(
+                    height: 13,
+                    // width: 23,
+                    child: Text(
+                      '+245',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontFamily: MyStrings.outfit,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff5548B1),
+                      ),
                     ),
                   ),
                 ),

@@ -14,6 +14,97 @@ class IndividualScreen extends StatefulWidget {
 class _IndividualScreenState extends State<IndividualScreen> {
   int selectedIndex = 0;
   bool isSwitchOn = false;
+  String selectedTopic = '';
+  String selectedImage = 'asset/image/bubble.png';
+  List<Map<String, String>> items = [
+    {
+      'text1': 'Jeevan',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 09, 2024'
+    },
+    {
+      'text1': 'Sanjay',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 10, 2024'
+    },
+  ];
+
+  List<Map<String, String>> items1 = [
+    {
+      'text1': 'Ramesh',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 09, 2024'
+    },
+    {
+      'text1': 'Suresh',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 10, 2024'
+    },
+  ];
+
+  List<Map<String, String>> items2 = [
+    {
+      'text1': 'Hari',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 09, 2024'
+    },
+    {
+      'text1': 'Surendar',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 10, 2024'
+    },
+  ];
+
+  List<Map<String, String>> items3 = [
+    {
+      'text1': 'Prabha',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 09, 2024'
+    },
+    {
+      'text1': 'Vishwa',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 10, 2024'
+    },
+    {
+      'text1': 'Surya',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 09, 2024'
+    },
+    {
+      'text1': 'Ajith',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 10, 2024'
+    },
+  ];
+
+  List<Map<String, String>> items4 = [
+    {
+      'text1': 'Jagadesh',
+      'text2':
+          'Customer inquires about available lime slots and schedules a midnight appointment.',
+      'text3': 'Nov 09, 2024'
+    },
+  ];
+  List<Map<String, String>> selectedItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = 0;
+    selectedTopic = 'Interested';
+    selectedItems = items;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +120,15 @@ class _IndividualScreenState extends State<IndividualScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3, bottom: 2),
-                    child: Icon(Icons.arrow_back, size: 20, color: whiteColor),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3, bottom: 2),
+                      child:
+                          Icon(Icons.arrow_back, size: 20, color: whiteColor),
+                    ),
                   ),
                   const SizedBox(width: 20),
                   SizedBox(
@@ -63,10 +160,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
                         value: isSwitchOn,
                         onChanged: (value) {
                           setState(() {
-                            value = false;
-                            setState(() {
-                              isSwitchOn = value; // Update the switch state
-                            });
+                            isSwitchOn = value; // Update the switch state
                           });
                         },
                         inactiveTrackColor: const Color(0xffFFFFFF),
@@ -81,30 +175,37 @@ class _IndividualScreenState extends State<IndividualScreen> {
             const SizedBox(height: 20),
             Row(
               children: [
-                topic('Interested', 0),
+                topic('Interested', 0, 'asset/image/bubble.png', items),
                 const SizedBox(width: 15),
-                topic('Budget Concern', 1),
+                topic('Budget Concern', 1, 'asset/image/upcoming.png', items1),
                 const SizedBox(width: 15),
-                topic('Enquiring', 2),
+                topic('Enquiring', 2, 'asset/image/approval_delegation.png',
+                    items2),
               ],
             ),
             const SizedBox(height: 15),
             Row(
               children: [
-                topic('Not Intersted - Currently No Need', 3),
+                topic('Not Intersted - Currently No Need', 3,
+                    'asset/image/mail_off.png', items3),
                 const SizedBox(width: 15),
-                topic('Spam', 4),
+                topic('Spam', 4, 'asset/image/speaker_notes_off.png', items4),
               ],
             ),
             const SizedBox(height: 30),
-            const InterestedPage(),
+            InterestedPage(
+              topics: selectedTopic,
+              images: selectedImage,
+              items: selectedItems,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget topic(String text, int index) {
+  Widget topic(
+      String text, int index, String image, List<Map<String, String>> items) {
     bool isSelected = selectedIndex == index;
     Color containerColor = isSelected ? Colors.white : const Color(0xff1A1C1A);
     Color textColor = isSelected ? Colors.black : Colors.white;
@@ -113,19 +214,18 @@ class _IndividualScreenState extends State<IndividualScreen> {
       onTap: () {
         setState(() {
           selectedIndex = index;
+          selectedTopic = text;
+          selectedImage = image;
+          selectedItems = items;
         });
       },
       child: Container(
-        // height: 26,
-        // width: 79,
         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: containerColor,
         ),
         child: Center(
-          // height: 16,
-          // // width: 59,
           child: Text(
             text,
             style: TextStyle(

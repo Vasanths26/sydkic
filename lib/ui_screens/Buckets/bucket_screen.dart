@@ -19,7 +19,7 @@ class _BucketScreenState extends State<BucketScreen> {
     return Scaffold(
       backgroundColor: const Color(0xff000000),
       body: Padding(
-        padding: const EdgeInsets.only(top: 32),
+        padding: const EdgeInsets.only(top: 22),
         child: ListView.builder(
             shrinkWrap: true, // Allows ListView to take only the required space
             physics:
