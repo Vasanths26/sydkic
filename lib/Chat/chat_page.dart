@@ -85,7 +85,8 @@ class _ChatPageState extends State<ChatPage> {
     return Stack(
       children: [
         Container(
-          height: 639,
+          height:
+              MediaQuery.of(context).size.height * 0.8, // 80% of screen height
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
@@ -200,7 +201,8 @@ class _ChatPageState extends State<ChatPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center, // Align vertically centered
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Align vertically centered
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),

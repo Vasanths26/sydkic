@@ -16,101 +16,99 @@ class _IndividualScreenState extends State<IndividualScreen> {
   bool isSwitchOn = false;
   String selectedTopic = '';
   String selectedImage = 'asset/image/bubble.png';
-  List<Map<String, String>> items = [
-    {
-      'text1': 'Jeevan',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 09, 2024'
-    },
-    {
-      'text1': 'Sanjay',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 10, 2024'
-    },
-  ];
+  final Map<String, List<Map<String, String>>> topicItems = {
+    'Interested': [
+      {
+        'text1': 'Jeevan',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 09, 2024'
+      },
+      {
+        'text1': 'Sanjay',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 10, 2024'
+      },
+    ],
+    'Budget Concern': [
+      {
+        'text1': 'Ramesh',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 09, 2024'
+      },
+      {
+        'text1': 'Suresh',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 10, 2024'
+      },
+    ],
+    'Enquiring': [
+      {
+        'text1': 'Hari',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 09, 2024'
+      },
+      {
+        'text1': 'Surendar',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 10, 2024'
+      },
+    ],
+    'Not Interested - Currently No Need': [
+      {
+        'text1': 'Hari',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 09, 2024'
+      },
+      {
+        'text1': 'Surendar',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 10, 2024'
+      },
+      {
+        'text1': 'Prabha',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 09, 2024'
+      },
+      {
+        'text1': 'Vishwa',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 10, 2024'
+      },
+    ],
+    'Spam': [
+      {
+        'text1': 'Jagadesh',
+        'text2':
+            'Customer inquires about available lime slots and schedules a midnight appointment.',
+        'text3': 'Nov 09, 2024'
+      },
+    ],
+  };
 
-  List<Map<String, String>> items1 = [
-    {
-      'text1': 'Ramesh',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 09, 2024'
-    },
-    {
-      'text1': 'Suresh',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 10, 2024'
-    },
-  ];
-
-  List<Map<String, String>> items2 = [
-    {
-      'text1': 'Hari',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 09, 2024'
-    },
-    {
-      'text1': 'Surendar',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 10, 2024'
-    },
-  ];
-
-  List<Map<String, String>> items3 = [
-    {
-      'text1': 'Prabha',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 09, 2024'
-    },
-    {
-      'text1': 'Vishwa',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 10, 2024'
-    },
-    {
-      'text1': 'Surya',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 09, 2024'
-    },
-    {
-      'text1': 'Ajith',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 10, 2024'
-    },
-  ];
-
-  List<Map<String, String>> items4 = [
-    {
-      'text1': 'Jagadesh',
-      'text2':
-          'Customer inquires about available lime slots and schedules a midnight appointment.',
-      'text3': 'Nov 09, 2024'
-    },
-  ];
-  List<Map<String, String>> selectedItems = [];
+  late List<Map<String, String>> selectedItems;
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = 0;
-    selectedTopic = 'Interested';
-    selectedItems = items;
+    selectedItems = topicItems['Interested']!; // Initialize selectedItems
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff000000),
-      body: Padding(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.only(left: 20, right: 20, top: 42.86),
         child: Column(
           children: [
@@ -175,28 +173,30 @@ class _IndividualScreenState extends State<IndividualScreen> {
             const SizedBox(height: 20),
             Row(
               children: [
-                topic('Interested', 0, 'asset/image/bubble.png', items),
+                topic('Interested', 0, 'asset/image/bubble.png'),
                 const SizedBox(width: 15),
-                topic('Budget Concern', 1, 'asset/image/upcoming.png', items1),
+                topic('Budget Concern', 1, 'asset/image/upcoming.png'),
                 const SizedBox(width: 15),
-                topic('Enquiring', 2, 'asset/image/approval_delegation.png',
-                    items2),
+                topic('Enquiring', 2, 'asset/image/approval_delegation.png'),
               ],
             ),
             const SizedBox(height: 15),
             Row(
               children: [
-                topic('Not Intersted - Currently No Need', 3,
-                    'asset/image/mail_off.png', items3),
+                topic('Not Interested - Currently No Need', 3,
+                    'asset/image/mail_off.png'),
                 const SizedBox(width: 15),
-                topic('Spam', 4, 'asset/image/speaker_notes_off.png', items4),
+                topic('Spam', 4, 'asset/image/speaker_notes_off.png'),
               ],
             ),
             const SizedBox(height: 30),
-            InterestedPage(
-              topics: selectedTopic,
-              images: selectedImage,
-              items: selectedItems,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.75,
+              child: InterestedPage(
+                topics: selectedTopic,
+                images: selectedImage,
+                items: selectedItems,
+              ),
             ),
           ],
         ),
@@ -204,8 +204,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
     );
   }
 
-  Widget topic(
-      String text, int index, String image, List<Map<String, String>> items) {
+  Widget topic(String text, int index, String image) {
     bool isSelected = selectedIndex == index;
     Color containerColor = isSelected ? Colors.white : const Color(0xff1A1C1A);
     Color textColor = isSelected ? Colors.black : Colors.white;
@@ -216,7 +215,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
           selectedIndex = index;
           selectedTopic = text;
           selectedImage = image;
-          selectedItems = items;
+          selectedItems = topicItems[text]!;
         });
       },
       child: Container(

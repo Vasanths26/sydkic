@@ -1,4 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/constant.dart';
@@ -21,21 +22,24 @@ class _InterestedPageState extends State<InterestedPage> {
   int selectedIndex = 0;
   int currentIndex = 0;
 
-  late List<Map<String, String>> currentList;
+  // Map to store the lists for each topic
+  Map<String, List<Map<String, String>>> topicLists = {};
 
   @override
   void initState() {
     super.initState();
-    currentList = List.from(widget.items); // Initialize with passed list
-  }
-
-  void moveItem(int index, String targetTopic) {
-    setState(() {
-      // Assuming you handle moving the item to the respective list of `targetTopic`
-      currentList.removeAt(index); // Remove from current list
-      // Here you would add this item to the target topic list, e.g., topic2Items
-    });
-    Navigator.pop(context); // Close the bottom sheet
+    widget.topics;
+    widget.images;
+    // Initialize topicLists with each topic having its list
+    topicLists = {
+      'Interested': widget.items, // Use widget.items for the "Interested" topic
+      'Spam': [], // Empty initial list for "Spam"
+      'Budget Concern': [],
+      'Not Interested - Currently No Need': [],
+      'Enquiring': [],
+      'Help': [],
+      'Immediate Action': [],
+    };
   }
 
   @override
@@ -79,7 +83,7 @@ class _InterestedPageState extends State<InterestedPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 1, bottom: 1),
                 child: Text(
-                  '${widget.items.length}',
+                  '${topicLists[widget.topics]?.length ?? 0}',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -92,15 +96,15 @@ class _InterestedPageState extends State<InterestedPage> {
           ),
         ),
         // const SizedBox(height: 20),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.67,
+        Expanded(
           child: ListView.builder(
-              itemCount: widget.items.length,
+              itemCount: topicLists[widget.topics]?.length ?? 0,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                final text1 = widget.items[index]['text1'] ?? 'Default Text 1';
-                final text2 = widget.items[index]['text2'] ?? 'Default Text 1';
-                final text3 = widget.items[index]['text3'] ?? 'Default Text 1';
+                final item = topicLists[widget.topics]![index];
+                final text1 = item['text1'] ?? 'Default Text 1';
+                final text2 = item['text2'] ?? 'Default Text 1';
+                final text3 = item['text3'] ?? 'Default Text 1';
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
@@ -275,10 +279,23 @@ class _InterestedPageState extends State<InterestedPage> {
 
     if (result != null) {
       String selectedTopic = result['text'];
-      int selectedIndex = result['index'];
-      moveItem(selectedIndex, selectedTopic);
+      // Move item to the new selected topic list
+      setState(() {
+        Map<String, List<Map<String, String>>> newTopicLists =
+            Map.from(topicLists);
+        List<Map<String, String>> currentList = newTopicLists[widget.topics]!;
+        List<Map<String, String>> newList = newTopicLists[selectedTopic]!;
 
-      print('Selected Topic: $selectedTopic, Index: $selectedIndex');
+        // Move item
+        Map<String, String> selectedItem = currentList.removeAt(currentIndex);
+        newList.add(selectedItem);
+
+        // Update topicLists
+        topicLists = newTopicLists;
+      });
+      if (kDebugMode) {
+        print('Selected Topic: $selectedTopic, Index: $currentIndex');
+      }
     }
   }
 }
@@ -325,10 +342,7 @@ class _BottomSheetUIState extends State<BottomSheetUI> {
               const Spacer(),
               IconButton(
                   onPressed: () {
-                    Navigator.pop(context, {
-                      'text': selectedTopic,
-                      'index': selectedIndex,
-                    });
+                    Navigator.pop(context);
                   },
                   icon:
                       Icon(Icons.close_outlined, size: 24, color: blackColor)),
@@ -376,7 +390,7 @@ class _BottomSheetUIState extends State<BottomSheetUI> {
         setState(() {
           selectedIndex = index;
           selectedTopic = text;
-          Navigator.pop(context);
+          Navigator.pop(context, {'text': text, 'index': index});
         });
       },
       child: Container(

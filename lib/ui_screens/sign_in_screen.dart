@@ -64,7 +64,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         "asset/image/logo.png",
                         height: 30,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 6,
                       ),
                       Text(
@@ -93,7 +93,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontSize: 24,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       Text(
@@ -116,7 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
                   ),
-                  Text(
+                  const Text(
                     "our exclusive feature",
                     style: TextStyle(
                         fontFamily: MyStrings.outfit,
@@ -153,7 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Container(
@@ -192,7 +192,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Container(
@@ -318,7 +318,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
@@ -340,10 +340,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            Container(
+                            SizedBox(
                               height: 28,
                               child: Center(
                                 child: SmallText(
@@ -359,7 +359,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
@@ -381,10 +381,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 15,
                             ),
-                            Container(
+                            SizedBox(
                               height: 28,
                               child: Center(
                                 child: SmallText(
