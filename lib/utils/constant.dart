@@ -26,3 +26,6 @@ Color dividerLineColor = const Color(0xffD9D9D9);
 Color blackColor = const Color(0xff000000);
 Color calenderScColor = const Color(0xffE0F8F6);
 Color calenderPcColor = const Color(0xff00A397);
+Color backgroundcolor = const Color(0xff121212);
+Color whitecolor = const Color(0xffFFFFFF);
+Color liteGrey = const Color(0xff1A1C1A);
