@@ -23,13 +23,13 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color(0xff000000),
+      backgroundColor: backgroundcolor,
       appBar: AppBar(
         automaticallyImplyLeading: false, // Removes the default back arrow
         backgroundColor: const Color(0xff000000),
         toolbarHeight: 138,
         flexibleSpace: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 49.86, 20, 10),
+          padding: const EdgeInsets.fromLTRB(10, 49.86, 10, 10),
           child: Column(
             children: [
               Row(
@@ -96,14 +96,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   Icon(Icons.more_vert, color: whiteColor),
                 ],
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(top: 23, left: 10, right: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
+              const SizedBox(height: 30,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
                       onTap: () {
                         setState(() {
                           selectedIndex = 0;
@@ -111,8 +109,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       child: topics('Chat', 29, 0),
                     ),
-                    const SizedBox(width: 37.7),
-                    GestureDetector(
+                  ),
+                  const SizedBox(width: 10), // Adjust the space as needed
+                  Expanded(
+                    child: GestureDetector(
                       onTap: () {
                         setState(() {
                           selectedIndex = 1;
@@ -120,8 +120,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       child: topics('Lead History', 74, 1),
                     ),
-                    const SizedBox(width: 37.7),
-                    GestureDetector(
+                  ),
+                  const SizedBox(width: 10), // Adjust the space as needed
+                  Expanded(
+                    child: GestureDetector(
                       onTap: () {
                         setState(() {
                           selectedIndex = 2;
@@ -129,8 +131,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       child: topics('Appointment', 79, 2),
                     ),
-                    const SizedBox(width: 37.7),
-                    GestureDetector(
+                  ),
+                  const SizedBox(width: 10), // Adjust the space as needed
+                  Expanded(
+                    child: GestureDetector(
                       onTap: () {
                         setState(() {
                           selectedIndex = 3;
@@ -138,9 +142,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       child: topics('Notes', 34, 3),
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                ],
+              )
             ],
           ),
         ),

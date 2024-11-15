@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../utils/constant.dart';
 import '../../utils/string.dart';
 import 'widgets/interested_page.dart';

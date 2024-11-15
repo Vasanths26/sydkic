@@ -20,6 +20,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  bool isLoading = false;
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final CacheManager customCacheManager = CacheManager(
@@ -49,7 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
     return Scaffold(
-      backgroundColor: const Color(0xff121212),
+      backgroundColor: backgroundcolor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -93,7 +95,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontSize: 24,
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         width: 8,
                       ),
                       Text(
@@ -108,21 +110,31 @@ class _SignInScreenState extends State<SignInScreen> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "Securely access your account and enjoy",
-                    style: TextStyle(
-                        fontFamily: MyStrings.outfit,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
-                  ),
-                  const Text(
-                    "our exclusive feature",
-                    style: TextStyle(
-                        fontFamily: MyStrings.outfit,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Securely access your account and enjoy",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: MyStrings.outfit,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: whiteColor,
+                        ),
+                      ),
+                      Text(
+                        "our exclusive feature",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: MyStrings.outfit,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: whiteColor,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                   Column(
@@ -144,16 +156,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             "Email",
                             style: TextStyle(
                               fontFamily: MyStrings.outfit,
                               fontSize: 16,
-                              color: Colors.grey,
+                              color: secondaryColor,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 15,
                           ),
                           Container(
@@ -161,8 +173,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 horizontal: 12.0), // Adds space on both sides
                             height: 50,
                             decoration: BoxDecoration(
-                              color: Colors
-                                  .grey[850], // Use a slightly darker color
+                              color: liteGrey, // Use a slightly darker color
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: TextFormField(
@@ -183,25 +194,25 @@ class _SignInScreenState extends State<SignInScreen> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      const Text(
+                      Text(
                         "Password",
                         style: TextStyle(
                           fontFamily: MyStrings.outfit,
                           fontSize: 16,
-                          color: Colors.grey,
+                          color: secondaryColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 15,
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0), // Adds space on both sides
+                            horizontal: 12.0,
+                            vertical: 2), // Adds space on both sides
                         height: 50,
                         decoration: BoxDecoration(
-                          color:
-                              Colors.grey[850], // Use a slightly darker color
+                          color: liteGrey, // Use a slightly darker color
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: TextFormField(
@@ -245,24 +256,18 @@ class _SignInScreenState extends State<SignInScreen> {
                         onTap: () async {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'Both email and password are required.'),
-                              ),
-                            );
+                            Fluttertoast.showToast(
+                                msg: "Both email and password are required.");
                           } else {
-                            bool isLoginSuccessful = await _logIn(context,
-                                emailController.text, passwordController.text);
+                            bool isLoginSuccessful = await _logIn(
+                              context,
+                              emailController.text,
+                              passwordController.text,
+                            );
+
                             if (!isLoginSuccessful) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Incorrect email or password.',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              );
+                              Fluttertoast.showToast(
+                                  msg: "Incorrect email or password.");
                             }
                           }
                         },
@@ -274,16 +279,20 @@ class _SignInScreenState extends State<SignInScreen> {
                               borderRadius: BorderRadius.circular(12),
                               color: whiteColor,
                             ),
-                            child: const Center(
-                              child: Text(
-                                "Sign in",
-                                style: TextStyle(
-                                  fontFamily: MyStrings.outfit,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                              ),
+                            child: Center(
+                              child: isLoading
+                                  ? CircularProgressIndicator(
+                                      color: primaryColor,
+                                    )
+                                  : const Text(
+                                      "Sign in",
+                                      style: TextStyle(
+                                        fontFamily: MyStrings.outfit,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18,
+                                      ),
+                                    ),
                             ),
                           ),
                         ),
@@ -325,7 +334,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.grey[850],
+                          color: liteGrey,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
@@ -343,17 +352,14 @@ class _SignInScreenState extends State<SignInScreen> {
                             const SizedBox(
                               width: 15,
                             ),
-                            SizedBox(
-                              height: 28,
-                              child: Center(
-                                child: SmallText(
-                                  color: secondaryColor,
-                                  text: MyStrings.continueWithGoogle,
-                                  size: 16,
-                                  fontWeight: FontWeight.w400,
-                                  textAlign: TextAlign.center,
-                                  fontFamily: MyStrings.outfit,
-                                ),
+                            Center(
+                              child: SmallText(
+                                color: secondaryColor,
+                                text: MyStrings.continueWithGoogle,
+                                size: 16,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.center,
+                                fontFamily: MyStrings.outfit,
                               ),
                             ),
                           ],
@@ -366,7 +372,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          color: Colors.grey[850],
+                          color: liteGrey,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
@@ -384,17 +390,14 @@ class _SignInScreenState extends State<SignInScreen> {
                             const SizedBox(
                               width: 15,
                             ),
-                            SizedBox(
-                              height: 28,
-                              child: Center(
-                                child: SmallText(
-                                  color: secondaryColor,
-                                  text: MyStrings.continueWithFaceBook,
-                                  size: 16,
-                                  fontWeight: FontWeight.w400,
-                                  textAlign: TextAlign.center,
-                                  fontFamily: MyStrings.outfit,
-                                ),
+                            Center(
+                              child: SmallText(
+                                color: secondaryColor,
+                                text: MyStrings.continueWithFaceBook,
+                                size: 16,
+                                fontWeight: FontWeight.w400,
+                                textAlign: TextAlign.center,
+                                fontFamily: MyStrings.outfit,
                               ),
                             ),
                           ],
@@ -412,6 +415,10 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   _logIn(BuildContext context, String email, String password) async {
+    setState(() {
+      isLoading = true;
+    });
+
     try {
       final response = await Webservice().callLoginService(
           email: email, password: password, showSnackBar: (SnackBar) {});
@@ -453,7 +460,7 @@ class _SignInScreenState extends State<SignInScreen> {
           );
         }
       } else {
-        Fluttertoast.showToast(msg: "Failed to Login");
+        Fluttertoast.showToast(msg: "Incorrect email or password.");
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "An error occurred");
@@ -462,7 +469,7 @@ class _SignInScreenState extends State<SignInScreen> {
       }
     } finally {
       setState(() {
-        isloading = false;
+        isLoading = false;
       });
     }
   }

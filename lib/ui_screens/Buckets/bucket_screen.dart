@@ -18,73 +18,71 @@ class _BucketScreenState extends State<BucketScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff000000),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 22),
-        child: ListView.builder(
-            shrinkWrap: true, // Allows ListView to take only the required space
-            physics:
-                const NeverScrollableScrollPhysics(), // Prevents inner scroll
-            itemCount: 4,
-            itemBuilder: (context, index) {
-              return Container(
+      body: ListView.builder(
+          shrinkWrap: true, // Allows ListView to take only the required space
+          physics:
+              const NeverScrollableScrollPhysics(), // Prevents inner scroll
+          itemCount: 4,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const IndividualScreen(),
+                  ),
+                );
+              },
+              child: Container(
                 height: 106,
-                // width: 353,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: const Color(0xff1A1C1A),
+                  color: liteGrey,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                margin:
+                    const EdgeInsets.all(12),
                 padding: const EdgeInsets.all(20),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const IndividualScreen(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.topLeft,
+                          height: 20,
+                          child: Text(
+                            'Test 01',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: whiteColor,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: MyStrings.outfit),
                           ),
-                        );
-                      },
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            alignment: Alignment.topLeft,
-                            height: 20,
-                            child: Text(
-                              'Test 01',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: whiteColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: MyStrings.outfit),
-                            ),
+                        ),
+                        const SizedBox(height: 28),
+                        SizedBox(
+                          height: 18,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                color: whiteColor,
+                                size: 15,
+                              ),
+                              const SizedBox(width: 5),
+                              const Text(
+                                'Created at : November 07, 2024',
+                                style: TextStyle(
+                                    color: Color(0xff8B8E8C),
+                                    fontSize: 13,
+                                    fontFamily: MyStrings.outfit,
+                                    fontWeight: FontWeight.w400),
+                              )
+                            ],
                           ),
-                          const SizedBox(height: 28),
-                          SizedBox(
-                            height: 18,
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.calendar_today,
-                                  color: whiteColor,
-                                  size: 15,
-                                ),
-                                const SizedBox(width: 5),
-                                const Text(
-                                  'Created at : November 07, 2024',
-                                  style: TextStyle(
-                                      color: Color(0xff8B8E8C),
-                                      fontSize: 13,
-                                      fontFamily: MyStrings.outfit,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     const Spacer(),
                     Column(
@@ -136,9 +134,9 @@ class _BucketScreenState extends State<BucketScreen> {
                     ),
                   ],
                 ),
-              );
-            }),
-      ),
+              ),
+            );
+          }),
     );
   }
 }
