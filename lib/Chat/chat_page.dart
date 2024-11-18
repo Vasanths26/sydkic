@@ -38,28 +38,12 @@ class _ChatPageState extends State<ChatPage> {
     },
   ];
   final TextEditingController _controller = TextEditingController();
-  String? _selectedOption = 'Option 1';
+  String _selectedOption = '';
   int selectedIndex = 0;
-  // double _containerHeight = 55; // Initial height
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _controller.addListener(_updateHeight);
-  // }
-
-  // void _updateHeight() {
-  //   final int lineCount = '\n'.allMatches(_controller.text).length + 1;
-  //   setState(() {
-  //     // Update height, allowing up to 6 lines
-  //     _containerHeight =
-  //         55 + ((lineCount - 1) * 20).clamp(0, 20 * 5).toDouble();
-  //   });
-  // }
 
   void _handleRadioValueChange(String? value) {
     setState(() {
-      _selectedOption = value;
+      _selectedOption = value!;
     });
   }
 
@@ -72,13 +56,6 @@ class _ChatPageState extends State<ChatPage> {
       _controller.clear();
     }
   }
-
-  // @override
-  // void dispose() {
-  //   _controller.removeListener(_updateHeight);
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -294,115 +271,122 @@ class _ChatPageState extends State<ChatPage> {
   void showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
       builder: (BuildContext context) {
         return Container(
-          height: 519,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+            height: 519,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: whiteColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
             ),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 10),
-                Container(
-                  height: 5,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff8B8E8C),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                SizedBox(
-                  // height: 18,
-                  // width: 133,
-                  child: Text(
-                    'Choose a Platform',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: blackColor),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const SizedBox(
-                  height: 18,
-                  // width: 192,
-                  child: Text('Pick a Way to Send Your Message'),
-                ),
-                const SizedBox(height: 25),
-                platform('asset/image/business-device 1.png', '+919943858300',
-                    'Option 1'),
-                const SizedBox(height: 15),
-                platform('asset/image/talk 1.png', '+916385402959', 'Option 2'),
-                const SizedBox(height: 15),
-                platform('asset/image/instagram-device 1.png', 'Instagram',
-                    'Option 3'),
-                const SizedBox(height: 15),
-                platform('asset/image/slack-device 1.png', 'Slack', 'Option 4'),
-                const SizedBox(height: 15),
-                platform('asset/image/envelope-device 1.png',
-                    'praveen@nidanatech.com', 'Option 5'),
-                const SizedBox(height: 15),
-                platform('asset/image/web-chat 1.png', 'Chatbot', 'Option 6'),
-                const SizedBox(height: 25),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 38,
-                      width: 145,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: blackColor, width: 1),
-                          borderRadius: BorderRadius.circular(12),
-                          color: whiteColor),
-                      child: Center(
-                        child: Text(
-                          'Back',
-                          style: TextStyle(
-                              color: blackColor,
-                              fontFamily: MyStrings.outfit,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13),
-                        ),
-                      ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 10),
+                  Container(
+                    height: 5,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: const Color(0xff8B8E8C),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    const SizedBox(width: 23),
-                    Container(
-                      height: 38,
-                      width: 145,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
+                  ),
+                  const SizedBox(height: 15),
+                  SizedBox(
+                    child: Text(
+                      'Choose a Platform',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
                           color: blackColor),
-                      child: Center(
-                        child: Text(
-                          'select',
-                          style: TextStyle(
-                              color: whiteColor,
-                              fontFamily: MyStrings.outfit,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 13),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const SizedBox(
+                    height: 18,
+                    child: Text('Pick a Way to Send Your Message'),
+                  ),
+                  const SizedBox(height: 25),
+                  platform('asset/image/business-device 1.png', '+919943858300',
+                      'Option 1', _selectedOption),
+                  const SizedBox(height: 15),
+                  platform('asset/image/talk 1.png', '+916385402959',
+                      'Option 2', _selectedOption),
+                  const SizedBox(height: 15),
+                  platform('asset/image/instagram-device 1.png', 'Instagram',
+                      'Option 3', _selectedOption),
+                  const SizedBox(height: 15),
+                  platform('asset/image/slack-device 1.png', 'Slack',
+                      'Option 4', _selectedOption),
+                  const SizedBox(height: 15),
+                  platform('asset/image/envelope-device 1.png',
+                      'praveen@nidanatech.com', 'Option 5', _selectedOption),
+                  const SizedBox(height: 15),
+                  platform('asset/image/web-chat 1.png', 'Chatbot', 'Option 6',
+                      _selectedOption),
+                  const SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 38,
+                        width: 145,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: blackColor, width: 1),
+                            borderRadius: BorderRadius.circular(12),
+                            color: whiteColor),
+                        child: Center(
+                          child: Text(
+                            'Back',
+                            style: TextStyle(
+                                color: blackColor,
+                                fontFamily: MyStrings.outfit,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-              ],
+                      const SizedBox(width: 23),
+                      Container(
+                        height: 38,
+                        width: 145,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: blackColor),
+                        child: Center(
+                          child: Text(
+                            'select',
+                            style: TextStyle(
+                                color: whiteColor,
+                                fontFamily: MyStrings.outfit,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
-          ),
-        );
+          );
       },
     );
   }
 
-  Widget platform(String image, String text, String option) {
+  Widget platform(
+      String image, String text, String option, String selectedOption) {
     return Container(
       height: 42,
       width: 353,
@@ -427,7 +411,9 @@ class _ChatPageState extends State<ChatPage> {
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: MyStrings.outfit,
-                color: blackColor,
+                color: _selectedOption == option
+                    ? blackColor
+                    : const Color(0xff8B8E8C),
               ),
             ),
           ),
@@ -435,7 +421,10 @@ class _ChatPageState extends State<ChatPage> {
           Radio<String>(
             value: option,
             groupValue: _selectedOption,
-            onChanged: _handleRadioValueChange,
+            onChanged: (value) {
+              _handleRadioValueChange(value);
+            },
+            activeColor: blackColor,
           ),
         ],
       ),

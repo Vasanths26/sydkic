@@ -15,7 +15,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   Widget build(BuildContext context) {
     return Container(
       height: 88,
-      width: 353,
+      // width: 353,
       margin: const EdgeInsets.only(top: 25, left: 20, right: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
