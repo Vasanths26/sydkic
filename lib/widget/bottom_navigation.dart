@@ -109,49 +109,49 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       drawerScrimColor: Colors.transparent,
       backgroundColor: blackColor,
       key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: _currentIndex == 2
-            ? const Color(0xff1A1C1A)
-            : const Color(0xff000000),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: IconButton(
-            onPressed: () {
-              _scaffoldKey.currentState?.openDrawer();
-            },
-            icon: Icon(
-              Icons.menu,
-              size: 30,
-              color: whiteColor,
+      appBar: _currentIndex == 0
+          ? null
+          : AppBar(
+              backgroundColor: _currentIndex == 2
+                  ? const Color(0xff1A1C1A)
+                  : const Color(0xff000000),
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: IconButton(
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                  icon: Icon(
+                    Icons.menu,
+                    size: 30,
+                    color: whiteColor,
+                  ),
+                ),
+              ),
+              title: Text(
+                _currentIndex == 1
+                    ? MyStrings.inbox
+                    : _currentIndex == 2
+                        ? 'Appointment'
+                        : _currentIndex == 3
+                            ? 'Chatbot'
+                            : 'Campaign',
+                style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    fontFamily: MyStrings.outfit),
+              ),
+              actions: [
+                Container(
+                  height: 24,
+                  width: 24,
+                  margin: const EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.only(top: 2.24, bottom: 2.25),
+                  child: Icon(Icons.cached_outlined, color: whiteColor),
+                ),
+              ],
             ),
-          ),
-        ),
-        title: Text(
-          _currentIndex == 0
-              ? 'Dashboard'
-              : _currentIndex == 1
-                  ? MyStrings.inbox
-                  : _currentIndex == 2
-                      ? 'Appointment'
-                      : _currentIndex == 3
-                          ? 'Chatbot'
-                          : 'Campaign',
-          style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              fontFamily: MyStrings.outfit),
-        ),
-        actions: [
-          Container(
-            height: 24,
-            width: 24,
-            margin: const EdgeInsets.only(right: 20),
-            padding: const EdgeInsets.only(top: 2.24, bottom: 2.25),
-            child: Icon(Icons.cached_outlined, color: whiteColor),
-          ),
-        ],
-      ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(color: Color(0xff000000)),
         padding: const EdgeInsets.only(left: 10, right: 10),
