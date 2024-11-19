@@ -95,7 +95,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontSize: 24,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       Text(
@@ -165,7 +165,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Container(
@@ -203,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Container(
