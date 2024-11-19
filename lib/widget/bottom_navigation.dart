@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:sydkic/ui_screens/web_chat.dart';
 import 'package:sydkic/ui_screens/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,6 +67,22 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
 
   List<String> text = ['Dashboard', 'Contact', 'Appointment', 'Assistent'];
   int _currentIndex = 0;
+
+  final List<String> _labels = [
+    'Dashboard',
+    'Inbox',
+    'Appointment',
+    'Chatbot',
+    'Campaign',
+  ];
+
+  final List<IconData> _icons = [
+    Icons.home_outlined,
+    Icons.send_outlined,
+    Icons.calendar_today_outlined,
+    Icons.bookmark_border,
+    Icons.campaign_outlined,
+  ];
 
   bool isSelected = false;
 
@@ -152,45 +168,122 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
                 ),
               ],
             ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: Color(0xff000000)),
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        height: 80,
-        child: GNav(
-          tabBorderRadius: 45,
-          selectedIndex: _currentIndex,
-          onTabChange: (index) {
-            onTabTapped(index);
-          },
-          duration: const Duration(milliseconds: 900), // tab animation duration
-          gap: 8, // the tab button gap between icon and text
-          color: Colors.grey[800], // unselected icon color
-          activeColor: Colors.white, // selected icon and text color
-          iconSize: 24, // tab button icon size
-          backgroundColor: const Color(0xff000000),
-          tabs: const [
-            GButton(
-              icon: Icons.home_filled,
-              // text: 'Dashboard',
+      bottomNavigationBar: Stack(
+        children: [
+          Container(
+            alignment: Alignment.bottomCenter,
+            height: 94,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              color: Colors.transparent,
             ),
-            GButton(
-              icon: Icons.chrome_reader_mode_outlined,
-              // text: 'Contact',
+            child: Container(
+              height: 80,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: const Color(0xff000000),
+                border: GradientBoxBorder(
+                  width: 2,
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color(0xff5548B1).withOpacity(1),
+                      const Color(0xff5548B1).withOpacity(0.35),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+              ),
             ),
-            GButton(
-              icon: Icons.send_outlined,
-              // text: 'Appointment',
+          ),
+          Positioned(
+            left: 17,
+            right: 17,
+            bottom: 18,
+            child: Container(
+              height: 76,
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(_icons.length, (index) {
+                  final isSelected = index == _currentIndex;
+                  return GestureDetector(
+                    onTap: () {
+                      onTabTapped(index);
+                    },
+                    child: Container(
+                      // height: 71,
+                      // width: 60,
+                      alignment: Alignment.bottomCenter,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(height: isSelected ? 0 : 5),
+                          if (isSelected)
+                            Container(
+                              height: 54,
+                              width: 54,
+                              decoration: const BoxDecoration(
+                                  color: Color(0xff000000),
+                                  border: GradientBoxBorder(
+                                    width: 2,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xff5548B1),
+                                        Color(0xff5548B1),
+                                        Color(0xff000000),
+                                        Color(0xff000000),
+                                        Color(0xff000000),
+                                        Color(0xff000000),
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                    ),
+                                  ),
+                                  shape: BoxShape.circle),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  _icons[index],
+                                  size: 24,
+                                  color: const Color(0xff5548B1),
+                                ),
+                              ),
+                            )
+                          else
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: Icon(
+                                _icons[index],
+                                size: 24,
+                                color: const Color(0xff9490AE),
+                              ),
+                            ),
+                          SizedBox(height: isSelected == true ? 3 : 8),
+                          SizedBox(
+                            height: 18,
+                            child: Text(
+                              _labels[index],
+                              style: TextStyle(
+                                  color: isSelected
+                                      ? const Color(0xff5548B1)
+                                      : const Color(0xff9490AE),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  fontFamily: MyStrings.outfit),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+              ),
             ),
-            GButton(
-              icon: Icons.person_outlined,
-              // text: 'Web chat',
-            ),
-            GButton(
-              icon: Icons.inventory_2_outlined,
-              // text: 'Web chat',
-            )
-          ],
-        ),
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -224,5 +317,50 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       MaterialPageRoute(builder: (context) => const SignInScreen()),
       (route) => false,
     );
+  }
+}
+
+class CurvedBorderPainter extends CustomPainter {
+  final int selectedIndex;
+  final int tabCount;
+  final Color borderColor;
+
+  CurvedBorderPainter({
+    required this.selectedIndex,
+    required this.tabCount,
+    required this.borderColor,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.transparent
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..shader = LinearGradient(
+        colors: [borderColor.withOpacity(1), borderColor.withOpacity(0.35)],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    final double tabWidth = size.width / tabCount;
+    final double startX = tabWidth * selectedIndex + tabWidth / 2;
+    final double radius = 25; // Adjust radius for curvature
+
+    Path path = Path()
+      ..moveTo(startX - radius, size.height - 10)
+      ..quadraticBezierTo(
+        startX,
+        size.height - 40,
+        startX + radius,
+        size.height - 10,
+      );
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }

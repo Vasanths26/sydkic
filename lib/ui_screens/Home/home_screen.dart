@@ -577,7 +577,7 @@ class _HomePagesState extends State<HomePages> {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Color(0xff9490AE),
-              fontSize: 16,
+              fontSize: 13,
               fontFamily: MyStrings.outfit,
               fontWeight: FontWeight.w500,
             ),

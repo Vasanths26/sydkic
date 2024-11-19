@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontSize: 24,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       Text(
@@ -165,7 +166,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Container(
@@ -175,6 +176,17 @@ class _SignInScreenState extends State<SignInScreen> {
                             decoration: BoxDecoration(
                               color: liteGrey, // Use a slightly darker color
                               borderRadius: BorderRadius.circular(12),
+                              border: GradientBoxBorder(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0xff5548B1).withOpacity(1),
+                                    const Color(0xff5548B1).withOpacity(0.5),
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                                width: 1,
+                              ),
                             ),
                             child: TextFormField(
                               cursorColor: Colors.white,
@@ -203,7 +215,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Container(
@@ -214,6 +226,17 @@ class _SignInScreenState extends State<SignInScreen> {
                         decoration: BoxDecoration(
                           color: liteGrey, // Use a slightly darker color
                           borderRadius: BorderRadius.circular(12),
+                          border: GradientBoxBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color(0xff5548B1).withOpacity(1),
+                                const Color(0xff5548B1).withOpacity(0.5),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                            width: 1,
+                          ),
                         ),
                         child: TextFormField(
                           cursorColor: whiteColor,
@@ -256,8 +279,12 @@ class _SignInScreenState extends State<SignInScreen> {
                         onTap: () async {
                           if (emailController.text.isEmpty ||
                               passwordController.text.isEmpty) {
-                            Fluttertoast.showToast(
-                                msg: "Both email and password are required.");
+                            // Fluttertoast.showToast(
+                            //     msg: "Both email and password are required.");
+                            setState(() {
+                              errorMessage =
+                                  'Both email and password are required';
+                            });
                           } else {
                             bool isLoginSuccessful = await _logIn(
                               context,
@@ -266,8 +293,11 @@ class _SignInScreenState extends State<SignInScreen> {
                             );
 
                             if (!isLoginSuccessful) {
-                              Fluttertoast.showToast(
-                                  msg: "Incorrect email or password.");
+                              // Fluttertoast.showToast(
+                              //     msg: "Incorrect email or password.");
+                              setState(() {
+                                errorMessage = 'Incorrect email or password';
+                              });
                             }
                           }
                         },
