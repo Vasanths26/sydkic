@@ -29,3 +29,4 @@ Color calenderPcColor = const Color(0xff00A397);
 Color backgroundcolor = const Color(0xff121212);
 Color whitecolor = const Color(0xffFFFFFF);
 Color liteGrey = const Color(0xff1A1C1A);
+Color homeTextColor = const Color(0xff9490AE);

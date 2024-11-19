@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:sydkic/ui_screens/Home/profile_screen.dart';
@@ -84,11 +85,11 @@ class _HomePagesState extends State<HomePages> {
   ];
 
   List<String> image = [
-    'asset/image/instagram.png',
-    'asset/image/whatsapp-logo.png',
-    'asset/image/pngwing.png',
+    'asset/image/Instagram_icon.png',
+    'asset/image/whatsapp_logo 2.png',
+    'asset/image/pngwing.com (6) 2.png',
     'asset/image/Component.png',
-    'asset/image/pngwing.png',
+    'asset/image/pngwing.com (6) 2.png',
     'asset/image/Component.png',
   ];
 
@@ -146,17 +147,26 @@ class _HomePagesState extends State<HomePages> {
                                   borderRadius: BorderRadius.circular(28),
                                   color:
                                       const Color(0xff000000).withOpacity(0.5),
-                                  border: Border.all(
-                                      color: const Color(0xff5548B1), width: 1),
+                                  border:
+                                      Border.all(color: primaryColor, width: 1),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(
+                                            0.3), // Light black shadow
+                                        offset: const Offset(5,
+                                            5), // Horizontal and vertical shadow position
+                                        blurRadius: 10,
+                                        spreadRadius: 0 // Spread radius
+                                        ),
+                                  ],
                                 ),
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Padding(
+                                    Padding(
                                       padding:
                                           EdgeInsets.only(top: 14, bottom: 14),
                                       child: Icon(Icons.search,
-                                          color: Color(0xff5548B1), size: 18),
+                                          color: primaryColor, size: 18),
                                     ),
                                     const SizedBox(width: 10),
                                     Expanded(
@@ -166,27 +176,25 @@ class _HomePagesState extends State<HomePages> {
                                         child: TextFormField(
                                           controller: _controller,
                                           keyboardType: TextInputType.multiline,
-                                          // maxLines: 6,
-                                          // minLines: 1,
                                           style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400,
                                             fontFamily: MyStrings.outfit,
                                             color: whiteColor,
                                           ),
-                                          decoration: const InputDecoration(
+                                          decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: 'Search Name, Number, IG',
                                             hintStyle: TextStyle(
-                                                color: Color(0xff9490AE),
-                                                fontFamily: MyStrings.outfit,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 13),
+                                              color: homeTextColor,
+                                              fontFamily: MyStrings.outfit,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 13,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                    const Spacer(),
                                     Container(
                                       height: 32,
                                       width: 32,
@@ -204,8 +212,9 @@ class _HomePagesState extends State<HomePages> {
                                       ),
                                       child: ClipOval(
                                         child: Image.asset(
-                                            'asset/image/round_profile.webp',
-                                            fit: BoxFit.cover),
+                                          'asset/image/round_profile.webp',
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -248,20 +257,6 @@ class _HomePagesState extends State<HomePages> {
                               const SizedBox(height: 15),
                               Container(
                                 height: 45,
-                                // decoration: const BoxDecoration(
-                                //   boxShadow: [
-                                //     BoxShadow(
-                                //         color: Color(0xff5548B1),
-                                //         blurRadius: 10,
-                                //         offset: Offset(4, 4),
-                                //         spreadRadius: 5),
-                                //     BoxShadow(
-                                //         color: Color(0xff000000),
-                                //         blurRadius: 4,
-                                //         offset: Offset(0, 0),
-                                //         spreadRadius: 5),
-                                //   ],
-                                // ),
                                 margin: const EdgeInsets.only(left: 5),
                                 alignment: Alignment.bottomCenter,
                                 child: ListView.builder(
@@ -328,8 +323,6 @@ class _HomePagesState extends State<HomePages> {
                             children: [
                               // First Row
                               Row(
-                                // mainAxisAlignment:
-                                // MainAxisAlignment.spaceBetween,
                                 children: [
                                   buildGridItem(
                                     icon: icons1[0],
@@ -371,65 +364,64 @@ class _HomePagesState extends State<HomePages> {
                           ),
                         ),
                         const SizedBox(height: 18),
-                        Container(
-                          height: 16,
-                          padding: const EdgeInsets.only(left: 20, right: 22),
-                          child: const Row(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 20),
+                          child: Column(
                             children: [
-                              Text(
-                                'Recent Chat',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 13,
-                                  fontFamily: MyStrings.outfit,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xff9490AE),
-                                ),
-                              ),
-                              Spacer(),
-                              Text(
-                                'See all',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 13,
-                                  fontFamily: MyStrings.outfit,
-                                  fontWeight: FontWeight.w400,
-                                  color: Color(0xffD9D3FF),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                // width: MediaQuery.of(context).size.width * 0.5,
-                                child: recentChat(),
-                              ),
-                              Container(
-                                height: 15,
-                                margin:
-                                    const EdgeInsets.only(left: 24, right: 24),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1,
-                                    color: const Color(0xff8B8E8C),
+                              const Row(
+                                children: [
+                                  Text(
+                                    'Recent Chat',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 13,
+                                      fontFamily: MyStrings.outfit,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xff9490AE),
+                                    ),
                                   ),
-                                ),
+                                  Spacer(),
+                                  Text(
+                                    'See all',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      fontSize: 13,
+                                      fontFamily: MyStrings.outfit,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xffD9D3FF),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                // width: MediaQuery.of(context).size.width / 2,
-                                child: recentChat(),
+                              const SizedBox(height: 24),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    // width: MediaQuery.of(context).size.width * 0.5,
+                                    child: recentChat(),
+                                  ),
+                                  Container(
+                                    height: 15,
+                                    margin: const EdgeInsets.only(
+                                        left: 24, right: 24),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 1,
+                                        color: const Color(0xff8B8E8C),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    // width: MediaQuery.of(context).size.width / 2,
+                                    child: recentChat(),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -530,17 +522,23 @@ class _HomePagesState extends State<HomePages> {
     required String label,
   }) {
     return Container(
-      // height: 160,
       width: MediaQuery.of(context).size.width * 0.43,
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        color: const Color(0xff1A1C1A).withOpacity(0.3),
-        border: Border.all(
-          width: 1,
-          color: const Color(0xff5548B1),
-        ),
-      ),
+          borderRadius: BorderRadius.circular(18),
+          color: const Color(0xff1A1C1A).withOpacity(0.3),
+          border: GradientBoxBorder(
+            width: 1,
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF5548B1), // #5548B1 at 30% opacity
+                Color(0xFF5548B1), // #5548B1 at full opacity
+                Color(0xFF5548B1).withOpacity(0.3), // #5548B1 at 30% opacity
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          )),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -550,13 +548,26 @@ class _HomePagesState extends State<HomePages> {
             padding: const EdgeInsets.all(10.5),
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
-              color: const Color(0xff000000),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                width: 1,
-                color: const Color(0xff5548B1),
-              ),
-            ),
+                color: const Color(0xff000000),
+                borderRadius: BorderRadius.circular(12),
+                border: GradientBoxBorder(
+                  width: 1,
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF5548B1), // #5548B1 at 30% opacity
+                      Color(0xFF5548B1), // #5548B1 at full opacity
+                      Color(0xFF5548B1)
+                          .withOpacity(0.3), // #5548B1 at 30% opacity
+                    ],
+                    stops: [
+                      0.0,
+                      0.5,
+                      1.0
+                    ], // Defines the distribution of colors
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                )),
             child: Icon(
               icon,
               color: const Color(0xff5548B1),
