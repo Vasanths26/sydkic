@@ -171,130 +171,132 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   _toggleExpandCollapse(details.primaryDelta!);
                 }
               },
-              child: SingleChildScrollView(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(18),
-                        bottomRight: Radius.circular(18)),
-                    color: Color(0xff1A1C1A),
-                  ),
-                  padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
-                  child: Column(
-                    children: [
-                      AnimatedContainer(
-                        alignment: Alignment.centerLeft,
-                        duration: const Duration(milliseconds: 300),
-                        height: _isExpanded
-                            ? MediaQuery.of(context).size.height * 0.37
-                            : MediaQuery.of(context).size.height * 0.095,
-                        width: MediaQuery.of(context).size.height * 0.6,
-                        padding: EdgeInsets.zero,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(18.0),
-                          color: const Color(0xff1A1C1A),
-                        ),
-                        margin: EdgeInsets.only(top: _isExpanded ? 10 : 0),
-                        child: TableCalendar(
-                          firstDay: DateTime.utc(1970, 1, 1),
-                          lastDay: DateTime.utc(2030, 12, 31),
-                          focusedDay: _focusedDay,
-                          headerVisible: false,
-                          headerStyle: const HeaderStyle(
-                            formatButtonVisible: false,
-                            titleCentered: true,
-                          ),
-                          calendarFormat:
-                          _isExpanded ? CalendarFormat.month : CalendarFormat.week,
-                          selectedDayPredicate: (day) {
-                            return isSameDay(_selectedDay, day);
-                          },
-                          onDaySelected: (selectedDay, focusedDay) {
-                            setState(() {
-                              _selectedDay = selectedDay;
-                              _focusedDay = focusedDay;
-                            });
-                          },
-                          onPageChanged: (newfocusedDay) {
-                            setState(() {
-                              _focusedDay = DateTime(
-                                  newfocusedDay.year, newfocusedDay.month, newfocusedDay.day);
-                              _selectedDay = DateTime(
-                                  newfocusedDay.year, newfocusedDay.month);
-                            });
-                          },
-                          calendarBuilders: CalendarBuilders(
-                            todayBuilder: (context, day, focusedDay) {
-                              return Container(
-                                height: 40,
-                                width: 40,
-                                margin: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: whiteColor,
-                                ),
-                                child: Center(
-                                  child: Text(day.day.toString(),
-                                      style: TextStyle(color: blackColor)),
-                                ),
-                              );
-                            },
-                            defaultBuilder: (context, day, focusedDay) {
-                              return Container(
-                                height: 40,
-                                width: 40,
-                                margin: const EdgeInsets.all(8),
-                                child: Center(
-                                  child: Text(
-                                    day.day.toString(),
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          calendarStyle: CalendarStyle(
-                            cellMargin: const EdgeInsets.all(8),
-                            cellPadding: const EdgeInsets.all(6),
-                            cellAlignment: Alignment.center,
-                            markerSize: 4.16,
-                            markersMaxCount: 3,
-                            markersAlignment: Alignment.bottomCenter,
-                            markerDecoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: blackColor,
-                            ),
-                            selectedDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: whiteColor,
-                            ),
-                            selectedTextStyle: const TextStyle(color: Color(0xff121212)),
-                            defaultTextStyle: const TextStyle(color: Colors.white),
-                            weekendTextStyle: const TextStyle(color: Colors.white),
-                            outsideTextStyle: const TextStyle(color: Colors.grey),
-                          ),
-                        ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(18),
+                      bottomRight: Radius.circular(18)),
+                  color: Color(0xff1A1C1A),
+                ),
+                padding: const EdgeInsets.only(left: 20, top: 10, right: 20),
+                child: Column(
+                  children: [
+                    AnimatedContainer(
+                      alignment: Alignment.centerLeft,
+                      duration: const Duration(milliseconds: 300),
+                      height: _isExpanded
+                          ? MediaQuery.of(context).size.height * 0.37
+                          : MediaQuery.of(context).size.height * 0.095,
+                      width: MediaQuery.of(context).size.height * 0.6,
+                      padding: EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18.0),
+                        color: const Color(0xff1A1C1A),
                       ),
-                      GestureDetector(
-                        onVerticalDragUpdate: (details) {
-                          // Drag down to expand, drag up to collapse
-                          if (details.primaryDelta != null) {
-                            _toggleExpandCollapse(details.primaryDelta!);
-                          }
+                      margin: EdgeInsets.only(top: _isExpanded ? 10 : 0),
+                      child: TableCalendar(
+                        firstDay: DateTime.utc(1970, 1, 1),
+                        lastDay: DateTime.utc(2030, 12, 31),
+                        focusedDay: _focusedDay,
+                        headerVisible: false,
+                        headerStyle: const HeaderStyle(
+                          formatButtonVisible: false,
+                          titleCentered: true,
+                        ),
+                        calendarFormat: _isExpanded
+                            ? CalendarFormat.month
+                            : CalendarFormat.week,
+                        selectedDayPredicate: (day) {
+                          return isSameDay(_selectedDay, day);
                         },
-                        child: Container(
-                          height: 4,
-                          width: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color(0xff505050),
+                        onDaySelected: (selectedDay, focusedDay) {
+                          setState(() {
+                            _selectedDay = selectedDay;
+                            _focusedDay = focusedDay;
+                          });
+                        },
+                        onPageChanged: (newfocusedDay) {
+                          setState(() {
+                            _focusedDay = DateTime(newfocusedDay.year,
+                                newfocusedDay.month, newfocusedDay.day);
+                            _selectedDay = DateTime(
+                                newfocusedDay.year, newfocusedDay.month);
+                          });
+                        },
+                        calendarBuilders: CalendarBuilders(
+                          todayBuilder: (context, day, focusedDay) {
+                            return Container(
+                              height: 40,
+                              width: 40,
+                              margin: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: whiteColor,
+                              ),
+                              child: Center(
+                                child: Text(day.day.toString(),
+                                    style: TextStyle(color: blackColor)),
+                              ),
+                            );
+                          },
+                          defaultBuilder: (context, day, focusedDay) {
+                            return Container(
+                              height: 40,
+                              width: 40,
+                              margin: const EdgeInsets.all(8),
+                              child: Center(
+                                child: Text(
+                                  day.day.toString(),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        calendarStyle: CalendarStyle(
+                          cellMargin: const EdgeInsets.all(8),
+                          cellPadding: const EdgeInsets.all(6),
+                          cellAlignment: Alignment.center,
+                          markerSize: 4.16,
+                          markersMaxCount: 3,
+                          markersAlignment: Alignment.bottomCenter,
+                          markerDecoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: blackColor,
                           ),
-                          margin: const EdgeInsets.only(top: 10),
+                          selectedDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: whiteColor,
+                          ),
+                          selectedTextStyle:
+                              const TextStyle(color: Color(0xff121212)),
+                          defaultTextStyle:
+                              const TextStyle(color: Colors.white),
+                          weekendTextStyle:
+                              const TextStyle(color: Colors.white),
+                          outsideTextStyle: const TextStyle(color: Colors.grey),
                         ),
                       ),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
+                    ),
+                    GestureDetector(
+                      onVerticalDragUpdate: (details) {
+                        // Drag down to expand, drag up to collapse
+                        if (details.primaryDelta != null) {
+                          _toggleExpandCollapse(details.primaryDelta!);
+                        }
+                      },
+                      child: Container(
+                        height: 4,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: const Color(0xff505050),
+                        ),
+                        margin: const EdgeInsets.only(top: 10),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
                 ),
               ),
             ),

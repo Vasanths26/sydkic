@@ -164,7 +164,7 @@ class _HomePagesState extends State<HomePages> {
                                   children: [
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: 14, bottom: 14),
+                                          const EdgeInsets.only(top: 14, bottom: 14),
                                       child: Icon(Icons.search,
                                           color: primaryColor, size: 18),
                                     ),
@@ -329,6 +329,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.totalMessages}',
                                     label: text2[0],
+                                    alignTop: Alignment.bottomRight,
+                                    alignBottom: Alignment.topLeft,
                                   ),
                                   const SizedBox(width: 15),
                                   buildGridItem(
@@ -336,6 +338,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.totalConversations}',
                                     label: text2[1],
+                                    alignTop: Alignment.bottomLeft,
+                                    alignBottom: Alignment.topRight,
                                   ),
                                 ],
                               ),
@@ -350,6 +354,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.activeAssistants}',
                                     label: text2[2],
+                                    alignTop: Alignment.topRight,
+                                    alignBottom: Alignment.bottomLeft,
                                   ),
                                   const SizedBox(width: 15),
                                   buildGridItem(
@@ -357,6 +363,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.activeCampaigns}',
                                     label: text2[3],
+                                    alignTop: Alignment.topLeft,
+                                    alignBottom: Alignment.bottomRight,
                                   ),
                                 ],
                               ),
@@ -520,25 +528,28 @@ class _HomePagesState extends State<HomePages> {
     required IconData icon,
     required String value,
     required String label,
+    required Alignment alignTop,
+    required Alignment alignBottom,
   }) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.43,
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: const Color(0xff1A1C1A).withOpacity(0.3),
-          border: GradientBoxBorder(
-            width: 1,
-            gradient: LinearGradient(
-              colors: [
-                Color(0xFF5548B1), // #5548B1 at 30% opacity
-                Color(0xFF5548B1), // #5548B1 at full opacity
-                Color(0xFF5548B1).withOpacity(0.3), // #5548B1 at 30% opacity
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          )),
+        borderRadius: BorderRadius.circular(18),
+        color: const Color(0xff1A1C1A).withOpacity(0.3),
+        border: GradientBoxBorder(
+          width: 1,
+          gradient: LinearGradient(
+            colors: [
+              // Color(0xFF5548B1), // #5548B1 at 30% opacity
+              const Color(0xFF5548B1), // #5548B1 at full opacity
+              const Color(0xFF5548B1).withOpacity(0.3), // #5548B1 at 30% opacity
+            ],
+            begin: alignTop,
+            end: alignBottom,
+          ),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -554,14 +565,14 @@ class _HomePagesState extends State<HomePages> {
                   width: 1,
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xFF5548B1), // #5548B1 at 30% opacity
-                      Color(0xFF5548B1), // #5548B1 at full opacity
-                      Color(0xFF5548B1)
+                      // Color(0xFF5548B1), // #5548B1 at 30% opacity
+                      const Color(0xFF5548B1), // #5548B1 at full opacity
+                      const Color(0xFF5548B1)
                           .withOpacity(0.3), // #5548B1 at 30% opacity
                     ],
-                    stops: [
+                    stops: const [
                       0.0,
-                      0.5,
+                      // 0.5,
                       1.0
                     ], // Defines the distribution of colors
                     begin: Alignment.topCenter,

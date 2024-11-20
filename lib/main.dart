@@ -4,7 +4,7 @@ import 'package:sydkic/ui_screens/appointment_screen.dart';
 import 'package:sydkic/ui_screens/contact_assitent.dart';
 import 'package:sydkic/ui_screens/contact_list_screen.dart';
 import 'package:sydkic/ui_screens/Home/home_screen.dart';
-import 'package:sydkic/ui_screens/web_chat.dart';
+import 'package:sydkic/ui_screens/inbox_screen.dart';
 import 'package:sydkic/ui_screens/splash_screen.dart';
 import 'package:sydkic/ui_screens/sms_screen.dart';
 import 'package:sydkic/widget/bottom_navigation.dart';

@@ -112,7 +112,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
         child: Column(
           children: [
             Container(
-              height: 25,
+              height: 28,
               alignment: Alignment.center,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,17 +123,17 @@ class _IndividualScreenState extends State<IndividualScreen> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 3, bottom: 2),
-                      child:
-                          Icon(Icons.arrow_back, size: 20, color: whiteColor),
+                      child: Icon(Icons.arrow_back,
+                          size: 20, color: dividerLineColor),
                     ),
                   ),
                   const SizedBox(width: 20),
                   SizedBox(
-                    height: 25,
+                    height: 28,
                     child: Text(
                       'Website Marketing',
                       style: TextStyle(
-                          color: whiteColor,
+                          color: homeTextColor,
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           fontFamily: MyStrings.outfit),
@@ -146,7 +146,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
                     alignment: Alignment.centerRight,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: const Color(0xffE0DCFF),
+                        color: whiteColor,
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(20.0),
@@ -160,9 +160,9 @@ class _IndividualScreenState extends State<IndividualScreen> {
                             isSwitchOn = value; // Update the switch state
                           });
                         },
-                        inactiveTrackColor: const Color(0xffFFFFFF),
-                        inactiveThumbColor: const Color(0xff5548B1),
-                        activeTrackColor: const Color(0xff5548B1),
+                        inactiveTrackColor: whiteColor,
+                        inactiveThumbColor: primaryColor,
+                        activeTrackColor: primaryColor,
                       ),
                     ),
                   ),
@@ -205,8 +205,8 @@ class _IndividualScreenState extends State<IndividualScreen> {
 
   Widget topic(String text, int index, String image) {
     bool isSelected = selectedIndex == index;
-    Color containerColor = isSelected ? Colors.white : const Color(0xff1A1C1A);
-    Color textColor = isSelected ? Colors.black : Colors.white;
+    Color containerColor = isSelected ? Colors.white : chineseBlack;
+    Color textColor = isSelected ? primaryColor : homeTextColor;
 
     return InkWell(
       onTap: () {
