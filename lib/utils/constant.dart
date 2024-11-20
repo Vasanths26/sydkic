@@ -30,6 +30,14 @@ Color backgroundcolor = const Color(0xff121212);
 Color whitecolor = const Color(0xffFFFFFF);
 Color liteGrey = const Color(0xff1A1C1A);
 Color homeTextColor = const Color(0xff9490AE);
+Color activeDeviceTextColor = const Color(0xffE0DCFF);
+Color sellAllColor = const Color(0xffD9D3FF);
+Color appointmentConColor = const Color(0xff141416);
+Color commonColor = const Color(0xff302660);
+Color assistantImageColor = const Color(0xff393939);
+Color activeColor = const Color(0xff60D669);
+Color holdColor = const Color(0xffFFD002);
+
 Color paleLavendar = const Color(0xffE0DCFF);
 Color antiflashWhite = const Color(0xffF0F2F5);
 Color onyxColor = const Color(0xff393939);

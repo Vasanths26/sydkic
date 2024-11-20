@@ -42,6 +42,12 @@ class MyStrings {
   static const String or = 'or';
   static const String continueWithGoogle = 'Continue with Google';
   static const String continueWithFaceBook = 'Continue with facebook';
+  static const String appointments = 'Appointments';
+  static const String date = '11/01/2024';
+  static const String time = '10:00 AM';
+  static const String name = 'Dinesh';
+  static const String content =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua  dolor sit amet. ';
 
 //Inbox
   static const String inbox = 'Inbox';
