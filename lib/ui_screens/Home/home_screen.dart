@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:sydkic/ui_screens/Home/profile_screen.dart';
 import '../../utils/constant.dart';
 import '../../utils/string.dart';
 import 'package:http/http.dart' as http;
@@ -120,7 +119,7 @@ class _HomePagesState extends State<HomePages> {
                   ),
                 )
               : Scaffold(
-                  backgroundColor: const Color(0xff000000),
+                  backgroundColor: blackColor,
                   body: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -145,8 +144,7 @@ class _HomePagesState extends State<HomePages> {
                                 ),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(28),
-                                  color:
-                                      const Color(0xff000000).withOpacity(0.5),
+                                  color: blackColor.withOpacity(0.5),
                                   border:
                                       Border.all(color: primaryColor, width: 1),
                                   boxShadow: [
@@ -203,10 +201,8 @@ class _HomePagesState extends State<HomePages> {
                                         shape: BoxShape.circle,
                                         gradient: LinearGradient(
                                           colors: [
-                                            const Color(0xffFFFFFF)
-                                                .withOpacity(1),
-                                            const Color(0xff5548B1)
-                                                .withOpacity(1),
+                                            whitecolor.withOpacity(1),
+                                            primaryColor.withOpacity(1),
                                           ],
                                         ),
                                       ),
@@ -227,12 +223,12 @@ class _HomePagesState extends State<HomePages> {
                                 padding: const EdgeInsets.only(left: 5),
                                 child: Row(
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       height: 16,
                                       child: Text(
                                         'Active Devices',
                                         style: TextStyle(
-                                            color: Color(0xff9490AE),
+                                            color: homeTextColor,
                                             fontSize: 13,
                                             fontFamily: MyStrings.outfit,
                                             fontWeight: FontWeight.w500),
@@ -244,8 +240,8 @@ class _HomePagesState extends State<HomePages> {
                                       margin: const EdgeInsets.only(right: 25),
                                       child: Text(
                                         '${provider._dashboardDetails?.activeDevice}/${provider._dashboardDetails?.totalDevice}',
-                                        style: const TextStyle(
-                                            color: Color(0xffE0DCFF),
+                                        style: TextStyle(
+                                            color: activeDeviceTextColor,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w700,
                                             fontFamily: MyStrings.outfit),
@@ -290,12 +286,11 @@ class _HomePagesState extends State<HomePages> {
                                                   decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                       color: whiteColor),
-                                                  child: const Center(
+                                                  child: Center(
                                                     child: Text(
                                                       '2',
                                                       style: TextStyle(
-                                                          color:
-                                                              Color(0xff5548B1),
+                                                          color: primaryColor,
                                                           fontFamily:
                                                               MyStrings.outfit,
                                                           fontWeight:
@@ -325,17 +320,20 @@ class _HomePagesState extends State<HomePages> {
                               Row(
                                 children: [
                                   buildGridItem(
-                                    icon: icons1[0],
-                                    value:
-                                        '${provider._dashboardDetails!.totalMessages}',
-                                    label: text2[0],
-                                  ),
+                                      icon: icons1[0],
+                                      value:
+                                          '${provider._dashboardDetails!.totalMessages}',
+                                      label: text2[0],
+                                      start: Alignment.bottomRight,
+                                      finish: Alignment.topLeft),
                                   const SizedBox(width: 15),
                                   buildGridItem(
                                     icon: icons1[1],
                                     value:
                                         '${provider._dashboardDetails!.totalConversations}',
                                     label: text2[1],
+                                    start: Alignment.bottomLeft,
+                                    finish: Alignment.topRight,
                                   ),
                                 ],
                               ),
@@ -350,6 +348,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.activeAssistants}',
                                     label: text2[2],
+                                    start: Alignment.topRight,
+                                    finish: Alignment.bottomLeft,
                                   ),
                                   const SizedBox(width: 15),
                                   buildGridItem(
@@ -357,6 +357,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.activeCampaigns}',
                                     label: text2[3],
+                                    start: Alignment.topLeft,
+                                    finish: Alignment.bottomRight,
                                   ),
                                 ],
                               ),
@@ -369,7 +371,7 @@ class _HomePagesState extends State<HomePages> {
                               horizontal: 20, vertical: 20),
                           child: Column(
                             children: [
-                              const Row(
+                              Row(
                                 children: [
                                   Text(
                                     'Recent Chat',
@@ -378,10 +380,10 @@ class _HomePagesState extends State<HomePages> {
                                       fontSize: 13,
                                       fontFamily: MyStrings.outfit,
                                       fontWeight: FontWeight.w500,
-                                      color: Color(0xff9490AE),
+                                      color: homeTextColor,
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Text(
                                     'See all',
                                     style: TextStyle(
@@ -389,7 +391,7 @@ class _HomePagesState extends State<HomePages> {
                                       fontSize: 13,
                                       fontFamily: MyStrings.outfit,
                                       fontWeight: FontWeight.w400,
-                                      color: Color(0xffD9D3FF),
+                                      color: sellAllColor,
                                     ),
                                   ),
                                 ],
@@ -409,7 +411,7 @@ class _HomePagesState extends State<HomePages> {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         width: 1,
-                                        color: const Color(0xff8B8E8C),
+                                        color: secondaryColor,
                                       ),
                                     ),
                                   ),
@@ -461,17 +463,17 @@ class _HomePagesState extends State<HomePages> {
                   color: whiteColor,
                   border: Border.all(
                     width: 1,
-                    color: const Color(0xff000000),
+                    color: blackColor,
                   ),
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
                     '12',
                     style: TextStyle(
                       fontSize: 8,
                       fontFamily: MyStrings.outfit,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xff5548B1),
+                      color: primaryColor,
                     ),
                   ),
                 ),
@@ -480,7 +482,7 @@ class _HomePagesState extends State<HomePages> {
           ],
         ),
         const SizedBox(width: 10),
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 5, bottom: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -496,7 +498,7 @@ class _HomePagesState extends State<HomePages> {
                     fontSize: 14,
                     fontFamily: MyStrings.outfit,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xff9490AE),
+                    color: homeTextColor,
                   ),
                 ),
               ),
@@ -506,7 +508,7 @@ class _HomePagesState extends State<HomePages> {
                   fontSize: 10,
                   fontFamily: MyStrings.outfit,
                   fontWeight: FontWeight.w400,
-                  color: Color(0xff8B8E8C),
+                  color: secondaryColor,
                 ),
               ),
             ],
@@ -520,6 +522,8 @@ class _HomePagesState extends State<HomePages> {
     required IconData icon,
     required String value,
     required String label,
+    required Alignment start,
+    required Alignment finish,
   }) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.43,
@@ -531,12 +535,11 @@ class _HomePagesState extends State<HomePages> {
             width: 1,
             gradient: LinearGradient(
               colors: [
-                Color(0xFF5548B1), // #5548B1 at 30% opacity
-                Color(0xFF5548B1), // #5548B1 at full opacity
-                Color(0xFF5548B1).withOpacity(0.3), // #5548B1 at 30% opacity
+                primaryColor, // #5548B1 at 30% opacity
+                primaryColor.withOpacity(0.3), // #5548B1 at 30% opacity
               ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+              begin: start,
+              end: finish,
             ),
           )),
       child: Column(
@@ -548,21 +551,14 @@ class _HomePagesState extends State<HomePages> {
             padding: const EdgeInsets.all(10.5),
             margin: const EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
-                color: const Color(0xff000000),
+                color: blackColor,
                 borderRadius: BorderRadius.circular(12),
                 border: GradientBoxBorder(
                   width: 1,
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xFF5548B1), // #5548B1 at 30% opacity
-                      Color(0xFF5548B1), // #5548B1 at full opacity
-                      Color(0xFF5548B1)
-                          .withOpacity(0.3), // #5548B1 at 30% opacity
-                    ],
-                    stops: [
-                      0.0,
-                      0.5,
-                      1.0
+                      primaryColor, // #5548B1 at 30% opacity
+                      primaryColor.withOpacity(0.3), // #5548B1 at 30% opacity
                     ], // Defines the distribution of colors
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -570,13 +566,13 @@ class _HomePagesState extends State<HomePages> {
                 )),
             child: Icon(
               icon,
-              color: const Color(0xff5548B1),
+              color: primaryColor,
             ),
           ),
           Text(
             value,
-            style: const TextStyle(
-              color: Color(0xffE0DCFF),
+            style: TextStyle(
+              color: activeDeviceTextColor,
               fontSize: 20,
               fontFamily: MyStrings.outfit,
               fontWeight: FontWeight.w600,
@@ -586,8 +582,8 @@ class _HomePagesState extends State<HomePages> {
           Text(
             label,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: Color(0xff9490AE),
+            style: TextStyle(
+              color: homeTextColor,
               fontSize: 13,
               fontFamily: MyStrings.outfit,
               fontWeight: FontWeight.w500,

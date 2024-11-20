@@ -119,55 +119,53 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       ),
     );
     return Scaffold(
-      drawer: const SafeArea(
-        child: DrawerScreen(),
-      ),
+      // drawer: const SafeArea(
+      //   child: DrawerScreen(),
+      // ),
       drawerScrimColor: Colors.transparent,
       backgroundColor: blackColor,
       key: _scaffoldKey,
-      appBar: _currentIndex == 0
-          ? null
-          : AppBar(
-              backgroundColor: _currentIndex == 2
-                  ? const Color(0xff1A1C1A)
-                  : const Color(0xff000000),
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: IconButton(
-                  onPressed: () {
-                    _scaffoldKey.currentState?.openDrawer();
-                  },
-                  icon: Icon(
-                    Icons.menu,
-                    size: 30,
-                    color: whiteColor,
-                  ),
-                ),
-              ),
-              title: Text(
-                _currentIndex == 1
-                    ? MyStrings.inbox
-                    : _currentIndex == 2
-                        ? 'Appointment'
-                        : _currentIndex == 3
-                            ? 'Chatbot'
-                            : 'Campaign',
-                style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontFamily: MyStrings.outfit),
-              ),
-              actions: [
-                Container(
-                  height: 24,
-                  width: 24,
-                  margin: const EdgeInsets.only(right: 20),
-                  padding: const EdgeInsets.only(top: 2.24, bottom: 2.25),
-                  child: Icon(Icons.cached_outlined, color: whiteColor),
-                ),
-              ],
-            ),
+      // appBar: _currentIndex == 0 &&  _currentIndex == 1
+      //     ? null
+      //     : AppBar(
+      //         backgroundColor: _currentIndex == 2
+      //             ? const Color(0xff1A1C1A)
+      //             : const Color(0xff000000),
+      //         leading: Padding(
+      //           padding: const EdgeInsets.only(left: 20),
+      //           child: IconButton(
+      //             onPressed: () {
+      //               _scaffoldKey.currentState?.openDrawer();
+      //             },
+      //             icon: Icon(
+      //               Icons.menu,
+      //               size: 30,
+      //               color: whiteColor,
+      //             ),
+      //           ),
+      //         ),
+      //         title: Text(
+      //           _currentIndex == 2
+      //                   ? 'Appointment'
+      //                   : _currentIndex == 3
+      //                       ? 'Chatbot'
+      //                       : 'Campaign',
+      //           style: const TextStyle(
+      //               fontSize: 24,
+      //               fontWeight: FontWeight.w600,
+      //               color: Colors.white,
+      //               fontFamily: MyStrings.outfit),
+      //         ),
+      //         actions: [
+      //           Container(
+      //             height: 24,
+      //             width: 24,
+      //             margin: const EdgeInsets.only(right: 20),
+      //             padding: const EdgeInsets.only(top: 2.24, bottom: 2.25),
+      //             child: Icon(Icons.cached_outlined, color: whiteColor),
+      //           ),
+      //         ],
+      //       ),
       bottomNavigationBar: Stack(
         children: [
           Container(

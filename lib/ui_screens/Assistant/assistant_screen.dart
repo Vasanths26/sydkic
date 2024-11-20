@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:sydkic/ui_screens/Assistant/assistant.dart';
 import '../../model/assistant_model.dart';
 import '../../utils/api_constant.dart';
@@ -80,6 +81,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
     {'name': 'Test Assistant1', 'isNavigable': false},
   ];
   final List<bool> switchValue = [true, true, false, true];
+  final TextEditingController _controller = TextEditingController();
 
   List<bool> switchStates = List.generate(10, (index) => false);
 
@@ -93,77 +95,148 @@ class _AssistantScreenState extends State<AssistantScreen> {
       ),
     );
     return Scaffold(
-      backgroundColor: const Color(0xff000000),
+      backgroundColor: blackColor,
       body: Padding(
         padding: const EdgeInsets.only(top: 22),
-        child: ListView.builder(
-          shrinkWrap: true, // Allows ListView to take only the required space
-          physics:
-              const NeverScrollableScrollPhysics(), // Prevents inner scroll
-          itemCount: groupList.length,
-          itemBuilder: (context, index) {
-            final groupName = groupList[index]['name'];
-            final isNavigable = groupList[index]['isNavigable'];
+        child: Column(
+          children: [
+            // Static Container
+            Container(
+              padding: const EdgeInsets.only(top: 35, left: 20, right: 20),
+              height: 120,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: commonColor,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(12),
+                  bottomRight: Radius.circular(12),
+                ),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: 46,
+                    padding: const EdgeInsets.only(left: 20, right: 7),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      color: blackColor.withOpacity(0.5),
+                      border: Border.all(color: primaryColor, width: 1),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3),
+                          offset: const Offset(5, 5),
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.search, color: primaryColor, size: 18),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _controller,
+                            keyboardType: TextInputType.multiline,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: MyStrings.outfit,
+                              color: whiteColor,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Search Name, Number, IG',
+                              hintStyle: TextStyle(
+                                color: homeTextColor,
+                                fontFamily: MyStrings.outfit,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 32,
+                          width: 32,
+                          padding: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              colors: [
+                                whiteColor.withOpacity(1),
+                                primaryColor.withOpacity(1),
+                              ],
+                            ),
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'asset/image/round_profile.webp',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+            // Expandable ListView
+            Expanded(
+              child: ListView.builder(
+                itemCount: groupList.length,
+                itemBuilder: (context, index) {
+                  final groupName = groupList[index]['name'];
+                  final isNavigable = groupList[index]['isNavigable'];
 
-            return Column(
-              children: [
-                group(groupName, isNavigable, switchValue[index], index),
-                const SizedBox(height: 15),
-              ],
-            );
-          },
+                  return Column(
+                    children: [
+                      group(groupName, isNavigable, switchValue[index], index),
+                      const SizedBox(height: 15),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
-      // SingleChildScrollView(
-      //   child: Column(
-      //     children: [
-      //       const SizedBox(height: 32),
-      //       GestureDetector(
-      //         onTap: () {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(
-      //               builder: (context) =>
-      //                   const GroupAssistant(topic: 'CricketGroup'),
-      //             ),
-      //           );
-      //         },
-      //         child: group('Cricket Group', true),
-      //       ),
-      //       const SizedBox(height: 15),
-      //       group('Trip Plan', false),
-      //       const SizedBox(height: 15),
-      //       group('Girl Friends', false),
-      //       const SizedBox(height: 15),
-      //       group('Test Assistant1', false),
-      //     ],
-      //   ),
-      // ),
     );
   }
 
   Widget group(String text, bool value, bool switchValue, int index) {
-    return Container(
-      height: 125,
-      // width: 353,
-      decoration: BoxDecoration(
-        color: const Color(0xff1A1C1A),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      margin: const EdgeInsets.only(left: 20, right: 20),
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GroupAssistant(topic: text),
-                ),
-              );
-            },
-            child: Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GroupAssistant(topic: text),
+          ),
+        );
+      },
+      child: Container(
+        height: 140,
+        decoration: BoxDecoration(
+          border: GradientBoxBorder(
+            width: 1,
+            gradient: LinearGradient(
+              colors: [
+                primaryColor, // #5548B1 at 30% opacity
+                primaryColor.withOpacity(0.3), // #5548B1 at 30% opacity
+              ], // Defines the distribution of colors
+              begin: Alignment.topLeft,
+              end: Alignment.topRight,
+            ),
+          ),
+          color: const Color(0xff1A1C1A),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        margin: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          children: [
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -173,7 +246,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                     text,
                     style: TextStyle(
                         fontSize: 16,
-                        color: whiteColor,
+                        color: homeTextColor,
                         fontWeight: FontWeight.w500,
                         fontFamily: MyStrings.outfit),
                   ),
@@ -184,9 +257,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                     Container(
                       height: 32,
                       width: 128,
-                      decoration: const BoxDecoration(
-                          // color: Color(0xff393939),
-                          ),
+                      decoration: const BoxDecoration(),
                       alignment: Alignment.centerLeft,
                     ),
                     imagePosition(0, false),
@@ -198,59 +269,59 @@ class _AssistantScreenState extends State<AssistantScreen> {
                 ),
               ],
             ),
-          ),
-          const Spacer(),
-          Column(
-            children: [
-              Container(
-                height: 32,
-                width: 32,
-                padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xff393939),
-                ),
-                child: SizedBox(
-                  height: 16,
-                  width: 16,
-                  child: Icon(
-                    index != 1 ? Icons.lock_outline : Icons.lock_open_outlined,
-                    color: whiteColor,
-                    size: 16,
+            const Spacer(),
+            Column(
+              children: [
+                Container(
+                  height: 32,
+                  width: 32,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: assistantImageColor,
+                  ),
+                  child: SizedBox(
+                    height: 16,
+                    width: 16,
+                    child: Icon(
+                      index != 1 ? Icons.lock : Icons.lock_open_outlined,
+                      color: primaryColor,
+                      size: 16,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 35),
-              Container(
-                height: 18,
-                width: 32,
-                alignment: Alignment.centerRight,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color(0xffE0DCFF),
-                    width: 1.0,
+                const SizedBox(height: 35),
+                Container(
+                  height: 18,
+                  width: 32,
+                  alignment: Alignment.centerRight,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: activeDeviceTextColor,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Transform.scale(
-                  scale: 0.75,
-                  child: Switch(
-                    value: switchStates[index],
-                    onChanged: (value) {
-                      setState(() {
-                        switchStates[index] =
-                            value; // Update the specific switch state
-                      });
-                    },
-                    inactiveTrackColor: const Color(0xffFFFFFF),
-                    inactiveThumbColor: const Color(0xff5548B1),
-                    activeTrackColor: const Color(0xff5548B1),
+                  child: Transform.scale(
+                    scale: 0.75,
+                    child: Switch(
+                      value: switchStates[index],
+                      onChanged: (value) {
+                        setState(() {
+                          switchStates[index] =
+                              value; // Update the specific switch state
+                        });
+                      },
+                      inactiveTrackColor: whiteColor,
+                      inactiveThumbColor: primaryColor,
+                      activeTrackColor: primaryColor,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

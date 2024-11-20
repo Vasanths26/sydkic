@@ -105,69 +105,58 @@ class _IndividualScreenState extends State<IndividualScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff000000),
+      backgroundColor: blackColor,
       body: Container(
         height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.only(left: 20, right: 20, top: 42.86),
         child: Column(
           children: [
-            Container(
-              height: 25,
-              alignment: Alignment.center,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 3, bottom: 2),
-                      child:
-                          Icon(Icons.arrow_back, size: 20, color: whiteColor),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back, size: 20, color: primaryColor),
+                ),
+                const SizedBox(width: 20),
+                Text(
+                  'Website Marketing',
+                  style: TextStyle(
+                      color: homeTextColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: MyStrings.outfit),
+                ),
+                const Spacer(),
+                Container(
+                  height: 18,
+                  width: 32,
+                  alignment: Alignment.centerRight,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color(0xffE0DCFF),
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Transform.scale(
+                    scale: 0.75,
+                    child: Switch(
+                      value: isSwitchOn,
+                      onChanged: (value) {
+                        setState(() {
+                          isSwitchOn = value; // Update the switch state
+                        });
+                      },
+                      inactiveTrackColor: const Color(0xffFFFFFF),
+                      inactiveThumbColor: const Color(0xff5548B1),
+                      activeTrackColor: const Color(0xff5548B1),
                     ),
                   ),
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    height: 25,
-                    child: Text(
-                      'Website Marketing',
-                      style: TextStyle(
-                          color: whiteColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: MyStrings.outfit),
-                    ),
-                  ),
-                  const Spacer(),
-                  Container(
-                    height: 18,
-                    width: 32,
-                    alignment: Alignment.centerRight,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: const Color(0xffE0DCFF),
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Transform.scale(
-                      scale: 0.75,
-                      child: Switch(
-                        value: isSwitchOn,
-                        onChanged: (value) {
-                          setState(() {
-                            isSwitchOn = value; // Update the switch state
-                          });
-                        },
-                        inactiveTrackColor: const Color(0xffFFFFFF),
-                        inactiveThumbColor: const Color(0xff5548B1),
-                        activeTrackColor: const Color(0xff5548B1),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Row(
