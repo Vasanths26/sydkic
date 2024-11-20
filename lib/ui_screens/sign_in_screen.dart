@@ -11,7 +11,6 @@ import '../utils/small_text.dart';
 import '../widget/bottom_navigation.dart';
 import '../utils/constant.dart';
 import '../utils/string.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -444,7 +443,8 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
-  _logIn(BuildContext context, String email, String password) async {
+  Future<bool> _logIn(
+      BuildContext context, String email, String password) async {
     setState(() {
       isLoading = true;
     });
@@ -489,14 +489,17 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
           );
         }
+        return true;
       } else {
-        Fluttertoast.showToast(msg: "Incorrect email or password.");
+        // Fluttertoast.showToast(msg: "Incorrect email or password.");
+        return false;
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: "An error occurred");
+      // Fluttertoast.showToast(msg: "An error occurred");
       if (kDebugMode) {
         print(e);
       }
+      return false;
     } finally {
       setState(() {
         isLoading = false;

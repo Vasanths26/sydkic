@@ -105,58 +105,69 @@ class _IndividualScreenState extends State<IndividualScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: blackColor,
+      backgroundColor: const Color(0xff000000),
       body: Container(
         height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.only(left: 20, right: 20, top: 42.86),
         child: Column(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(Icons.arrow_back, size: 20, color: primaryColor),
-                ),
-                const SizedBox(width: 20),
-                Text(
-                  'Website Marketing',
-                  style: TextStyle(
-                      color: homeTextColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: MyStrings.outfit),
-                ),
-                const Spacer(),
-                Container(
-                  height: 18,
-                  width: 32,
-                  alignment: Alignment.centerRight,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xffE0DCFF),
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Transform.scale(
-                    scale: 0.75,
-                    child: Switch(
-                      value: isSwitchOn,
-                      onChanged: (value) {
-                        setState(() {
-                          isSwitchOn = value; // Update the switch state
-                        });
-                      },
-                      inactiveTrackColor: const Color(0xffFFFFFF),
-                      inactiveThumbColor: const Color(0xff5548B1),
-                      activeTrackColor: const Color(0xff5548B1),
+            Container(
+              height: 28,
+              alignment: Alignment.center,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 3, bottom: 2),
+                      child: Icon(Icons.arrow_back,
+                          size: 20, color: dividerLineColor),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    height: 28,
+                    child: Text(
+                      'Website Marketing',
+                      style: TextStyle(
+                          color: homeTextColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: MyStrings.outfit),
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    height: 18,
+                    width: 32,
+                    alignment: Alignment.centerRight,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: whiteColor,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Transform.scale(
+                      scale: 0.75,
+                      child: Switch(
+                        value: isSwitchOn,
+                        onChanged: (value) {
+                          setState(() {
+                            isSwitchOn = value; // Update the switch state
+                          });
+                        },
+                        inactiveTrackColor: whiteColor,
+                        inactiveThumbColor: primaryColor,
+                        activeTrackColor: primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -194,8 +205,8 @@ class _IndividualScreenState extends State<IndividualScreen> {
 
   Widget topic(String text, int index, String image) {
     bool isSelected = selectedIndex == index;
-    Color containerColor = isSelected ? Colors.white : const Color(0xff1A1C1A);
-    Color textColor = isSelected ? Colors.black : Colors.white;
+    Color containerColor = isSelected ? Colors.white : chineseBlack;
+    Color textColor = isSelected ? primaryColor : homeTextColor;
 
     return InkWell(
       onTap: () {

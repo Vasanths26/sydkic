@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
-import 'package:sydkic/ui_screens/web_chat.dart';
+import 'package:sydkic/ui_screens/inbox_screen.dart';
 import 'package:sydkic/ui_screens/sign_in_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../ui_screens/Buckets/bucket_screen.dart';
+import '../ui_screens/Buckets/campaign_screen.dart';
 import '../ui_screens/appointment_screen.dart';
 import '../ui_screens/Home/home_screen.dart';
 import '../ui_screens/Assistant/assistant_screen.dart';
@@ -58,14 +58,6 @@ class BottomNavigationScreen extends StatefulWidget {
 class _BottomNavigationScreenState extends State<BottomNavigationScreen>
     with TickerProviderStateMixin {
   late PageController _pageController;
-  List<IconData> icons = [
-    Icons.home_outlined,
-    Icons.chrome_reader_mode_outlined,
-    Icons.send_outlined,
-    Icons.person_outline
-  ];
-
-  List<String> text = ['Dashboard', 'Contact', 'Appointment', 'Assistent'];
   int _currentIndex = 0;
 
   final List<String> _labels = [
@@ -119,18 +111,16 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       ),
     );
     return Scaffold(
-      // drawer: const SafeArea(
-      //   child: DrawerScreen(),
-      // ),
+      drawer: const SafeArea(
+        child: DrawerScreen(),
+      ),
       drawerScrimColor: Colors.transparent,
       backgroundColor: blackColor,
       key: _scaffoldKey,
-      // appBar: _currentIndex == 0 &&  _currentIndex == 1
+      // appBar: _currentIndex == 0 && _currentIndex == 1
       //     ? null
       //     : AppBar(
-      //         backgroundColor: _currentIndex == 2
-      //             ? const Color(0xff1A1C1A)
-      //             : const Color(0xff000000),
+      //         backgroundColor: const Color(0xff000000),
       //         leading: Padding(
       //           padding: const EdgeInsets.only(left: 20),
       //           child: IconButton(
@@ -145,8 +135,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       //           ),
       //         ),
       //         title: Text(
-      //           _currentIndex == 2
-      //                   ? 'Appointment'
+      //           _currentIndex == 1
+      //               ? MyStrings.inbox
+      //               : _currentIndex == 2
+      //                   ? ''
       //                   : _currentIndex == 3
       //                       ? 'Chatbot'
       //                       : 'Campaign',
@@ -180,104 +172,91 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: const Color(0xff000000),
-                border: GradientBoxBorder(
-                  width: 2,
-                  gradient: LinearGradient(
-                    colors: [
-                      const Color(0xff5548B1).withOpacity(1),
-                      const Color(0xff5548B1).withOpacity(0.35),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                color: blackColor,
+                border: Border(
+                  top: BorderSide(
+                    width: 2,
+                    color: primaryColor.withOpacity(1),
+                    //   GradientBoxBorder(
+                    //   width: 2,
+                    //   gradient: LinearGradient(
+                    //     colors: [
+                    //       const Color(0xff5548B1).withOpacity(1),
+                    //       const Color(0xff5548B1).withOpacity(0.35),
+                    //     ],
+                    //     begin: Alignment.topCenter,
+                    //     end: Alignment.bottomCenter,
+                    //   ),
+                    // ),
                   ),
                 ),
               ),
             ),
           ),
           Positioned(
-            left: 17,
-            right: 17,
+            left: 22.4,
+            right: 22.4,
             bottom: 18,
             child: Container(
               height: 76,
               alignment: Alignment.bottomCenter,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(_icons.length, (index) {
-                  final isSelected = index == _currentIndex;
-                  return GestureDetector(
+                children: [
+                  GestureDetector(
                     onTap: () {
-                      onTabTapped(index);
+                      onTabTapped(0);
                     },
-                    child: Container(
-                      // height: 71,
-                      // width: 60,
-                      alignment: Alignment.bottomCenter,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        // mainAxisSize: MainAxisSize.max,
-                        children: [
-                          SizedBox(height: isSelected ? 0 : 5),
-                          if (isSelected)
-                            Container(
-                              height: 54,
-                              width: 54,
-                              decoration: const BoxDecoration(
-                                  color: Color(0xff000000),
-                                  border: GradientBoxBorder(
-                                    width: 2,
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xff5548B1),
-                                        Color(0xff5548B1),
-                                        Color(0xff000000),
-                                        Color(0xff000000),
-                                        Color(0xff000000),
-                                        Color(0xff000000),
-                                      ],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                    ),
-                                  ),
-                                  shape: BoxShape.circle),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  _icons[index],
-                                  size: 24,
-                                  color: const Color(0xff5548B1),
-                                ),
-                              ),
-                            )
-                          else
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Icon(
-                                _icons[index],
-                                size: 24,
-                                color: const Color(0xff9490AE),
-                              ),
-                            ),
-                          SizedBox(height: isSelected == true ? 3 : 8),
-                          SizedBox(
-                            height: 18,
-                            child: Text(
-                              _labels[index],
-                              style: TextStyle(
-                                  color: isSelected
-                                      ? const Color(0xff5548B1)
-                                      : const Color(0xff9490AE),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  fontFamily: MyStrings.outfit),
-                            ),
-                          ),
-                        ],
-                      ),
+                    child: _buildTabItem(
+                      isSelected: _currentIndex == 0,
+                      icon: _icons[0],
+                      label: _labels[0],
                     ),
-                  );
-                }),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () {
+                      onTabTapped(1);
+                    },
+                    child: _buildTabItem(
+                      isSelected: _currentIndex == 1,
+                      icon: _icons[1],
+                      label: _labels[1],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () {
+                      onTabTapped(2);
+                    },
+                    child: _buildTabItem(
+                      isSelected: _currentIndex == 2,
+                      icon: _icons[2],
+                      label: _labels[2],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () {
+                      onTabTapped(3);
+                    },
+                    child: _buildTabItem(
+                      isSelected: _currentIndex == 3,
+                      icon: _icons[3],
+                      label: _labels[3],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () {
+                      onTabTapped(4);
+                    },
+                    child: _buildTabItem(
+                      isSelected: _currentIndex == 4,
+                      icon: _icons[4],
+                      label: _labels[4],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -318,47 +297,74 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
   }
 }
 
-class CurvedBorderPainter extends CustomPainter {
-  final int selectedIndex;
-  final int tabCount;
-  final Color borderColor;
-
-  CurvedBorderPainter({
-    required this.selectedIndex,
-    required this.tabCount,
-    required this.borderColor,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.transparent
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
-      ..shader = LinearGradient(
-        colors: [borderColor.withOpacity(1), borderColor.withOpacity(0.35)],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-
-    final double tabWidth = size.width / tabCount;
-    final double startX = tabWidth * selectedIndex + tabWidth / 2;
-    final double radius = 25; // Adjust radius for curvature
-
-    Path path = Path()
-      ..moveTo(startX - radius, size.height - 10)
-      ..quadraticBezierTo(
-        startX,
-        size.height - 40,
-        startX + radius,
-        size.height - 10,
-      );
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
+Widget _buildTabItem({
+  required bool isSelected,
+  required IconData icon,
+  required String label,
+}) {
+  return Container(
+    alignment: Alignment.bottomCenter,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(height: isSelected ? 0 : 5),
+        if (isSelected)
+          Container(
+            height: 54,
+            width: 54,
+            decoration: BoxDecoration(
+              color: blackColor,
+              border: GradientBoxBorder(
+                width: 2,
+                gradient: LinearGradient(
+                  colors: [
+                    primaryColor,
+                    primaryColor,
+                    blackColor,
+                    blackColor,
+                    blackColor,
+                    blackColor,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              shape: BoxShape.circle,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                icon,
+                size: 24,
+                color: const Color(0xff5548B1),
+              ),
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Icon(
+              icon,
+              size: 24,
+              color: const Color(0xff9490AE),
+            ),
+          ),
+        SizedBox(height: isSelected == true ? 3 : 8),
+        SizedBox(
+          height: 18,
+          child: Text(
+            label,
+            style: TextStyle(
+              color: isSelected
+                  ? const Color(0xff5548B1)
+                  : const Color(0xff9490AE),
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+              fontFamily: MyStrings.outfit,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

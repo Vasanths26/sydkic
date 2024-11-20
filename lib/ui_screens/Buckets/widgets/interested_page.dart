@@ -54,8 +54,8 @@ class _InterestedPageState extends State<InterestedPage> {
                 height: 35,
                 width: 35,
                 padding: const EdgeInsets.all(10.75),
-                decoration: const BoxDecoration(
-                    color: Color(0xff393939), shape: BoxShape.circle),
+                decoration:
+                    BoxDecoration(color: onyxColor, shape: BoxShape.circle),
                 child: Image.asset(widget.images, height: 13.5, width: 13.5),
               ),
               const SizedBox(width: 10),
@@ -64,26 +64,26 @@ class _InterestedPageState extends State<InterestedPage> {
                   padding: const EdgeInsets.only(top: 7.5, bottom: 7.5),
                   child: Text(
                     widget.topics,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       fontFamily: MyStrings.outfit,
-                      color: Color(0xff8B8E8C),
+                      color: secondaryColor,
                     ),
                   ),
                 ),
               ),
               const SizedBox(width: 4),
-              const Icon(
+              Icon(
                 Icons.arrow_upward_outlined,
-                color: Color(0xffFFD002),
+                color: lightYellow,
                 size: 18,
               ),
               const SizedBox(width: 4),
               Padding(
                 padding: const EdgeInsets.only(top: 1, bottom: 1),
                 child: Text(
-                  '${topicLists[widget.topics]?.length ?? 0}',
+                  '${widget.items.length}',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -98,17 +98,17 @@ class _InterestedPageState extends State<InterestedPage> {
         // const SizedBox(height: 20),
         Expanded(
           child: ListView.builder(
-              itemCount: topicLists[widget.topics]?.length ?? 0,
+              itemCount: widget.items.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                final item = topicLists[widget.topics]![index];
+                final item = widget.items[index];
                 final text1 = item['text1'] ?? 'Default Text 1';
                 final text2 = item['text2'] ?? 'Default Text 1';
                 final text3 = item['text3'] ?? 'Default Text 1';
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: const Color(0xff1A1C1A),
+                    color: chineseBlack,
                   ),
                   // height: 150,
                   width: 353,
@@ -133,9 +133,9 @@ class _InterestedPageState extends State<InterestedPage> {
                             Container(
                               height: 24,
                               width: 24,
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Color(0xff393939),
+                                color: raisinBlack,
                               ),
                               alignment: Alignment.center,
                               child: Image.asset(
@@ -149,19 +149,19 @@ class _InterestedPageState extends State<InterestedPage> {
                         const SizedBox(height: 9),
                         Text(
                           text2,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             fontFamily: MyStrings.outfit,
-                            color: Color(0xff8B8E8C),
+                            color: secondaryColor,
                           ),
                         ),
                         const SizedBox(height: 20),
                         Container(
                           height: 1,
                           // width: 313,
-                          decoration: const BoxDecoration(
-                            color: Color(0xff373737),
+                          decoration: BoxDecoration(
+                            color: onyxColor1,
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -173,37 +173,37 @@ class _InterestedPageState extends State<InterestedPage> {
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 1, bottom: 1.5),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 1, bottom: 1.5),
                                       child: Icon(Icons.calendar_month,
-                                          size: 18, color: Colors.white),
+                                          size: 18, color: primaryColor),
                                     ),
                                     const SizedBox(width: 8),
                                     Text(
                                       text3,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w400,
                                         fontFamily: MyStrings.outfit,
-                                        color: Color(0xff8B8E8C),
+                                        color: secondaryColor,
                                       ),
                                     ),
                                     const SizedBox(width: 10),
-                                    const Padding(
-                                      padding: EdgeInsets.only(
+                                    Padding(
+                                      padding: const EdgeInsets.only(
                                           top: 0.75, bottom: 0.06),
                                       child: Icon(Icons.chat_outlined,
-                                          size: 18, color: Colors.white),
+                                          size: 18, color: primaryColor),
                                     ),
                                     const SizedBox(width: 8),
-                                    const Text(
+                                    Text(
                                       '14',
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w400,
                                         fontFamily: MyStrings.outfit,
-                                        color: Color(0xff8B8E8C),
+                                        color: secondaryColor,
                                       ),
                                     ),
                                   ],
@@ -223,7 +223,7 @@ class _InterestedPageState extends State<InterestedPage> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(5)),
                                 child: DottedBorder(
-                                  color: const Color(0xff8B8E8C),
+                                  color: secondaryColor,
                                   strokeWidth: 1,
                                   borderType: BorderType.RRect,
                                   radius: const Radius.circular(
@@ -232,25 +232,25 @@ class _InterestedPageState extends State<InterestedPage> {
                                     6,
                                     3
                                   ], // Adjust dash and gap lengths
-                                  child: const Center(
+                                  child: Center(
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        SizedBox(width: 6.5),
+                                        const SizedBox(width: 6.5),
                                         Icon(Icons.drive_file_move_outline,
-                                            color: Colors.white, size: 16),
-                                        SizedBox(width: 6.62),
+                                            color: whiteColor, size: 16),
+                                        const SizedBox(width: 6.62),
                                         Text(
                                           'Move',
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
                                             fontFamily: MyStrings.outfit,
-                                            color: Color(0xff8B8E8C),
+                                            color: secondaryColor,
                                           ),
                                         ),
-                                        SizedBox(width: 6.5),
+                                        const SizedBox(width: 6.5),
                                       ],
                                     ),
                                   ),
@@ -327,25 +327,25 @@ class _BottomSheetUIState extends State<BottomSheetUI> {
         children: [
           Row(
             children: [
-              const Icon(Icons.drive_file_move_outline,
-                  color: Colors.black, size: 25),
+              Icon(Icons.drive_file_move_outline,
+                  color: primaryColor, size: 25),
               const SizedBox(width: 12.5),
-              const Text(
+              Text(
                 'Move',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   fontFamily: MyStrings.outfit,
-                  color: Colors.black,
+                  color: blackColor,
                 ),
               ),
               const Spacer(),
               IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon:
-                      Icon(Icons.close_outlined, size: 24, color: blackColor)),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.close_outlined, size: 24, color: primaryColor),
+              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -381,8 +381,7 @@ class _BottomSheetUIState extends State<BottomSheetUI> {
 
   Widget topic(String text, int index) {
     bool isSelected = selectedIndex == index;
-    Color containerColor =
-        isSelected ? const Color(0xff1A1C1A) : const Color(0xffF0F2F5);
+    Color containerColor = isSelected ? primaryColor : antiflashWhite;
     Color textColor = isSelected ? Colors.white : Colors.black;
 
     return InkWell(

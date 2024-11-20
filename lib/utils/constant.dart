@@ -37,3 +37,12 @@ Color commonColor = const Color(0xff302660);
 Color assistantImageColor = const Color(0xff393939);
 Color activeColor = const Color(0xff60D669);
 Color holdColor = const Color(0xffFFD002);
+
+Color paleLavendar = const Color(0xffE0DCFF);
+Color antiflashWhite = const Color(0xffF0F2F5);
+Color onyxColor = const Color(0xff393939);
+Color onyxColor1 = const Color(0xff373737);
+Color raisinBlack = const Color(0xff202020);
+Color chineseBlack = const Color(0xff141416);
+Color lightGreen = const Color(0xff60D669);
+Color lightYellow = const Color(0xffFFD002);

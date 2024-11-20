@@ -162,7 +162,7 @@ class _HomePagesState extends State<HomePages> {
                                   children: [
                                     Padding(
                                       padding:
-                                          EdgeInsets.only(top: 14, bottom: 14),
+                                          const EdgeInsets.only(top: 14, bottom: 14),
                                       child: Icon(Icons.search,
                                           color: primaryColor, size: 18),
                                     ),
@@ -320,20 +320,21 @@ class _HomePagesState extends State<HomePages> {
                               Row(
                                 children: [
                                   buildGridItem(
-                                      icon: icons1[0],
-                                      value:
-                                          '${provider._dashboardDetails!.totalMessages}',
-                                      label: text2[0],
-                                      start: Alignment.bottomRight,
-                                      finish: Alignment.topLeft),
+                                    icon: icons1[0],
+                                    value:
+                                        '${provider._dashboardDetails!.totalMessages}',
+                                    label: text2[0],
+                                    alignTop: Alignment.bottomRight,
+                                    alignBottom: Alignment.topLeft,
+                                  ),
                                   const SizedBox(width: 15),
                                   buildGridItem(
                                     icon: icons1[1],
                                     value:
                                         '${provider._dashboardDetails!.totalConversations}',
                                     label: text2[1],
-                                    start: Alignment.bottomLeft,
-                                    finish: Alignment.topRight,
+                                    alignTop: Alignment.bottomLeft,
+                                    alignBottom: Alignment.topRight,
                                   ),
                                 ],
                               ),
@@ -348,8 +349,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.activeAssistants}',
                                     label: text2[2],
-                                    start: Alignment.topRight,
-                                    finish: Alignment.bottomLeft,
+                                    alignTop: Alignment.topRight,
+                                    alignBottom: Alignment.bottomLeft,
                                   ),
                                   const SizedBox(width: 15),
                                   buildGridItem(
@@ -357,8 +358,8 @@ class _HomePagesState extends State<HomePages> {
                                     value:
                                         '${provider._dashboardDetails!.activeCampaigns}',
                                     label: text2[3],
-                                    start: Alignment.topLeft,
-                                    finish: Alignment.bottomRight,
+                                    alignTop: Alignment.topLeft,
+                                    alignBottom: Alignment.bottomRight,
                                   ),
                                 ],
                               ),
@@ -522,26 +523,28 @@ class _HomePagesState extends State<HomePages> {
     required IconData icon,
     required String value,
     required String label,
-    required Alignment start,
-    required Alignment finish,
+    required Alignment alignTop,
+    required Alignment alignBottom,
   }) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.43,
       padding: const EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 20),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: const Color(0xff1A1C1A).withOpacity(0.3),
-          border: GradientBoxBorder(
-            width: 1,
-            gradient: LinearGradient(
-              colors: [
-                primaryColor, // #5548B1 at 30% opacity
-                primaryColor.withOpacity(0.3), // #5548B1 at 30% opacity
-              ],
-              begin: start,
-              end: finish,
-            ),
-          )),
+        borderRadius: BorderRadius.circular(18),
+        color: const Color(0xff1A1C1A).withOpacity(0.3),
+        border: GradientBoxBorder(
+          width: 1,
+          gradient: LinearGradient(
+            colors: [
+              // Color(0xFF5548B1), // #5548B1 at 30% opacity
+              const Color(0xFF5548B1), // #5548B1 at full opacity
+              const Color(0xFF5548B1).withOpacity(0.3), // #5548B1 at 30% opacity
+            ],
+            begin: alignTop,
+            end: alignBottom,
+          ),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
