@@ -177,86 +177,33 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
                   top: BorderSide(
                     width: 2,
                     color: primaryColor.withOpacity(1),
-                    //   GradientBoxBorder(
-                    //   width: 2,
-                    //   gradient: LinearGradient(
-                    //     colors: [
-                    //       const Color(0xff5548B1).withOpacity(1),
-                    //       const Color(0xff5548B1).withOpacity(0.35),
-                    //     ],
-                    //     begin: Alignment.topCenter,
-                    //     end: Alignment.bottomCenter,
-                    //   ),
-                    // ),
                   ),
                 ),
               ),
             ),
           ),
           Positioned(
-            left: 22.4,
-            right: 22.4,
+            left: 0,
+            right: 0,
             bottom: 18,
             child: Container(
               height: 76,
-              alignment: Alignment.bottomCenter,
+              alignment: Alignment.center,
               child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      onTabTapped(0);
-                    },
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceEvenly, // Even spacing
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Align items vertically
+                children: List.generate(_icons.length, (index) {
+                  return GestureDetector(
+                    onTap: () => onTabTapped(index),
                     child: _buildTabItem(
-                      isSelected: _currentIndex == 0,
-                      icon: _icons[0],
-                      label: _labels[0],
+                      isSelected: _currentIndex == index,
+                      icon: _icons[index],
+                      label: _labels[index],
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      onTabTapped(1);
-                    },
-                    child: _buildTabItem(
-                      isSelected: _currentIndex == 1,
-                      icon: _icons[1],
-                      label: _labels[1],
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      onTabTapped(2);
-                    },
-                    child: _buildTabItem(
-                      isSelected: _currentIndex == 2,
-                      icon: _icons[2],
-                      label: _labels[2],
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      onTabTapped(3);
-                    },
-                    child: _buildTabItem(
-                      isSelected: _currentIndex == 3,
-                      icon: _icons[3],
-                      label: _labels[3],
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      onTabTapped(4);
-                    },
-                    child: _buildTabItem(
-                      isSelected: _currentIndex == 4,
-                      icon: _icons[4],
-                      label: _labels[4],
-                    ),
-                  ),
-                ],
+                  );
+                }),
               ),
             ),
           ),

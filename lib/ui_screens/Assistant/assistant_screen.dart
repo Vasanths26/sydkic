@@ -178,7 +178,6 @@ class _AssistantScreenState extends State<AssistantScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
                 ],
               ),
             ),
@@ -216,7 +215,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
         );
       },
       child: Container(
-        height: 140,
+        height: 120,
         decoration: BoxDecoration(
           border: GradientBoxBorder(
             width: 1,
@@ -232,8 +231,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
           color: const Color(0xff1A1C1A),
           borderRadius: BorderRadius.circular(5),
         ),
-        margin: const EdgeInsets.only(left: 20, right: 20),
-        padding: const EdgeInsets.all(20),
+        margin: const EdgeInsets.symmetric(vertical: 2,horizontal: 20),
+        padding: const EdgeInsets.all(15),
         child: Row(
           children: [
             Column(
