@@ -114,7 +114,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
             children: [
               Container(
                 padding: const EdgeInsets.only(top: 35, left: 20, right: 20),
-                height: 180,
+                height: 150,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: commonColor),
                 child: Column(
@@ -143,7 +143,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       child: Row(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               top: 14,
                               bottom: 14,
                             ),
@@ -200,7 +200,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -290,7 +290,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           padding: EdgeInsets.zero,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18.0),
-                            color: Color(0xff302660),
+                            color: const Color(0xff302660),
                           ),
                           margin: EdgeInsets.only(
                             top: _isExpanded ? 20 : 0,
@@ -406,7 +406,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -417,114 +417,113 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       fontWeight: FontWeight.w500,
                       fontFamily: MyStrings.outfit,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
-                    ListView.builder(
-                      itemCount: 2,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.only(bottom: 10),
-                              height: 150,
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                  border: GradientBoxBorder(
-                                    width: 1,
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        primaryColor, // #5548B1 at 30% opacity
-                                        primaryColor.withOpacity(
-                                            0.3), // #5548B1 at 30% opacity
-                                      ], // Defines the distribution of colors
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.topRight,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: ListView.builder(
+                        itemCount: 3,
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: const EdgeInsets.all(15),
+                            margin: const EdgeInsets.only(bottom: 10),
+                            // height: 150,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                border: GradientBoxBorder(
+                                  width: 1,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      primaryColor, // #5548B1 at 30% opacity
+                                      primaryColor.withOpacity(
+                                          0.3), // #5548B1 at 30% opacity
+                                    ], // Defines the distribution of colors
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.topRight,
+                                  ),
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                                color: appointmentConColor),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_month_outlined,
+                                      size: 18,
+                                      color: primaryColor,
                                     ),
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: appointmentConColor),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.calendar_month_outlined,
-                                        size: 18,
-                                        color: primaryColor,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SmallText(
-                                        text: MyStrings.date,
-                                        size: 10,
-                                        color: secondaryColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: MyStrings.outfit,
-                                      ),
-                                      SizedBox(
-                                        width: 12,
-                                      ),
-                                      Icon(
-                                        Icons.access_time_rounded,
-                                        size: 14,
-                                        color: primaryColor,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SmallText(
-                                        text: MyStrings.time,
-                                        size: 10,
-                                        color: secondaryColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: MyStrings.outfit,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  SmallText(
-                                    text: MyStrings.content,
-                                    size: 13,
-                                    color: homeTextColor,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: MyStrings.outfit,
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Icon(
-                                        Icons.person_2_outlined,
-                                        color: primaryColor,
-                                        size: 18,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      SmallText(
-                                        text: MyStrings.name,
-                                        size: 10,
-                                        color: secondaryColor,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: MyStrings.outfit,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        );
-                      },
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    SmallText(
+                                      text: MyStrings.date,
+                                      size: 10,
+                                      color: secondaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: MyStrings.outfit,
+                                    ),
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
+                                    Icon(
+                                      Icons.access_time_rounded,
+                                      size: 14,
+                                      color: primaryColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    SmallText(
+                                      text: MyStrings.time,
+                                      size: 10,
+                                      color: secondaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: MyStrings.outfit,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                SmallText(
+                                  text: MyStrings.content,
+                                  size: 13,
+                                  color: homeTextColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: MyStrings.outfit,
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      Icons.person_2_outlined,
+                                      color: primaryColor,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    SmallText(
+                                      text: MyStrings.name,
+                                      size: 10,
+                                      color: secondaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: MyStrings.outfit,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
