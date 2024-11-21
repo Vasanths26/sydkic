@@ -320,33 +320,33 @@ class _ContactPageState extends State<ContactPage> {
                         webChatProvider.userContacts[index];
                     return Stack(
                       children: [
-                        Container(
-                          height: 87,
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.only(
-                              left: 15, top: 20, bottom: 20, right: 15),
-                          decoration: BoxDecoration(
-                            border: GradientBoxBorder(
-                              width: 1,
-                              gradient: RadialGradient(colors: [
-                                primaryColor.withOpacity(1),
-                                onyxColor.withOpacity(0),
-                              ], center: Alignment.bottomCenter, radius: 2),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ChatScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 87,
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.only(
+                                left: 15, top: 20, bottom: 20, right: 15),
+                            decoration: BoxDecoration(
+                              border: GradientBoxBorder(
+                                width: 1,
+                                gradient: RadialGradient(colors: [
+                                  primaryColor.withOpacity(1),
+                                  onyxColor.withOpacity(0),
+                                ], center: Alignment.bottomCenter, radius: 2),
+                              ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const ChatScreen(),
-                                    ),
-                                  );
-                                },
-                                child: SizedBox(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SizedBox(
                                   child: Row(
                                     children: [
                                       Container(
@@ -457,52 +457,53 @@ class _ContactPageState extends State<ContactPage> {
                                     ],
                                   ),
                                 ),
-                              ),
-                              const Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      index != 1 && index != 4
-                                          ? logo(
-                                              'asset/image/whatsapp-logo.png')
-                                          : Container(),
-                                      index == 1
-                                          ? Row(
-                                              children: [
-                                                logo(
-                                                    'asset/image/instagram-device 1.png'),
-                                                const SizedBox(width: 5),
-                                              ],
-                                            )
-                                          : Container(),
-                                      index == 1
-                                          ? Row(
-                                              children: [
-                                                logo(
-                                                    'asset/image/envelope-device 1.png'),
-                                                const SizedBox(width: 5),
-                                              ],
-                                            )
-                                          : Container(),
-                                      index == 1 || index == 4
-                                          ? Row(
-                                              children: [
-                                                logo('asset/image/talk 1.png'),
-                                                const SizedBox(width: 5),
-                                              ],
-                                            )
-                                          : Container(),
-                                      index == 1 || index == 4
-                                          ? logo('asset/image/web-chat 1.png')
-                                          : Container(),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
+                                const Spacer(),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        index != 1 && index != 4
+                                            ? logo(
+                                                'asset/image/whatsapp-logo.png')
+                                            : Container(),
+                                        index == 1
+                                            ? Row(
+                                                children: [
+                                                  logo(
+                                                      'asset/image/instagram-device 1.png'),
+                                                  const SizedBox(width: 5),
+                                                ],
+                                              )
+                                            : Container(),
+                                        index == 1
+                                            ? Row(
+                                                children: [
+                                                  logo(
+                                                      'asset/image/envelope-device 1.png'),
+                                                  const SizedBox(width: 5),
+                                                ],
+                                              )
+                                            : Container(),
+                                        index == 1 || index == 4
+                                            ? Row(
+                                                children: [
+                                                  logo(
+                                                      'asset/image/talk 1.png'),
+                                                  const SizedBox(width: 5),
+                                                ],
+                                              )
+                                            : Container(),
+                                        index == 1 || index == 4
+                                            ? logo('asset/image/web-chat 1.png')
+                                            : Container(),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Positioned(

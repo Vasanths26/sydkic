@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 import '../utils/constant.dart';
 import '../utils/string.dart';
@@ -62,6 +63,7 @@ class _ChatPageState extends State<ChatPage> {
     return Stack(
       children: [
         Container(
+          color: blackColor,
           height:
               MediaQuery.of(context).size.height * 0.8, // 80% of screen height
           width: MediaQuery.of(context).size.width,
@@ -100,8 +102,8 @@ class _ChatPageState extends State<ChatPage> {
                                     MediaQuery.of(context).size.width * 0.7),
                             decoration: BoxDecoration(
                               color: isSentByUser
-                                  ? const Color(0xff242824)
-                                  : const Color(0xffF0F2F5),
+                                  ? primaryColor
+                                  : appointmentConColor,
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: Text(
@@ -111,7 +113,7 @@ class _ChatPageState extends State<ChatPage> {
                                   fontFamily: MyStrings.outfit,
                                   fontWeight: FontWeight.w400,
                                   color:
-                                      isSentByUser ? whiteColor : Colors.black),
+                                      isSentByUser ? whiteColor : whiteColor),
                             ),
                           ),
                         ),
@@ -174,18 +176,29 @@ class _ChatPageState extends State<ChatPage> {
           child: Container(
             height: 55,
             decoration: BoxDecoration(
-              color: const Color(0xffF4F4F4),
-              borderRadius: BorderRadius.circular(12),
+              border: GradientBoxBorder(
+                width: 1,
+                gradient: LinearGradient(
+                  colors: [
+                    primaryColor, // #5548B1 at 30% opacity
+                    primaryColor.withOpacity(0.3), // #5548B1 at 30% opacity
+                  ], // Defines the distribution of colors
+                  begin: Alignment.topLeft,
+                  end: Alignment.topRight,
+                ),
+              ),
+              color: blackColor,
+              borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
               crossAxisAlignment:
                   CrossAxisAlignment.center, // Align vertically centered
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: Icon(
                     Icons.mood_outlined,
-                    color: Color(0xff121212),
+                    color: whitecolor,
                     size: 25,
                   ),
                 ),
@@ -202,12 +215,12 @@ class _ChatPageState extends State<ChatPage> {
                       fontFamily: MyStrings.outfit,
                       color: blackColor,
                     ),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Message...',
                       hintStyle: TextStyle(
-                        color: Color(0xff8B8E8C),
-                        fontSize: 12,
+                        color: secondaryColor,
+                        fontSize: 13,
                         fontWeight: FontWeight.w400,
                         fontFamily: MyStrings.outfit,
                       ),
@@ -216,7 +229,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.attach_file, color: Color(0xff1C1B1F)),
+                  icon: Icon(Icons.attach_file, color: whitecolor),
                   iconSize: 18,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   onPressed: () {},
@@ -229,8 +242,8 @@ class _ChatPageState extends State<ChatPage> {
                     height: 30,
                     width: 30,
                     padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: Color(0xffFFFFFF),
+                    decoration: BoxDecoration(
+                      color: whitecolor,
                       shape: BoxShape.circle,
                     ),
                     child: Image.asset(
@@ -248,9 +261,9 @@ class _ChatPageState extends State<ChatPage> {
                   child: Container(
                     height: 30,
                     width: 30,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Color(0xff121212),
+                      color: primaryColor,
                     ),
                     child: const Icon(
                       Icons.send_outlined,
@@ -279,108 +292,108 @@ class _ChatPageState extends State<ChatPage> {
       ),
       builder: (BuildContext context) {
         return Container(
-            height: 519,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: whiteColor,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
+          height: 519,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: whiteColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 5,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff8B8E8C),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                Container(
+                  height: 5,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: const Color(0xff8B8E8C),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  const SizedBox(height: 15),
-                  SizedBox(
-                    child: Text(
-                      'Choose a Platform',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  child: Text(
+                    'Choose a Platform',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: blackColor),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const SizedBox(
+                  height: 18,
+                  child: Text('Pick a Way to Send Your Message'),
+                ),
+                const SizedBox(height: 25),
+                platform('asset/image/business-device 1.png', '+919943858300',
+                    'Option 1', _selectedOption),
+                const SizedBox(height: 15),
+                platform('asset/image/talk 1.png', '+916385402959', 'Option 2',
+                    _selectedOption),
+                const SizedBox(height: 15),
+                platform('asset/image/instagram-device 1.png', 'Instagram',
+                    'Option 3', _selectedOption),
+                const SizedBox(height: 15),
+                platform('asset/image/slack-device 1.png', 'Slack', 'Option 4',
+                    _selectedOption),
+                const SizedBox(height: 15),
+                platform('asset/image/envelope-device 1.png',
+                    'praveen@nidanatech.com', 'Option 5', _selectedOption),
+                const SizedBox(height: 15),
+                platform('asset/image/web-chat 1.png', 'Chatbot', 'Option 6',
+                    _selectedOption),
+                const SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 38,
+                      width: 145,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: blackColor, width: 1),
+                          borderRadius: BorderRadius.circular(12),
+                          color: whiteColor),
+                      child: Center(
+                        child: Text(
+                          'Back',
+                          style: TextStyle(
+                              color: blackColor,
+                              fontFamily: MyStrings.outfit,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 23),
+                    Container(
+                      height: 38,
+                      width: 145,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
                           color: blackColor),
+                      child: Center(
+                        child: Text(
+                          'select',
+                          style: TextStyle(
+                              color: whiteColor,
+                              fontFamily: MyStrings.outfit,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 13),
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  const SizedBox(
-                    height: 18,
-                    child: Text('Pick a Way to Send Your Message'),
-                  ),
-                  const SizedBox(height: 25),
-                  platform('asset/image/business-device 1.png', '+919943858300',
-                      'Option 1', _selectedOption),
-                  const SizedBox(height: 15),
-                  platform('asset/image/talk 1.png', '+916385402959',
-                      'Option 2', _selectedOption),
-                  const SizedBox(height: 15),
-                  platform('asset/image/instagram-device 1.png', 'Instagram',
-                      'Option 3', _selectedOption),
-                  const SizedBox(height: 15),
-                  platform('asset/image/slack-device 1.png', 'Slack',
-                      'Option 4', _selectedOption),
-                  const SizedBox(height: 15),
-                  platform('asset/image/envelope-device 1.png',
-                      'praveen@nidanatech.com', 'Option 5', _selectedOption),
-                  const SizedBox(height: 15),
-                  platform('asset/image/web-chat 1.png', 'Chatbot', 'Option 6',
-                      _selectedOption),
-                  const SizedBox(height: 25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 38,
-                        width: 145,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: blackColor, width: 1),
-                            borderRadius: BorderRadius.circular(12),
-                            color: whiteColor),
-                        child: Center(
-                          child: Text(
-                            'Back',
-                            style: TextStyle(
-                                color: blackColor,
-                                fontFamily: MyStrings.outfit,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 23),
-                      Container(
-                        height: 38,
-                        width: 145,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: blackColor),
-                        child: Center(
-                          child: Text(
-                            'select',
-                            style: TextStyle(
-                                color: whiteColor,
-                                fontFamily: MyStrings.outfit,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+              ],
             ),
-          );
+          ),
+        );
       },
     );
   }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -144,6 +143,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               top: 14,
                               bottom: 14,
                             ),
@@ -200,6 +200,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                         ],
                       ),
                     ),
+                    const SizedBox(
                     const SizedBox(
                       height: 20,
                     ),
@@ -295,89 +296,91 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           margin: EdgeInsets.only(
                             top: _isExpanded ? 20 : 0,
                           ),
-                          child: TableCalendar(
-                            firstDay: DateTime.utc(1970, 1, 1),
-                            lastDay: DateTime.utc(2030, 12, 31),
-                            focusedDay: _focusedDay,
-                            headerVisible: false,
-                            headerStyle: const HeaderStyle(
-                              formatButtonVisible: false,
-                              titleCentered: true,
-                            ),
-                            calendarFormat: _isExpanded
-                                ? CalendarFormat.month
-                                : CalendarFormat.week,
-                            selectedDayPredicate: (day) {
-                              return isSameDay(_selectedDay, day);
-                            },
-                            onDaySelected: (selectedDay, focusedDay) {
-                              setState(() {
-                                _selectedDay = selectedDay;
-                                _focusedDay = focusedDay;
-                              });
-                            },
-                            onPageChanged: (newfocusedDay) {
-                              setState(() {
-                                _focusedDay = DateTime(newfocusedDay.year,
-                                    newfocusedDay.month, newfocusedDay.day);
-                                _selectedDay = DateTime(
-                                    newfocusedDay.year, newfocusedDay.month);
-                              });
-                            },
-                            calendarBuilders: CalendarBuilders(
-                              todayBuilder: (context, day, focusedDay) {
-                                return Container(
-                                  height: 40,
-                                  width: 40,
-                                  margin: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: whiteColor,
-                                  ),
-                                  child: Center(
-                                    child: Text(day.day.toString(),
-                                        style: TextStyle(color: blackColor)),
-                                  ),
-                                );
+                          child: Flexible(
+                            child: TableCalendar(
+                              firstDay: DateTime.utc(1970, 1, 1),
+                              lastDay: DateTime.utc(2030, 12, 31),
+                              focusedDay: _focusedDay,
+                              headerVisible: false,
+                              headerStyle: const HeaderStyle(
+                                formatButtonVisible: false,
+                                titleCentered: true,
+                              ),
+                              calendarFormat: _isExpanded
+                                  ? CalendarFormat.month
+                                  : CalendarFormat.week,
+                              selectedDayPredicate: (day) {
+                                return isSameDay(_selectedDay, day);
                               },
-                              defaultBuilder: (context, day, focusedDay) {
-                                return Container(
-                                  height: 40,
-                                  width: 40,
-                                  margin: const EdgeInsets.all(8),
-                                  child: Center(
-                                    child: Text(
-                                      day.day.toString(),
-                                      style:
-                                          const TextStyle(color: Colors.white),
+                              onDaySelected: (selectedDay, focusedDay) {
+                                setState(() {
+                                  _selectedDay = selectedDay;
+                                  _focusedDay = focusedDay;
+                                });
+                              },
+                              onPageChanged: (newfocusedDay) {
+                                setState(() {
+                                  _focusedDay = DateTime(newfocusedDay.year,
+                                      newfocusedDay.month, newfocusedDay.day);
+                                  _selectedDay = DateTime(
+                                      newfocusedDay.year, newfocusedDay.month);
+                                });
+                              },
+                              calendarBuilders: CalendarBuilders(
+                                todayBuilder: (context, day, focusedDay) {
+                                  return Container(
+                                    height: 40,
+                                    width: 40,
+                                    margin: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: whiteColor,
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
-                            calendarStyle: CalendarStyle(
-                              cellMargin: const EdgeInsets.all(8),
-                              cellPadding: const EdgeInsets.all(6),
-                              cellAlignment: Alignment.center,
-                              markerSize: 4.16,
-                              markersMaxCount: 3,
-                              markersAlignment: Alignment.bottomCenter,
-                              markerDecoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: blackColor,
+                                    child: Center(
+                                      child: Text(day.day.toString(),
+                                          style: TextStyle(color: blackColor)),
+                                    ),
+                                  );
+                                },
+                                defaultBuilder: (context, day, focusedDay) {
+                                  return Container(
+                                    height: 40,
+                                    width: 40,
+                                    margin: const EdgeInsets.all(8),
+                                    child: Center(
+                                      child: Text(
+                                        day.day.toString(),
+                                        style:
+                                            const TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                              selectedDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: whiteColor,
+                              calendarStyle: CalendarStyle(
+                                cellMargin: const EdgeInsets.all(8),
+                                cellPadding: const EdgeInsets.all(6),
+                                cellAlignment: Alignment.center,
+                                markerSize: 4.16,
+                                markersMaxCount: 3,
+                                markersAlignment: Alignment.bottomCenter,
+                                markerDecoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: blackColor,
+                                ),
+                                selectedDecoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: whiteColor,
+                                ),
+                                selectedTextStyle:
+                                    const TextStyle(color: Color(0xff121212)),
+                                defaultTextStyle:
+                                    const TextStyle(color: Colors.white),
+                                weekendTextStyle:
+                                    const TextStyle(color: Colors.white),
+                                outsideTextStyle:
+                                    const TextStyle(color: Colors.grey),
                               ),
-                              selectedTextStyle:
-                                  const TextStyle(color: Color(0xff121212)),
-                              defaultTextStyle:
-                                  const TextStyle(color: Colors.white),
-                              weekendTextStyle:
-                                  const TextStyle(color: Colors.white),
-                              outsideTextStyle:
-                                  const TextStyle(color: Colors.grey),
                             ),
                           ),
                         ),
@@ -417,6 +420,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       fontWeight: FontWeight.w500,
                       fontFamily: MyStrings.outfit,
                     ),
+                    const SizedBox(
                     const SizedBox(
                       height: 16,
                     ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../utils/constant.dart';
 import '../utils/string.dart';
 
@@ -13,77 +12,81 @@ class LeadHistory extends StatefulWidget {
 class _LeadHistoryState extends State<LeadHistory> {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 25),
-              steps('Customer inquiring about appointment booking', '1', 16,
-                  25.5),
-              const SizedBox(height: 20),
-              steps(
-                  'Successfully booked appointments for customer and customer\'s cousin',
-                  '2',
-                  32,
-                  33.5),
-              const SizedBox(height: 20),
-              steps(
-                  'Successfully booked appointments for customer and customer\'s cousin',
-                  '3',
-                  32,
-                  33.5),
-              const SizedBox(height: 20),
-              steps(
-                  'Successfully booked appointments for customer and customer\'s cousin',
-                  '4',
-                  32,
-                  33.5),
-            ],
-          ),
-        ),
-        Positioned(
-          left: 33,
-          top: 85,
-          child: Container(
-            height: 70,
-            width: 4,
-            // margin: const EdgeInsets.only(left: 13),
-            decoration: BoxDecoration(
-              color: const Color(0xff242824),
-              borderRadius: BorderRadius.circular(6),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      color: blackColor,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 25),
+                steps('Customer inquiring about appointment booking', '1', 16,
+                    25.5),
+                const SizedBox(height: 20),
+                steps(
+                    'Successfully booked appointments for customer and customer\'s cousin',
+                    '2',
+                    32,
+                    33.5),
+                const SizedBox(height: 20),
+                steps(
+                    'Successfully booked appointments for customer and customer\'s cousin',
+                    '3',
+                    32,
+                    33.5),
+                const SizedBox(height: 20),
+                steps(
+                    'Successfully booked appointments for customer and customer\'s cousin',
+                    '4',
+                    32,
+                    33.5),
+              ],
             ),
           ),
-        ),
-        Positioned(
-          left: 33,
-          top: 194,
-          child: Container(
-            height: 78,
-            width: 4,
-            // margin: const EdgeInsets.only(left: 13),
-            decoration: BoxDecoration(
-              color: const Color(0xff242824),
-              borderRadius: BorderRadius.circular(6),
+          Positioned(
+            left: 33,
+            top: 85,
+            child: Container(
+              height: 70,
+              width: 4,
+              // margin: const EdgeInsets.only(left: 13),
+              decoration: BoxDecoration(
+                color: const Color(0xff242824),
+                borderRadius: BorderRadius.circular(6),
+              ),
             ),
           ),
-        ),
-        Positioned(
-          left: 33,
-          top: 311,
-          child: Container(
-            height: 78,
-            width: 4,
-            // margin: const EdgeInsets.only(left: 13),
-            decoration: BoxDecoration(
-              color: const Color(0xff242824),
-              borderRadius: BorderRadius.circular(6),
+          Positioned(
+            left: 33,
+            top: 194,
+            child: Container(
+              height: 78,
+              width: 4,
+              // margin: const EdgeInsets.only(left: 13),
+              decoration: BoxDecoration(
+                color: const Color(0xff242824),
+                borderRadius: BorderRadius.circular(6),
+              ),
             ),
           ),
-        ),
-      ],
+          Positioned(
+            left: 33,
+            top: 311,
+            child: Container(
+              height: 78,
+              width: 4,
+              // margin: const EdgeInsets.only(left: 13),
+              decoration: BoxDecoration(
+                color: const Color(0xff242824),
+                borderRadius: BorderRadius.circular(6),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -133,7 +136,7 @@ class _LeadHistoryState extends State<LeadHistory> {
                           child: Text(
                             text,
                             style: TextStyle(
-                                color: whiteColor,
+                                color: homeTextColor,
                                 height: 1.0,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w400,
@@ -154,7 +157,7 @@ class _LeadHistoryState extends State<LeadHistory> {
                           child: Text(
                             'DISQUALIFIED',
                             style: TextStyle(
-                                color: whiteColor,
+                                color: homeTextColor,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: MyStrings.outfit),
