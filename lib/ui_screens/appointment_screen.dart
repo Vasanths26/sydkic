@@ -81,7 +81,6 @@ class AppointmentPage extends StatefulWidget {
 
 class _AppointmentPageState extends State<AppointmentPage> {
   bool _isExpanded = false;
-  final TextEditingController _controller = TextEditingController();
 
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
@@ -113,96 +112,101 @@ class _AppointmentPageState extends State<AppointmentPage> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 35, left: 20, right: 20),
-                height: 150,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                height: 60,
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(color: commonColor),
+                decoration: BoxDecoration(
+                  color: commonColor,
+                  image: const DecorationImage(
+                      image: AssetImage('asset/image/image.png'),
+                      fit: BoxFit.cover),
+                ),
                 child: Column(
                   children: [
-                    Container(
-                      height: 46,
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 7,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(28),
-                        color: blackColor.withOpacity(0.5),
-                        border: Border.all(color: primaryColor, width: 1),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black
-                                  .withOpacity(0.3), // Light black shadow
-                              offset: const Offset(5,
-                                  5), // Horizontal and vertical shadow position
-                              blurRadius: 10,
-                              spreadRadius: 0 // Spread radius
-                              ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 14,
-                              bottom: 14,
-                            ),
-                            child: Icon(Icons.search,
-                                color: primaryColor, size: 18),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 13.5, bottom: 13.5),
-                              child: TextFormField(
-                                controller: _controller,
-                                keyboardType: TextInputType.multiline,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: MyStrings.outfit,
-                                  color: whiteColor,
-                                ),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Search Name, Number, IG',
-                                  hintStyle: TextStyle(
-                                    color: homeTextColor,
-                                    fontFamily: MyStrings.outfit,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 32,
-                            width: 32,
-                            padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                colors: [
-                                  whitecolor.withOpacity(1),
-                                  primaryColor.withOpacity(1),
-                                ],
-                              ),
-                            ),
-                            child: ClipOval(
-                              child: Image.asset(
-                                'asset/image/round_profile.webp',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    // Container(
+                    //   height: 46,
+                    //   padding: const EdgeInsets.only(
+                    //     left: 20,
+                    //     right: 7,
+                    //   ),
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(28),
+                    //     color: blackColor.withOpacity(0.5),
+                    //     border: Border.all(color: primaryColor, width: 1),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //           color: Colors.black
+                    //               .withOpacity(0.3), // Light black shadow
+                    //           offset: const Offset(5,
+                    //               5), // Horizontal and vertical shadow position
+                    //           blurRadius: 10,
+                    //           spreadRadius: 0 // Spread radius
+                    //           ),
+                    //     ],
+                    //   ),
+                    //   child: Row(
+                    //     children: [
+                    //       Padding(
+                    //         padding: const EdgeInsets.only(
+                    //           top: 14,
+                    //           bottom: 14,
+                    //         ),
+                    //         child: Icon(Icons.search,
+                    //             color: primaryColor, size: 18),
+                    //       ),
+                    //       const SizedBox(width: 10),
+                    //       Expanded(
+                    //         child: Padding(
+                    //           padding: const EdgeInsets.only(
+                    //               top: 13.5, bottom: 13.5),
+                    //           child: TextFormField(
+                    //             controller: _controller,
+                    //             keyboardType: TextInputType.multiline,
+                    //             style: TextStyle(
+                    //               fontSize: 12,
+                    //               fontWeight: FontWeight.w400,
+                    //               fontFamily: MyStrings.outfit,
+                    //               color: whiteColor,
+                    //             ),
+                    //             decoration: InputDecoration(
+                    //               border: InputBorder.none,
+                    //               hintText: 'Search Name, Number, IG',
+                    //               hintStyle: TextStyle(
+                    //                 color: homeTextColor,
+                    //                 fontFamily: MyStrings.outfit,
+                    //                 fontWeight: FontWeight.w400,
+                    //                 fontSize: 13,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       Container(
+                    //         height: 32,
+                    //         width: 32,
+                    //         padding: const EdgeInsets.all(2),
+                    //         decoration: BoxDecoration(
+                    //           shape: BoxShape.circle,
+                    //           gradient: LinearGradient(
+                    //             colors: [
+                    //               whitecolor.withOpacity(1),
+                    //               primaryColor.withOpacity(1),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         child: ClipOval(
+                    //           child: Image.asset(
+                    //             'asset/image/round_profile.webp',
+                    //             fit: BoxFit.cover,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,7 +242,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                   fontSize: 13,
                                   fontWeight: FontWeight.w400,
                                   fontFamily: MyStrings.outfit,
-                                  color: whiteColor,
+                                  color: secondaryColor,
                                 ),
                               ),
                             ],
@@ -271,10 +275,13 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 child: SingleChildScrollView(
                   child: Container(
                     decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('asset/image/image.png'),
+                          fit: BoxFit.cover),
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(12),
                           bottomRight: Radius.circular(12)),
-                      color: Color(0xff302660),
+                      // color: Color(0xff302660),
                     ),
                     padding:
                         const EdgeInsets.only(left: 20, top: 10, right: 20),
@@ -284,17 +291,20 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           alignment: Alignment.centerLeft,
                           duration: const Duration(milliseconds: 300),
                           height: _isExpanded
-                              ? MediaQuery.of(context).size.height * 0.37
+                              ? MediaQuery.of(context).size.height * 0.365
                               : MediaQuery.of(context).size.height * 0.095,
                           width: MediaQuery.of(context).size.height * 0.6,
                           padding: EdgeInsets.zero,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18.0),
-                            color: const Color(0xff302660),
+                            // image: const DecorationImage(
+                            //     image: AssetImage('asset/image/image.png'),
+                            //     fit: BoxFit.cover),
+                            // color: const Color(0xff302660),
                           ),
-                          margin: EdgeInsets.only(
-                            top: _isExpanded ? 20 : 0,
-                          ),
+                          // margin: EdgeInsets.only(
+                          //   top: _isExpanded ? 20 : 0,
+                          // ),
                           child: TableCalendar(
                             firstDay: DateTime.utc(1970, 1, 1),
                             lastDay: DateTime.utc(2030, 12, 31),
@@ -373,11 +383,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
                               selectedTextStyle:
                                   const TextStyle(color: Color(0xff121212)),
                               defaultTextStyle:
-                                  const TextStyle(color: Colors.white),
+                                  TextStyle(color: secondaryColor),
                               weekendTextStyle:
-                                  const TextStyle(color: Colors.white),
+                                  TextStyle(color: secondaryColor),
                               outsideTextStyle:
-                                  const TextStyle(color: Colors.grey),
+                                  const TextStyle(color: Color(0xff8F9BB3)),
                             ),
                           ),
                         ),

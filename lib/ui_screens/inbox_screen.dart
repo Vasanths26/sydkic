@@ -177,7 +177,6 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
-  final TextEditingController _controller = TextEditingController();
   // List<bool> switchStates = List.generate(10, (index) => false);
   @override
   void initState() {
@@ -215,103 +214,103 @@ class _ContactPageState extends State<ContactPage> {
               )
             : Scaffold(
                 backgroundColor: blackColor,
-                appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(144),
-                  child: Container(
-                    height: 144,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('asset/image/image.png'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(12),
-                      ),
-                    ),
-                    padding:
-                        const EdgeInsets.only(left: 20, top: 68, bottom: 20),
-                    child: Container(
-                      height: 46,
-                      margin: const EdgeInsets.only(right: 20),
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        right: 7,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(28),
-                        color: const Color(0xff000000).withOpacity(0.5),
-                        border: Border.all(color: primaryColor, width: 1),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black
-                                  .withOpacity(0.3), // Light black shadow
-                              offset: const Offset(5,
-                                  5), // Horizontal and vertical shadow position
-                              blurRadius: 10,
-                              spreadRadius: 0 // Spread radius
-                              ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 14, bottom: 14),
-                            child: Icon(Icons.search,
-                                color: primaryColor, size: 18),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 13.5, bottom: 13.5),
-                              child: TextFormField(
-                                controller: _controller,
-                                keyboardType: TextInputType.multiline,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: MyStrings.outfit,
-                                  color: whiteColor,
-                                ),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Search Name, Number, IG',
-                                  hintStyle: TextStyle(
-                                    color: homeTextColor,
-                                    fontFamily: MyStrings.outfit,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 32,
-                            width: 32,
-                            padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                colors: [
-                                  whiteColor.withOpacity(1),
-                                  primaryColor.withOpacity(1),
-                                ],
-                              ),
-                            ),
-                            child: ClipOval(
-                              child: Image.asset(
-                                'asset/image/round_profile.webp',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // appBar: PreferredSize(
+                //   preferredSize: const Size.fromHeight(144),
+                //   child: Container(
+                //     height: 144,
+                //     decoration: const BoxDecoration(
+                //       image: DecorationImage(
+                //         image: AssetImage('asset/image/image.png'),
+                //         fit: BoxFit.cover,
+                //       ),
+                //       borderRadius: BorderRadius.only(
+                //         bottomLeft: Radius.circular(12),
+                //         bottomRight: Radius.circular(12),
+                //       ),
+                //     ),
+                //     padding: const EdgeInsets.only(
+                //         left: 20, top: 68, bottom: 20, right: 20),
+                //     child: Container(
+                //       height: 46,
+                //       margin: const EdgeInsets.only(right: 20),
+                //       padding: const EdgeInsets.only(
+                //         left: 20,
+                //         right: 7,
+                //       ),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(28),
+                //         color: blackColor.withOpacity(0.5),
+                //         border: Border.all(color: primaryColor, width: 1),
+                //         boxShadow: [
+                //           BoxShadow(
+                //               color: Colors.black
+                //                   .withOpacity(0.3), // Light black shadow
+                //               offset: const Offset(5,
+                //                   5), // Horizontal and vertical shadow position
+                //               blurRadius: 10,
+                //               spreadRadius: 0 // Spread radius
+                //               ),
+                //         ],
+                //       ),
+                //       child: Row(
+                //         children: [
+                //           Padding(
+                //             padding: const EdgeInsets.only(top: 14, bottom: 14),
+                //             child: Icon(Icons.search,
+                //                 color: primaryColor, size: 18),
+                //           ),
+                //           const SizedBox(width: 10),
+                //           Expanded(
+                //             child: Padding(
+                //               padding: const EdgeInsets.only(
+                //                   top: 13.5, bottom: 13.5),
+                //               child: TextFormField(
+                //                 controller: _controller,
+                //                 keyboardType: TextInputType.multiline,
+                //                 style: TextStyle(
+                //                   fontSize: 12,
+                //                   fontWeight: FontWeight.w400,
+                //                   fontFamily: MyStrings.outfit,
+                //                   color: whiteColor,
+                //                 ),
+                //                 decoration: InputDecoration(
+                //                   border: InputBorder.none,
+                //                   hintText: 'Search Name, Number, IG',
+                //                   hintStyle: TextStyle(
+                //                     color: homeTextColor,
+                //                     fontFamily: MyStrings.outfit,
+                //                     fontWeight: FontWeight.w400,
+                //                     fontSize: 13,
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //           Container(
+                //             height: 32,
+                //             width: 32,
+                //             padding: const EdgeInsets.all(2),
+                //             decoration: BoxDecoration(
+                //               shape: BoxShape.circle,
+                //               gradient: LinearGradient(
+                //                 colors: [
+                //                   whitecolor.withOpacity(1),
+                //                   primaryColor.withOpacity(1),
+                //                 ],
+                //               ),
+                //             ),
+                //             child: ClipOval(
+                //               child: Image.asset(
+                //                 'asset/image/round_profile.webp',
+                //                 fit: BoxFit.cover,
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 body: ListView.builder(
                   shrinkWrap: true,
                   itemCount: webChatProvider.userContacts.length,
@@ -325,7 +324,7 @@ class _ContactPageState extends State<ContactPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ChatScreen(),
+                                builder: (context) => ChatScreen(contactID: userContact.id!,onSave: refreshContacts,),
                               ),
                             );
                           },
@@ -518,14 +517,14 @@ class _ContactPageState extends State<ContactPage> {
                                       width: 1,
                                       color: blackColor,
                                     ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: const Offset(0, 4),
-                                        blurRadius: 4,
-                                        spreadRadius: 0,
-                                        color: blackColor.withOpacity(0.2),
-                                      ),
-                                    ],
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     offset: const Offset(0, 4),
+                                    //     blurRadius: 4,
+                                    //     spreadRadius: 0,
+                                    //     color: blackColor.withOpacity(0.2),
+                                    //   ),
+                                    // ],
                                     color: whiteColor,
                                     shape: BoxShape.circle,
                                   ),

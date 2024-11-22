@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sydkic/Chat/bio_screen.dart';
 import 'package:sydkic/utils/string.dart';
+import '../ui_screens/contact_assitent.dart';
 import '../utils/constant.dart';
 import 'appointment_page.dart';
 import 'chat_page.dart';
@@ -9,7 +10,10 @@ import 'note_page.dart';
 import 'profile_page.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({super.key, required this.contactID, required this.onSave});
+
+  final int contactID;
+  final VoidCallback onSave;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -61,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Icon(Icons.arrow_back, color: whiteColor),
+                      child: Icon(Icons.arrow_back, color: primaryColor),
                     ),
                     const SizedBox(width: 10),
                     Container(
@@ -115,22 +119,26 @@ class _ChatScreenState extends State<ChatScreen> {
                       height: 18,
                       width: 40,
                       alignment: Alignment.centerRight,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: activeDeviceTextColor,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
+                      // decoration: BoxDecoration(
+                      //   border: Border.all(
+                      //     color: activeDeviceTextColor,
+                      //     width: 1.0,
+                      //   ),
+                      //   borderRadius: BorderRadius.circular(20.0),
+                      // ),
                       child: Transform.scale(
                         scale: 0.75,
                         child: Switch(
                           value: switchState,
                           onChanged: (value) {
+                            showContactAssistantModal(
+                                context, widget.contactID, widget.onSave);
                             setState(() {
                               switchState = value; // Update the switch state
                             });
                           },
+                          trackOutlineColor:
+                              const WidgetStatePropertyAll(Colors.transparent),
                           inactiveTrackColor: whiteColor,
                           inactiveThumbColor: primaryColor,
                           activeTrackColor: primaryColor,
@@ -156,20 +164,37 @@ class _ChatScreenState extends State<ChatScreen> {
                   }),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
                 width: double
                     .infinity, // Ensures the container spans the full width
                 height: 1, // Sets the height of the divider line
-                color: Color(0xff242824), // Line color (adjust as needed)
+                color: const Color(0xff242824), // Line color (adjust as needed)
               ),
             ],
           ),
         ),
       ),
       body: pages[selectedIndex],
+    );
+  }
+
+  void showContactAssistantModal(
+      BuildContext context, int? contactId, VoidCallback onSave) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return ClipRRect(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          child: ContactAssitentComponent(
+            contactid: contactId,
+            onSave: onSave,
+          ),
+        );
+      },
     );
   }
 

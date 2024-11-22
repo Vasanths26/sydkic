@@ -235,31 +235,79 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 10, left: 36, right: 36, bottom: 52),
+                      top: 10, left: 25, right: 25, bottom: 30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
                         child: Container(
                           height: 5,
-                          width: 62,
+                          width: 30,
                           margin: const EdgeInsets.only(
-                            // left: 127.5,
                             bottom: 15,
-                            // right: 131.5,
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: const Color(0xffECECEC),
+                            color: const Color(0xffD0CBEF),
                           ),
                         ),
                       ),
-                      SmallText(
-                        text: MyStrings.selectTheAssistant,
-                        fontFamily: MyStrings.outfit,
-                        color: blackColor,
+                      Row(
+                        children: [
+                          SmallText(
+                            text: MyStrings.selectTheAssistant,
+                            fontFamily: MyStrings.outfit,
+                            color: primaryColor,
+                            size: 16,
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(Icons.close,
+                                size: 20, color: primaryColor),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
+                      Container(
+                        height: 45,
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.only(bottom: 15),
+                        padding: const EdgeInsets.fromLTRB(15.5, 12, 15.5, 12),
+                        decoration: BoxDecoration(
+                            color: const Color(0xffF0F2F5),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(2.25),
+                              child: Icon(Icons.search,
+                                  size: 18, color: secondaryColor),
+                            ),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 1),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: 'Search assistance...',
+                                    hintStyle: TextStyle(
+                                      fontFamily: MyStrings.outfit,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 13,
+                                      color: secondaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Expanded(
                         child: ListView.builder(
                           shrinkWrap: true,
@@ -290,11 +338,11 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                 height: 40,
                                 alignment: Alignment.center,
                                 margin: const EdgeInsets.only(bottom: 15),
-                                padding: const EdgeInsets.fromLTRB(
-                                    15.5, 12, 15.5, 12),
+                                padding:
+                                    const EdgeInsets.fromLTRB(15, 10, 10, 10),
                                 decoration: BoxDecoration(
                                     color: const Color(0xffF0F2F5),
-                                    borderRadius: BorderRadius.circular(12)),
+                                    borderRadius: BorderRadius.circular(5)),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -305,8 +353,8 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                           fontWeight: FontWeight.w500,
                                           fontSize: 13,
                                           color: provider.currentIndex == index
-                                              ? blackColor
-                                              : const Color(0xff8B8E8C)),
+                                              ? primaryColor
+                                              : secondaryColor),
                                     ),
                                     const Spacer(),
                                     isActive == true
@@ -315,7 +363,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                                             width: 16.67,
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: blackColor),
+                                                color: primaryColor),
                                             child: Center(
                                               child: Icon(Icons.check,
                                                   size: 16.67,
@@ -331,57 +379,71 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                         ),
                       ),
                       // const SizedBox(height: 20),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            widget.onSave(); // Ensure this is called after pop
-                          });
-                        },
-                        child: Container(
-                          height: 45,
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.only(top: 30),
-                          decoration: BoxDecoration(
-                              color: const Color(0xff000000),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Center(
-                            child: Text('Save',
-                                style: TextStyle(
-                                    color: whiteColor,
-                                    fontFamily: MyStrings.outfit,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400)),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          provider.inactivateAllAssistants();
-                          Navigator.pop(context);
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            widget.onSave(); // Ensure this is called after pop
-                          });
-                        },
-                        child: Container(
-                          height: 45,
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.only(top: 20),
-                          decoration: BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.circular(12),
-                              border:
-                                  Border.all(width: 1, color: Colors.black)),
-                          child: const Center(
-                            child: Text(
-                              'Turn Off Assistance',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: MyStrings.outfit,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(top: 33, left: 15, right: 15),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                provider.inactivateAllAssistants();
+                                Navigator.pop(context);
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  widget
+                                      .onSave(); // Ensure this is called after pop
+                                });
+                              },
+                              child: Container(
+                                height: 45,
+                                width:
+                                    MediaQuery.of(context).size.width * 0.374,
+                                decoration: BoxDecoration(
+                                  color: whiteColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border:
+                                      Border.all(width: 1, color: primaryColor),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Back',
+                                    style: TextStyle(
+                                        color: primaryColor,
+                                        fontFamily: MyStrings.outfit,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                            const SizedBox(width: 23),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  widget
+                                      .onSave(); // Ensure this is called after pop
+                                });
+                              },
+                              child: Container(
+                                height: 45,
+                                width:
+                                    MediaQuery.of(context).size.width * 0.374,
+                                decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Center(
+                                  child: Text('Confirm',
+                                      style: TextStyle(
+                                          color: whiteColor,
+                                          fontFamily: MyStrings.outfit,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400)),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

@@ -81,7 +81,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
     {'name': 'Test Assistant1', 'isNavigable': false},
   ];
   final List<bool> switchValue = [true, true, false, true];
-  final TextEditingController _controller = TextEditingController();
+  // final TextEditingController _controller = TextEditingController();
 
   List<bool> switchStates = List.generate(10, (index) => false);
 
@@ -98,107 +98,21 @@ class _AssistantScreenState extends State<AssistantScreen> {
       backgroundColor: blackColor,
       body: Padding(
         padding: const EdgeInsets.only(top: 22),
-        child: Column(
-          children: [
-            // Static Container
-            Container(
-              padding: const EdgeInsets.only(top: 35, left: 20, right: 20),
-              height: 120,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: commonColor,
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    height: 46,
-                    padding: const EdgeInsets.only(left: 20, right: 7),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28),
-                      color: blackColor.withOpacity(0.5),
-                      border: Border.all(color: primaryColor, width: 1),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          offset: const Offset(5, 5),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.search, color: primaryColor, size: 18),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _controller,
-                            keyboardType: TextInputType.multiline,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: MyStrings.outfit,
-                              color: whiteColor,
-                            ),
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Search Name, Number, IG',
-                              hintStyle: TextStyle(
-                                color: homeTextColor,
-                                fontFamily: MyStrings.outfit,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          height: 32,
-                          width: 32,
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              colors: [
-                                whiteColor.withOpacity(1),
-                                primaryColor.withOpacity(1),
-                              ],
-                            ),
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'asset/image/round_profile.webp',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Expandable ListView
-            Expanded(
-              child: ListView.builder(
-                itemCount: groupList.length,
-                itemBuilder: (context, index) {
-                  final groupName = groupList[index]['name'];
-                  final isNavigable = groupList[index]['isNavigable'];
+        child: ListView.builder(
+          itemCount: groupList.length,
+          itemBuilder: (context, index) {
+            final groupName = groupList[index]['name'];
+            final isNavigable = groupList[index]['isNavigable'];
 
-                  return Column(
-                    children: [
-                      group(groupName, isNavigable, switchValue[index], index),
-                      const SizedBox(height: 15),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
+            return Column(
+              children: [
+                group(groupName, isNavigable, switchValue[index], index),
+                index == groupList.length - 1
+                    ? Container()
+                    : const SizedBox(height: 15),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -231,7 +145,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
           color: const Color(0xff1A1C1A),
           borderRadius: BorderRadius.circular(5),
         ),
-        margin: const EdgeInsets.symmetric(vertical: 2,horizontal: 20),
+        margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
         padding: const EdgeInsets.all(15),
         child: Row(
           children: [
@@ -311,6 +225,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
                               value; // Update the specific switch state
                         });
                       },
+                      trackOutlineColor:
+                          WidgetStatePropertyAll(Colors.transparent),
                       inactiveTrackColor: whiteColor,
                       inactiveThumbColor: primaryColor,
                       activeTrackColor: primaryColor,

@@ -97,6 +97,8 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
     super.dispose();
   }
 
+  final TextEditingController _controller = TextEditingController();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -117,47 +119,105 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       drawerScrimColor: Colors.transparent,
       backgroundColor: blackColor,
       key: _scaffoldKey,
-      // appBar: _currentIndex == 0 && _currentIndex == 1
-      //     ? null
-      //     : AppBar(
-      //         backgroundColor: const Color(0xff000000),
-      //         leading: Padding(
-      //           padding: const EdgeInsets.only(left: 20),
-      //           child: IconButton(
-      //             onPressed: () {
-      //               _scaffoldKey.currentState?.openDrawer();
-      //             },
-      //             icon: Icon(
-      //               Icons.menu,
-      //               size: 30,
-      //               color: whiteColor,
-      //             ),
-      //           ),
-      //         ),
-      //         title: Text(
-      //           _currentIndex == 1
-      //               ? MyStrings.inbox
-      //               : _currentIndex == 2
-      //                   ? ''
-      //                   : _currentIndex == 3
-      //                       ? 'Chatbot'
-      //                       : 'Campaign',
-      //           style: const TextStyle(
-      //               fontSize: 24,
-      //               fontWeight: FontWeight.w600,
-      //               color: Colors.white,
-      //               fontFamily: MyStrings.outfit),
-      //         ),
-      //         actions: [
-      //           Container(
-      //             height: 24,
-      //             width: 24,
-      //             margin: const EdgeInsets.only(right: 20),
-      //             padding: const EdgeInsets.only(top: 2.24, bottom: 2.25),
-      //             child: Icon(Icons.cached_outlined, color: whiteColor),
-      //           ),
-      //         ],
-      //       ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(144),
+        child: Container(
+          height: 144,
+          decoration: BoxDecoration(
+            image: const DecorationImage(
+              image: AssetImage('asset/image/image.png'),
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(
+                  _currentIndex == 0 || _currentIndex == 2 ? 0 : 12),
+              bottomRight: Radius.circular(
+                  _currentIndex == 0 || _currentIndex == 2 ? 0 : 12),
+            ),
+          ),
+          padding:
+              const EdgeInsets.only(left: 20, top: 68, bottom: 20, right: 20),
+          child: Container(
+            height: 46,
+            padding: const EdgeInsets.only(
+              left: 20,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              color: blackColor.withOpacity(0.5),
+              border: Border.all(color: primaryColor, width: 1),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.3), // Light black shadow
+                    offset: const Offset(
+                        5, 5), // Horizontal and vertical shadow position
+                    blurRadius: 10,
+                    spreadRadius: 0 // Spread radius
+                    ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 14, bottom: 14),
+                  child: Icon(Icons.search, color: primaryColor, size: 18),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 13.5, bottom: 13.5),
+                    child: TextFormField(
+                      controller: _controller,
+                      keyboardType: TextInputType.multiline,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: MyStrings.outfit,
+                        color: whiteColor,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search Name, Number, IG',
+                        hintStyle: TextStyle(
+                          color: homeTextColor,
+                          fontFamily: MyStrings.outfit,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 7),
+                  child: Container(
+                    height: 36,
+                    width: 36,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: GradientBoxBorder(
+                        width: 2,
+                        gradient: LinearGradient(
+                          colors: [
+                            whitecolor.withOpacity(1),
+                            primaryColor.withOpacity(1),
+                          ],
+                        ),
+                      ),
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'asset/image/round_profile.webp',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       bottomNavigationBar: Stack(
         children: [
           Container(

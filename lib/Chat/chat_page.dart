@@ -195,7 +195,7 @@ class _ChatPageState extends State<ChatPage> {
                   CrossAxisAlignment.center, // Align vertically centered
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Icon(
                     Icons.mood_outlined,
                     color: whitecolor,
@@ -224,7 +224,7 @@ class _ChatPageState extends State<ChatPage> {
                         fontWeight: FontWeight.w400,
                         fontFamily: MyStrings.outfit,
                       ),
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 15),
                     ),
                   ),
                 ),
@@ -301,6 +301,7 @@ class _ChatPageState extends State<ChatPage> {
               topRight: Radius.circular(20),
             ),
           ),
+          padding: const EdgeInsets.only(left: 25, right: 25),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -314,20 +315,43 @@ class _ChatPageState extends State<ChatPage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                const SizedBox(height: 15),
-                SizedBox(
-                  child: Text(
-                    'Choose a Platform',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: blackColor),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const SizedBox(
-                  height: 18,
-                  child: Text('Pick a Way to Send Your Message'),
+                const SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          child: Text(
+                            'Choose a Platform',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: primaryColor),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        SizedBox(
+                          height: 18,
+                          child: Text(
+                            'Pick a Way to Send Your Message',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                                color: secondaryColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.close, size: 20, color: primaryColor),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 25),
                 platform('asset/image/business-device 1.png', '+919943858300',
@@ -403,6 +427,7 @@ class _ChatPageState extends State<ChatPage> {
     return Container(
       height: 42,
       width: 353,
+      padding: const EdgeInsets.only(left: 10, right: 15, top: 6, bottom: 6),
       decoration: BoxDecoration(
         color: const Color(0xffF0F2F5),
         borderRadius: BorderRadius.circular(5),
@@ -418,7 +443,7 @@ class _ChatPageState extends State<ChatPage> {
           const SizedBox(width: 15),
           SizedBox(
             // height: 18,
-            // width: 186,
+            width: 232,
             child: Text(
               text,
               style: TextStyle(

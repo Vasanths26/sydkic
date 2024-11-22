@@ -20,8 +20,9 @@ class _NotePageState extends State<NotePage> {
         child: Column(
           children: [
             Container(
-              decoration: const BoxDecoration(
-                color: Color(0xff242824),
+              decoration: BoxDecoration(
+                color: const Color(0xff242824),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: Stack(
                 children: [
@@ -29,7 +30,7 @@ class _NotePageState extends State<NotePage> {
                     maxLines:
                         null, // Allows the TextFormField to expand vertically
                     minLines: 5, // Sets an initial height with 5 lines
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Take a note here...",
                       hintStyle: TextStyle(
                           color: secondaryColor,
@@ -37,8 +38,8 @@ class _NotePageState extends State<NotePage> {
                           fontWeight: FontWeight.w400,
                           fontFamily: MyStrings.outfit),
                       border: InputBorder.none,
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 16),
                     ),
                     style: const TextStyle(fontSize: 16),
                   ),

@@ -92,7 +92,6 @@ class _HomePagesState extends State<HomePages> {
     'asset/image/Component.png',
   ];
 
-  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -124,103 +123,103 @@ class _HomePagesState extends State<HomePages> {
                     child: Column(
                       children: [
                         Container(
-                          height: 240,
+                          height: 100,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('asset/image/image.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
-                          padding: const EdgeInsets.only(
-                              left: 20, top: 68, bottom: 15),
+                          padding: const EdgeInsets.only(left: 20, bottom: 15),
                           child: Column(
                             children: [
-                              Container(
-                                height: 46,
-                                margin: const EdgeInsets.only(right: 20),
-                                padding: const EdgeInsets.only(
-                                  left: 20,
-                                  right: 7,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(28),
-                                  color: blackColor.withOpacity(0.5),
-                                  border:
-                                      Border.all(color: primaryColor, width: 1),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black.withOpacity(
-                                            0.3), // Light black shadow
-                                        offset: const Offset(5,
-                                            5), // Horizontal and vertical shadow position
-                                        blurRadius: 10,
-                                        spreadRadius: 0 // Spread radius
-                                        ),
-                                  ],
-                                ),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(top: 14, bottom: 14),
-                                      child: Icon(Icons.search,
-                                          color: primaryColor, size: 18),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 13.5, bottom: 13.5),
-                                        child: TextFormField(
-                                          controller: _controller,
-                                          keyboardType: TextInputType.multiline,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: MyStrings.outfit,
-                                            color: whiteColor,
-                                          ),
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Search Name, Number, IG',
-                                            hintStyle: TextStyle(
-                                              color: homeTextColor,
-                                              fontFamily: MyStrings.outfit,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 32,
-                                      width: 32,
-                                      padding: const EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            whitecolor.withOpacity(1),
-                                            primaryColor.withOpacity(1),
-                                          ],
-                                        ),
-                                      ),
-                                      child: ClipOval(
-                                        child: Image.asset(
-                                          'asset/image/round_profile.webp',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
+                              // Container(
+                              //   height: 46,
+                              //   margin: const EdgeInsets.only(right: 20),
+                              //   padding: const EdgeInsets.only(
+                              //     left: 20,
+                              //     right: 7,
+                              //   ),
+                              //   decoration: BoxDecoration(
+                              //     borderRadius: BorderRadius.circular(28),
+                              //     color: blackColor.withOpacity(0.5),
+                              //     border:
+                              //         Border.all(color: primaryColor, width: 1),
+                              //     boxShadow: [
+                              //       BoxShadow(
+                              //           color: Colors.black.withOpacity(
+                              //               0.3), // Light black shadow
+                              //           offset: const Offset(5,
+                              //               5), // Horizontal and vertical shadow position
+                              //           blurRadius: 10,
+                              //           spreadRadius: 0 // Spread radius
+                              //           ),
+                              //     ],
+                              //   ),
+                              //   child: Row(
+                              //     children: [
+                              //       Padding(
+                              //         padding:
+                              //             const EdgeInsets.only(top: 14, bottom: 14),
+                              //         child: Icon(Icons.search,
+                              //             color: primaryColor, size: 18),
+                              //       ),
+                              //       const SizedBox(width: 10),
+                              //       Expanded(
+                              //         child: Padding(
+                              //           padding: const EdgeInsets.only(
+                              //               top: 13.5, bottom: 13.5),
+                              //           child: TextFormField(
+                              //             controller: _controller,
+                              //             keyboardType: TextInputType.multiline,
+                              //             style: TextStyle(
+                              //               fontSize: 12,
+                              //               fontWeight: FontWeight.w400,
+                              //               fontFamily: MyStrings.outfit,
+                              //               color: whiteColor,
+                              //             ),
+                              //             decoration: InputDecoration(
+                              //               border: InputBorder.none,
+                              //               hintText: 'Search Name, Number, IG',
+                              //               hintStyle: TextStyle(
+                              //                 color: homeTextColor,
+                              //                 fontFamily: MyStrings.outfit,
+                              //                 fontWeight: FontWeight.w400,
+                              //                 fontSize: 13,
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       ),
+                              //       Container(
+                              //         height: 32,
+                              //         width: 32,
+                              //         padding: const EdgeInsets.all(2),
+                              //         decoration: BoxDecoration(
+                              //           shape: BoxShape.circle,
+                              //           gradient: LinearGradient(
+                              //             colors: [
+                              //               whitecolor.withOpacity(1),
+                              //               primaryColor.withOpacity(1),
+                              //             ],
+                              //           ),
+                              //         ),
+                              //         child: ClipOval(
+                              //           child: Image.asset(
+                              //             'asset/image/round_profile.webp',
+                              //             fit: BoxFit.cover,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              // const SizedBox(
+                              //   height: 15,
+                              // ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 5),
+                                padding:
+                                    const EdgeInsets.only(left: 5, right: 5),
                                 child: Row(
                                   children: [
                                     SizedBox(
@@ -385,15 +384,26 @@ class _HomePagesState extends State<HomePages> {
                                     ),
                                   ),
                                   const Spacer(),
-                                  Text(
-                                    'See all',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 13,
-                                      fontFamily: MyStrings.outfit,
-                                      fontWeight: FontWeight.w400,
-                                      color: sellAllColor,
-                                    ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        'See all',
+                                        style: TextStyle(
+                                          // decoration: TextDecoration.underline,
+                                          fontSize: 13,
+                                          // decorationColor: sellAllColor,
+                                          fontFamily: MyStrings.outfit,
+                                          fontWeight: FontWeight.w400,
+                                          color: sellAllColor,
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 48, // Match the text width
+                                        height:
+                                            1.5, // Thickness of the underline
+                                        color: sellAllColor,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -538,7 +548,8 @@ class _HomePagesState extends State<HomePages> {
             colors: [
               // Color(0xFF5548B1), // #5548B1 at 30% opacity
               const Color(0xFF5548B1), // #5548B1 at full opacity
-              const Color(0xFF5548B1).withOpacity(0.3), // #5548B1 at 30% opacity
+              const Color(0xFF5548B1)
+                  .withOpacity(0.3), // #5548B1 at 30% opacity
             ],
             begin: alignTop,
             end: alignBottom,
