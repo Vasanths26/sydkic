@@ -210,7 +210,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                   alignment: Alignment.centerRight,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: activeDeviceTextColor,
+                      color: whitecolor,
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(20.0),

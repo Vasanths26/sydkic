@@ -180,11 +180,11 @@ class _BucketScreenState extends State<BucketScreen> {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.calendar_today,
+                                Icons.calendar_month_outlined,
                                 color: primaryColor,
-                                size: 15,
+                                size: 18,
                               ),
-                              const SizedBox(width: 5),
+                              const SizedBox(width: 10),
                               Text(
                                 'November 07, 2024',
                                 style: TextStyle(

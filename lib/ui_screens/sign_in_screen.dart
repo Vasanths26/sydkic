@@ -313,13 +313,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ? CircularProgressIndicator(
                                       color: primaryColor,
                                     )
-                                  : const Text(
+                                  :  Text(
                                       "Sign in",
                                       style: TextStyle(
                                         fontFamily: MyStrings.outfit,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18,
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
                                       ),
                                     ),
                             ),

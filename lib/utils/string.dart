@@ -47,7 +47,7 @@ class MyStrings {
   static const String time = '10:00 AM';
   static const String name = 'Dinesh';
   static const String content =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua  dolor sit amet. ';
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor';
 
 //Inbox
   static const String inbox = 'Inbox';

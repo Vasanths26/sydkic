@@ -158,7 +158,7 @@ class _GroupAssistantState extends State<GroupAssistant> {
                   alignment: Alignment.centerRight,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: activeDeviceTextColor,
+                      color: whitecolor,
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(20.0),
@@ -172,7 +172,9 @@ class _GroupAssistantState extends State<GroupAssistant> {
                           switchStates[index] = value;
                         });
                       },
-                      inactiveTrackColor: whitecolor,
+                      trackOutlineColor:
+                      const WidgetStatePropertyAll(Colors.transparent),
+                      inactiveTrackColor: whiteColor,
                       inactiveThumbColor: primaryColor,
                       activeTrackColor: primaryColor,
                     ),
