@@ -517,7 +517,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Icon(
-                                      Icons.person_2_outlined,
+                                      Icons.person_2,
                                       color: primaryColor,
                                       size: 18,
                                     ),
@@ -553,7 +553,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                       width: 12,
                                     ),
                                     Icon(
-                                      Icons.access_time_rounded,
+                                      Icons.access_time_filled_rounded,
                                       size: 14,
                                       color: primaryColor,
                                     ),

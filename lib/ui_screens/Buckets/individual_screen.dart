@@ -13,7 +13,7 @@ class IndividualScreen extends StatefulWidget {
 class _IndividualScreenState extends State<IndividualScreen> {
   int selectedIndex = 0;
   bool isSwitchOn = false;
-  String selectedTopic = '';
+  String selectedTopic = 'Interested';
   String selectedImage = 'asset/image/bubble.png';
   final Map<String, List<Map<String, String>>> topicItems = {
     'Interested': [
@@ -105,7 +105,7 @@ class _IndividualScreenState extends State<IndividualScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff000000),
+      backgroundColor: blackColor,
       body: Container(
         height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.only(left: 20, right: 20, top: 42.86),
@@ -123,8 +123,8 @@ class _IndividualScreenState extends State<IndividualScreen> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 3, bottom: 2),
-                      child: Icon(Icons.arrow_back,
-                          size: 20, color: dividerLineColor),
+                      child:
+                          Icon(Icons.arrow_back, size: 20, color: primaryColor),
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -160,6 +160,8 @@ class _IndividualScreenState extends State<IndividualScreen> {
                             isSwitchOn = value; // Update the switch state
                           });
                         },
+                        trackOutlineColor:
+                            const WidgetStatePropertyAll(Colors.transparent),
                         inactiveTrackColor: whiteColor,
                         inactiveThumbColor: primaryColor,
                         activeTrackColor: primaryColor,
