@@ -160,7 +160,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 14, bottom: 14),
-                  child: Icon(Icons.search, color: primaryColor, size: 18),
+                  child: Icon(Icons.search, color: primaryColor, size: 22),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -189,10 +189,10 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 7),
+                  padding: const EdgeInsets.all(7),
                   child: Container(
-                    height: 36,
-                    width: 36,
+                    height: 44,
+                    width: 44,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: GradientBoxBorder(

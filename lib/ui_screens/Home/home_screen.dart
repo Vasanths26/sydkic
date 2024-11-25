@@ -92,7 +92,6 @@ class _HomePagesState extends State<HomePages> {
     'asset/image/Component.png',
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -120,6 +119,7 @@ class _HomePagesState extends State<HomePages> {
               : Scaffold(
                   backgroundColor: blackColor,
                   body: SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
                     child: Column(
                       children: [
                         Container(
@@ -367,8 +367,7 @@ class _HomePagesState extends State<HomePages> {
                         ),
                         const SizedBox(height: 18),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             children: [
                               Row(
@@ -376,7 +375,6 @@ class _HomePagesState extends State<HomePages> {
                                   Text(
                                     'Recent Chat',
                                     style: TextStyle(
-                                      decoration: TextDecoration.underline,
                                       fontSize: 13,
                                       fontFamily: MyStrings.outfit,
                                       fontWeight: FontWeight.w500,
@@ -385,6 +383,8 @@ class _HomePagesState extends State<HomePages> {
                                   ),
                                   const Spacer(),
                                   Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         'See all',
@@ -398,7 +398,7 @@ class _HomePagesState extends State<HomePages> {
                                         ),
                                       ),
                                       Container(
-                                        width: 48, // Match the text width
+                                        width: 47.5, // Match the text width
                                         height:
                                             1.5, // Thickness of the underline
                                         color: sellAllColor,
@@ -407,7 +407,7 @@ class _HomePagesState extends State<HomePages> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 24),
+                              const SizedBox(height: 15),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [

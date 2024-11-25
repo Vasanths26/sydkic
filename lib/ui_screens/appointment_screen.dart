@@ -109,6 +109,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
       child: Scaffold(
         backgroundColor: blackColor,
         body: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
               Container(
@@ -291,21 +292,15 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           alignment: Alignment.centerLeft,
                           duration: const Duration(milliseconds: 300),
                           height: _isExpanded
-                              ? MediaQuery.of(context).size.height * 0.365
-                              : MediaQuery.of(context).size.height * 0.095,
+                              ? MediaQuery.of(context).size.height * 0.37
+                              : MediaQuery.of(context).size.height * 0.105,
                           width: MediaQuery.of(context).size.height * 0.6,
                           padding: EdgeInsets.zero,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(18.0),
-                            // image: const DecorationImage(
-                            //     image: AssetImage('asset/image/image.png'),
-                            //     fit: BoxFit.cover),
-                            // color: const Color(0xff302660),
                           ),
-                          // margin: EdgeInsets.only(
-                          //   top: _isExpanded ? 20 : 0,
-                          // ),
                           child: TableCalendar(
+                            daysOfWeekHeight: 30,
                             firstDay: DateTime.utc(1970, 1, 1),
                             lastDay: DateTime.utc(2030, 12, 31),
                             focusedDay: _focusedDay,
@@ -334,26 +329,68 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                     newfocusedDay.year, newfocusedDay.month);
                               });
                             },
+                            daysOfWeekStyle: DaysOfWeekStyle(
+                              weekendStyle: TextStyle(
+                                color: secondaryColor, // Color for weekend days
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                                fontFamily: MyStrings.outfit,
+                              ),
+                              weekdayStyle: TextStyle(
+                                color: secondaryColor, // Color for weekdays
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13,
+                                fontFamily: MyStrings.outfit,
+                              ),
+                            ),
                             calendarBuilders: CalendarBuilders(
+                              weekNumberBuilder: (context, day) {
+                                return Center(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        // Customize day text appearance
+                                        day.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 4.0,
+                                      ), // Adjust spacing as needed
+                                      Text(
+                                        // Customize date text appearance
+                                        day.toString(),
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                               todayBuilder: (context, day, focusedDay) {
                                 return Container(
                                   height: 40,
                                   width: 40,
                                   margin: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: whiteColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: whiteColor),
                                   ),
                                   child: Center(
-                                    child: Text(day.day.toString(),
-                                        style: TextStyle(color: blackColor)),
+                                    child: Text(
+                                      day.day.toString(),
+                                      style: TextStyle(color: whiteColor),
+                                    ),
                                   ),
                                 );
                               },
                               defaultBuilder: (context, day, focusedDay) {
                                 return Container(
-                                  height: 40,
-                                  width: 40,
+                                  height: 30,
+                                  width: 30,
                                   margin: const EdgeInsets.all(8),
                                   child: Center(
                                     child: Text(
@@ -366,6 +403,13 @@ class _AppointmentPageState extends State<AppointmentPage> {
                               },
                             ),
                             calendarStyle: CalendarStyle(
+                              todayTextStyle: TextStyle(color: whiteColor),
+                              todayDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: whiteColor,
+                                ),
+                              ),
                               cellMargin: const EdgeInsets.all(8),
                               cellPadding: const EdgeInsets.all(6),
                               cellAlignment: Alignment.center,
@@ -377,11 +421,10 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                 color: blackColor,
                               ),
                               selectedDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(10),
                                 color: whiteColor,
                               ),
-                              selectedTextStyle:
-                                  const TextStyle(color: Color(0xff121212)),
+                              selectedTextStyle: TextStyle(color: blackColor),
                               defaultTextStyle:
                                   TextStyle(color: secondaryColor),
                               weekendTextStyle:
@@ -459,8 +502,38 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                 color: appointmentConColor),
                             child: Column(
                               children: [
+                                SmallText(
+                                  text: MyStrings.content,
+                                  size: 13,
+                                  color: homeTextColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: MyStrings.outfit,
+                                  maxLine: 2,
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
+                                    Icon(
+                                      Icons.person_2_outlined,
+                                      color: primaryColor,
+                                      size: 18,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    SmallText(
+                                      text: MyStrings.name,
+                                      size: 10,
+                                      color: secondaryColor,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: MyStrings.outfit,
+                                    ),
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
                                     Icon(
                                       Icons.calendar_month_outlined,
                                       size: 18,
@@ -496,39 +569,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                SmallText(
-                                  text: MyStrings.content,
-                                  size: 13,
-                                  color: homeTextColor,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: MyStrings.outfit,
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.person_2_outlined,
-                                      color: primaryColor,
-                                      size: 18,
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    SmallText(
-                                      text: MyStrings.name,
-                                      size: 10,
-                                      color: secondaryColor,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: MyStrings.outfit,
-                                    ),
-                                  ],
-                                )
                               ],
                             ),
                           );

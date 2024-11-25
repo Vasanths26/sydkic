@@ -244,7 +244,7 @@ class _InterestedPageState extends State<InterestedPage> {
                                         Text(
                                           'Move',
                                           style: TextStyle(
-                                            fontSize: 13,
+                                            fontSize: 10,
                                             fontWeight: FontWeight.w400,
                                             fontFamily: MyStrings.outfit,
                                             color: secondaryColor,
