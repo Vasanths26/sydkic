@@ -37,12 +37,15 @@ Color commonColor = const Color(0xff302660);
 Color assistantImageColor = const Color(0xff393939);
 Color activeColor = const Color(0xff60D669);
 Color holdColor = const Color(0xffFFD002);
+Color appointmentText= const Color(0xff4B4B4B);
+Color biodividerColor= const Color(0xff242824);
 
-Color paleLavendar = const Color(0xffE0DCFF);
+
+Color paleLavendar = const Color(0xffE0DCFF);//duplicate of activeDeviceTextColor
 Color antiflashWhite = const Color(0xffF0F2F5);
-Color onyxColor = const Color(0xff393939);
+Color onyxColor = const Color(0xff393939);//duplicate of assistantImageColor
 Color onyxColor1 = const Color(0xff373737);
 Color raisinBlack = const Color(0xff202020);
-Color chineseBlack = const Color(0xff141416);
-Color lightGreen = const Color(0xff60D669);
-Color lightYellow = const Color(0xffFFD002);
+Color chineseBlack = const Color(0xff141416);//duplicate of appointmentConColor
+Color lightGreen = const Color(0xff60D669);//duplicate of active color
+Color lightYellow = const Color(0xffFFD002);//duplicate of hold color

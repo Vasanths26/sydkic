@@ -393,7 +393,7 @@ class _ChatPageState extends State<ChatPage> {
                           platform["option"]!,
                         ),
                         if (index != platforms.length - 1)
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 10),
                       ],
                     );
                   },
@@ -452,7 +452,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget platformWidget(String image, String text, String option) {
     return Container(
       height: 42,
-      width: 353,
+      // width: 353,
       padding: const EdgeInsets.only(left: 10, right: 15, top: 6, bottom: 6),
       decoration: BoxDecoration(
         color: const Color(0xffF0F2F5),

@@ -554,7 +554,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                     ),
                                     Icon(
                                       Icons.access_time_filled_rounded,
-                                      size: 14,
+                                      size: 18,
                                       color: primaryColor,
                                     ),
                                     const SizedBox(

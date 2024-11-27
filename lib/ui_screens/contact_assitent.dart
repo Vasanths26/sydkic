@@ -15,17 +15,21 @@ import 'package:http/http.dart' as http;
 class ScheduledProvider extends ChangeNotifier {
   List<UserContacts> _userContacts = [];
   List<ContactAssistant> _contactAssistant = [];
+  List<ContactAssistant> _filteredAssistant = [];
   int _selectedIndex = 0;
   bool _isLoading = false;
   String _assistant = '';
   int _currentIndex = -1;
   CreateAssistantModel? _createAssistant;
   CreateAssistant? _createNewAssistant;
+  bool _isShowSearchList = false;
 
   int get selectedIndex => _selectedIndex;
   bool get isLoading => _isLoading;
+  bool get isShowSearchList => _isShowSearchList;
   List<UserContacts> get userContacts => _userContacts;
   List<ContactAssistant> get contactAssistant => _contactAssistant;
+  List<ContactAssistant> get filteredAssistant => _filteredAssistant;
   String get assistant => _assistant;
   int get currentIndex => _currentIndex;
   CreateAssistantModel? get createAssistant => _createAssistant;
@@ -189,6 +193,24 @@ class ScheduledProvider extends ChangeNotifier {
     data;
     notifyListeners();
   }
+
+  void filterNames(String query) {
+    if (query.isNotEmpty) {
+      List<ContactAssistant> filterdList = [];
+      for (var item in _contactAssistant) {
+        if (item.assistantName!.toLowerCase().contains(query.toLowerCase())) {
+          filterdList.add(ContactAssistant());
+        }
+      }
+      _isShowSearchList = true;
+      _filteredAssistant.clear();
+      _filteredAssistant.addAll(filterdList);
+    } else {
+      _isShowSearchList = false;
+      _filteredAssistant.clear();
+      _filteredAssistant.addAll(_contactAssistant);
+    }
+  }
 }
 
 class ContactAssitentComponent extends StatefulWidget {
@@ -203,6 +225,8 @@ class ContactAssitentComponent extends StatefulWidget {
 }
 
 class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -275,7 +299,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                         height: 45,
                         alignment: Alignment.center,
                         margin: const EdgeInsets.only(bottom: 15),
-                        padding: const EdgeInsets.fromLTRB(15.5, 12, 15.5, 12),
+                        padding: const EdgeInsets.fromLTRB(15, 12, 15, 12),
                         decoration: BoxDecoration(
                             color: const Color(0xffF0F2F5),
                             borderRadius: BorderRadius.circular(12)),
@@ -283,7 +307,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(2.25),
+                              padding: const EdgeInsets.only(top: 2.25),
                               child: Icon(Icons.search,
                                   size: 18, color: secondaryColor),
                             ),
@@ -292,6 +316,7 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 1),
                                 child: TextFormField(
+                                  controller: searchController,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: 'Search assistance...',
@@ -311,11 +336,13 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                       Expanded(
                         child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: provider.contactAssistant.length,
+                          itemCount: provider.isShowSearchList == true
+                              ? provider.filteredAssistant.length
+                              : provider.contactAssistant.length,
                           itemBuilder: (context, index) {
                             final userContact =
-                                provider.contactAssistant[index];
-
+                                 provider.contactAssistant[index];
+                            final filterContact= provider.filteredAssistant[index];
                             bool hasAssistantContact =
                                 userContact.assistantName != null &&
                                     userContact.createdBy != null;
@@ -337,9 +364,9 @@ class _ContactAssitentComponentState extends State<ContactAssitentComponent> {
                               child: Container(
                                 height: 40,
                                 alignment: Alignment.center,
-                                margin: const EdgeInsets.only(bottom: 15),
+                                margin: const EdgeInsets.only(bottom: 10),
                                 padding:
-                                    const EdgeInsets.fromLTRB(15, 10, 10, 10),
+                                    const EdgeInsets.fromLTRB(15, 10, 15, 10),
                                 decoration: BoxDecoration(
                                     color: const Color(0xffF0F2F5),
                                     borderRadius: BorderRadius.circular(5)),

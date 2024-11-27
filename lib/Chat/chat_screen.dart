@@ -52,9 +52,9 @@ class _ChatScreenState extends State<ChatScreen> {
         scrolledUnderElevation: 0.0, // This will fix the problem
         automaticallyImplyLeading: false,
         backgroundColor: blackColor,
-        toolbarHeight: 150,
+        toolbarHeight: 130,
         flexibleSpace: Padding(
-          padding: const EdgeInsets.only(top: 50, bottom: 10),
+          padding: const EdgeInsets.only(top: 50),
           child: Column(
             children: [
               Padding(
@@ -119,13 +119,6 @@ class _ChatScreenState extends State<ChatScreen> {
                       height: 18,
                       width: 40,
                       alignment: Alignment.centerRight,
-                      // decoration: BoxDecoration(
-                      //   border: Border.all(
-                      //     color: activeDeviceTextColor,
-                      //     width: 1.0,
-                      //   ),
-                      //   borderRadius: BorderRadius.circular(20.0),
-                      // ),
                       child: Transform.scale(
                         scale: 0.75,
                         child: Switch(
