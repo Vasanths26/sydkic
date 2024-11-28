@@ -113,8 +113,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                height: 60,
+                padding: const EdgeInsets.only(left: 20, top: 15, right: 20),
+                height: 64,
+                alignment: Alignment.bottomCenter,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: commonColor,
@@ -285,7 +286,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                       // color: Color(0xff302660),
                     ),
                     padding:
-                        const EdgeInsets.only(left: 20, top: 10, right: 20),
+                        const EdgeInsets.only(left: 20, top: 12.21, right: 20),
                     child: Column(
                       children: [
                         AnimatedContainer(

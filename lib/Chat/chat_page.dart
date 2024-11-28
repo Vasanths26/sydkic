@@ -39,14 +39,8 @@ class _ChatPageState extends State<ChatPage> {
     },
   ];
   final TextEditingController _controller = TextEditingController();
-  String _selectedOption = '';
+  String? _selectedOption;
   int selectedIndex = 0;
-
-  void _handleRadioValueChange(String? value) {
-    setState(() {
-      _selectedOption = value!;
-    });
-  }
 
   void _sendMessage() {
     final message = _controller.text.trim();
@@ -65,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
         Container(
           color: blackColor,
           height:
-              MediaQuery.of(context).size.height * 0.8, // 80% of screen height
+              MediaQuery.of(context).size.height * 0.85, // 80% of screen height
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
@@ -324,173 +318,180 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
       builder: (BuildContext context) {
-        return Container(
-          height: 519,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          padding: const EdgeInsets.only(left: 25, right: 25),
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              Container(
-                height: 5,
-                width: 30,
-                decoration: BoxDecoration(
-                  color: const Color(0xff8B8E8C),
-                  borderRadius: BorderRadius.circular(10),
+        String? selectedOption = _selectedOption; // Initialize local state
+
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Container(
+              height: 519,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: whiteColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
               ),
-              const SizedBox(height: 10),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Column(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 10),
+                  Container(
+                    height: 5,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: const Color(0xff8B8E8C),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
                     children: [
-                      Text(
-                        'Choose a Platform',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: primaryColor),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Choose a Platform',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: primaryColor),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Pick a Way to Send Your Message',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400,
+                                color: secondaryColor),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Pick a Way to Send Your Message',
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            color: secondaryColor),
+                      const Spacer(),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(Icons.close, size: 20, color: primaryColor),
                       ),
                     ],
                   ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(Icons.close, size: 20, color: primaryColor),
+                  const SizedBox(height: 25),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: platforms.length,
+                      itemBuilder: (context, index) {
+                        final platform = platforms[index];
+                        return Column(
+                          children: [
+                            Container(
+                              height: 42,
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 15, top: 6, bottom: 6),
+                              decoration: BoxDecoration(
+                                color: const Color(0xffF0F2F5),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    width: 30,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle),
+                                    child: Image.asset(
+                                      platform["image"]!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  SizedBox(
+                                    width: 232,
+                                    child: Text(
+                                      platform["text"]!,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: MyStrings.outfit,
+                                        color:
+                                            selectedOption == platform["option"]
+                                                ? blackColor
+                                                : const Color(0xff8B8E8C),
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Radio<String>(
+                                    value: platform["option"]!,
+                                    groupValue: selectedOption,
+                                    onChanged: (value) {
+                                      setModalState(() {
+                                        selectedOption = value;
+                                      });
+                                      setState(() {
+                                        _selectedOption = value;
+                                      });
+                                    },
+                                    activeColor: primaryColor,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            if (index != platforms.length - 1)
+                              const SizedBox(height: 10),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 25),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: platforms.length,
-                  itemBuilder: (context, index) {
-                    final platform = platforms[index];
-                    return Column(
-                      children: [
-                        platformWidget(
-                          platform["image"]!,
-                          platform["text"]!,
-                          platform["option"]!,
+                  const SizedBox(height: 25),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 38,
+                        width: 145,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: primaryColor, width: 1),
+                            borderRadius: BorderRadius.circular(12),
+                            color: whiteColor),
+                        child: Center(
+                          child: Text(
+                            'Back',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontFamily: MyStrings.outfit,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13),
+                          ),
                         ),
-                        if (index != platforms.length - 1)
-                          const SizedBox(height: 10),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 25),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 38,
-                    width: 145,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: primaryColor, width: 1),
-                        borderRadius: BorderRadius.circular(12),
-                        color: whiteColor),
-                    child: Center(
-                      child: Text(
-                        'Back',
-                        style: TextStyle(
-                            color: primaryColor,
-                            fontFamily: MyStrings.outfit,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13),
                       ),
-                    ),
-                  ),
-                  const SizedBox(width: 23),
-                  Container(
-                    height: 38,
-                    width: 145,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: primaryColor),
-                    child: Center(
-                      child: Text(
-                        'Select',
-                        style: TextStyle(
-                            color: whiteColor,
-                            fontFamily: MyStrings.outfit,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13),
+                      const SizedBox(width: 23),
+                      Container(
+                        height: 38,
+                        width: 145,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: primaryColor),
+                        child: Center(
+                          child: Text(
+                            'Select',
+                            style: TextStyle(
+                                color: whiteColor,
+                                fontFamily: MyStrings.outfit,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 13),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+                  const SizedBox(height: 30),
                 ],
               ),
-              const SizedBox(height: 30),
-            ],
-          ),
+            );
+          },
         );
       },
-    );
-  }
-
-  Widget platformWidget(String image, String text, String option) {
-    return Container(
-      height: 42,
-      // width: 353,
-      padding: const EdgeInsets.only(left: 10, right: 15, top: 6, bottom: 6),
-      decoration: BoxDecoration(
-        color: const Color(0xffF0F2F5),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: 30,
-            width: 30,
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            child: Image.asset(image, fit: BoxFit.cover),
-          ),
-          const SizedBox(width: 15),
-          SizedBox(
-            width: 232,
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: MyStrings.outfit,
-                color: _selectedOption == option
-                    ? blackColor
-                    : const Color(0xff8B8E8C),
-              ),
-            ),
-          ),
-          const Spacer(),
-          Radio<String>(
-            value: option,
-            groupValue: _selectedOption,
-            onChanged: (value) {
-              _handleRadioValueChange(value);
-            },
-            activeColor: primaryColor,
-          ),
-        ],
-      ),
     );
   }
 }

@@ -16,7 +16,7 @@ class _NotePageState extends State<NotePage> {
     return Scaffold(
       backgroundColor: blackColor,
       body: Container(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Container(
@@ -63,7 +63,7 @@ class _NotePageState extends State<NotePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Container(
               height: 160,
               width: MediaQuery.of(context).size.width,

@@ -21,6 +21,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   int selectedIndex = 0;
+  final PageController _pageController = PageController();
 
   // List of pages corresponding to tabs
   final List<Widget> pages = [
@@ -42,6 +43,22 @@ class _ChatScreenState extends State<ChatScreen> {
 
   // Toggle switch state
   bool switchState = false;
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToSelectedIndex() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double buttonWidth =
+        100; // Approximate width of each button (adjust as needed)
+    double targetPosition =
+        (selectedIndex * buttonWidth) - (screenWidth - buttonWidth) / 2;
+    targetPosition =
+        targetPosition.clamp(0, _scrollController.position.maxScrollExtent);
+    _scrollController.animateTo(
+      targetPosition,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         );
                       },
-                      child: const Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -98,17 +115,17 @@ class _ChatScreenState extends State<ChatScreen> {
                               fontFamily: MyStrings.outfit,
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xffFFFFFF),
+                              color: whiteColor,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
                             '7418601714',
                             style: TextStyle(
                               fontFamily: MyStrings.outfit,
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
-                              color: Color(0xff8B8E8C),
+                              color: secondaryColor,
                             ),
                           ),
                         ],
@@ -143,6 +160,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               const SizedBox(height: 15),
               SingleChildScrollView(
+                controller: _scrollController,
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(tabTitles.length, (index) {
@@ -150,6 +168,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       onTap: () {
                         setState(() {
                           selectedIndex = index;
+                          _pageController.jumpToPage(index);
+                          _scrollToSelectedIndex();
                         });
                       },
                       child: topics(tabTitles[index], index),
@@ -170,7 +190,16 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
-      body: pages[selectedIndex],
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            selectedIndex = index;
+            _scrollToSelectedIndex();
+          });
+        },
+        children: pages,
+      ),
     );
   }
 
