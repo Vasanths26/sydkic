@@ -37,9 +37,39 @@ class _SignInScreenState extends State<SignInScreen> {
     "asset/image/instagramLogo.png"
   ];
   bool isloading = false;
+  bool isRememberMeChecked = false;
 
   bool isPasswordVisible = false;
   String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRememberedCredentials();
+  }
+
+  Future<void> _loadRememberedCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isRememberMeChecked = prefs.getBool('isRememberMeChecked') ?? false;
+      if (isRememberMeChecked) {
+        emailController.text = prefs.getString('rememberedEmail') ?? '';
+        passwordController.text = prefs.getString('rememberedPassword') ?? '';
+      }
+    });
+  }
+
+  Future<void> _saveRememberedCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (isRememberMeChecked) {
+      await prefs.setString('rememberedEmail', emailController.text);
+      await prefs.setString('rememberedPassword', passwordController.text);
+    } else {
+      await prefs.remove('rememberedEmail');
+      await prefs.remove('rememberedPassword');
+    }
+    await prefs.setBool('isRememberMeChecked', isRememberMeChecked);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -269,10 +299,40 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 30,
+                      ),
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: isRememberMeChecked,
+                            activeColor: primaryColor,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isRememberMeChecked = value ?? false;
+                              });
+                            },
+                          ),
+                          SmallText(
+                            text: 'Remember me',
+                            size: 16,
+                            color: secondaryColor,
+                            fontWeight: FontWeight.w500,
+                            textAlign: TextAlign.center,
+                            fontFamily: MyStrings.outfit,
+                          ),
+                          Spacer(),
+                          SmallText(
+                            text: 'Forgot Password?',
+                            size: 16,
+                            color: secondaryColor,
+                            fontWeight: FontWeight.w500,
+                            textAlign: TextAlign.center,
+                            fontFamily: MyStrings.outfit,
+                          ),
+                        ],
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 40,
                       ),
                       GestureDetector(
                         onTap: () async {
@@ -285,6 +345,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   'Both email and password are required';
                             });
                           } else {
+                            await _saveRememberedCredentials();
                             bool isLoginSuccessful = await _logIn(
                               context,
                               emailController.text,
@@ -313,13 +374,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                   ? CircularProgressIndicator(
                                       color: primaryColor,
                                     )
-                                  : const Text(
+                                  : Text(
                                       "Sign in",
                                       style: TextStyle(
                                         fontFamily: MyStrings.outfit,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18,
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
                                       ),
                                     ),
                             ),
@@ -327,111 +388,136 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 60,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Divider(
-                              color: signinorColor, // Color of the divider
-                              thickness: 0.5, // Thickness of the divider
-                              endIndent: 8, // Space at the end of the divider
-                            ),
-                          ),
                           SmallText(
-                            text: MyStrings.or,
+                            text: 'Register a new account on',
                             size: 16,
                             color: secondaryColor,
                             fontWeight: FontWeight.w500,
                             textAlign: TextAlign.center,
                             fontFamily: MyStrings.outfit,
+                            decoration: TextDecoration.underline,
+                            decorationColor: secondaryColor,
                           ),
-                          Expanded(
-                            child: Divider(
-                              color: signinorColor,
-                              thickness: 0.5,
-                              indent: 8, // Space at the start of the divider
-                            ),
+                          SmallText(
+                            text: ' Web',
+                            size: 16,
+                            color: primaryColor,
+                            fontWeight: FontWeight.w500,
+                            textAlign: TextAlign.center,
+                            fontFamily: MyStrings.outfit,
+                            decoration: TextDecoration.underline,
+                            decorationColor: primaryColor,
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: liteGrey,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: Center(
-                                child: Image.asset(
-                                  "asset/image/google trasprant.png",
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Center(
-                              child: SmallText(
-                                color: secondaryColor,
-                                text: MyStrings.continueWithGoogle,
-                                size: 16,
-                                fontWeight: FontWeight.w400,
-                                textAlign: TextAlign.center,
-                                fontFamily: MyStrings.outfit,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: liteGrey,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 25,
-                              width: 25,
-                              child: Center(
-                                child: Image.asset(
-                                  "asset/image/facebook.png",
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            Center(
-                              child: SmallText(
-                                color: secondaryColor,
-                                text: MyStrings.continueWithFaceBook,
-                                size: 16,
-                                fontWeight: FontWeight.w400,
-                                textAlign: TextAlign.center,
-                                fontFamily: MyStrings.outfit,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      )
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     Expanded(
+                      //       child: Divider(
+                      //         color: signinorColor, // Color of the divider
+                      //         thickness: 0.5, // Thickness of the divider
+                      //         endIndent: 8, // Space at the end of the divider
+                      //       ),
+                      //     ),
+                      //     SmallText(
+                      //       text: MyStrings.or,
+                      //       size: 16,
+                      //       color: secondaryColor,
+                      //       fontWeight: FontWeight.w500,
+                      //       textAlign: TextAlign.center,
+                      //       fontFamily: MyStrings.outfit,
+                      //     ),
+                      //     Expanded(
+                      //       child: Divider(
+                      //         color: signinorColor,
+                      //         thickness: 0.5,
+                      //         indent: 8, // Space at the start of the divider
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Container(
+                      //   height: 50,
+                      //   width: MediaQuery.of(context).size.width,
+                      //   decoration: BoxDecoration(
+                      //     color: liteGrey,
+                      //     borderRadius: BorderRadius.circular(12),
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       SizedBox(
+                      //         height: 25,
+                      //         width: 25,
+                      //         child: Center(
+                      //           child: Image.asset(
+                      //             "asset/image/google trasprant.png",
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(
+                      //         width: 15,
+                      //       ),
+                      //       Center(
+                      //         child: SmallText(
+                      //           color: secondaryColor,
+                      //           text: MyStrings.continueWithGoogle,
+                      //           size: 16,
+                      //           fontWeight: FontWeight.w400,
+                      //           textAlign: TextAlign.center,
+                      //           fontFamily: MyStrings.outfit,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // Container(
+                      //   height: 50,
+                      //   width: MediaQuery.of(context).size.width,
+                      //   decoration: BoxDecoration(
+                      //     color: liteGrey,
+                      //     borderRadius: BorderRadius.circular(12),
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       SizedBox(
+                      //         height: 25,
+                      //         width: 25,
+                      //         child: Center(
+                      //           child: Image.asset(
+                      //             "asset/image/facebook.png",
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(
+                      //         width: 15,
+                      //       ),
+                      //       Center(
+                      //         child: SmallText(
+                      //           color: secondaryColor,
+                      //           text: MyStrings.continueWithFaceBook,
+                      //           size: 16,
+                      //           fontWeight: FontWeight.w400,
+                      //           textAlign: TextAlign.center,
+                      //           fontFamily: MyStrings.outfit,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   )
                 ],

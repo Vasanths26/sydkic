@@ -39,8 +39,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
             bottomRight: Radius.circular(34),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: SingleChildScrollView(
+            child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -192,7 +193,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
             ],
           ),
-        ),
+        )),
       ),
     );
   }

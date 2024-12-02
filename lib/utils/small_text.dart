@@ -14,6 +14,7 @@ class SmallText extends StatelessWidget {
   final double? height;
   final TextDecoration? decoration; // New property
   final TextDecoration? letterspcing; // New property
+  final Color? decorationColor;
 
   const SmallText({
     super.key,
@@ -29,6 +30,7 @@ class SmallText extends StatelessWidget {
     this.textAlign,
     this.fontFamily,
     this.decoration,
+    this.decorationColor,
     this.letterspcing// New constructor parameter
   });
 
@@ -47,6 +49,7 @@ class SmallText extends StatelessWidget {
         height: height,
         fontFamily: fontFamily,
         decoration: decoration, // Set decoration
+        decorationColor:decorationColor,
       ),
     );
   }

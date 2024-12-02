@@ -91,6 +91,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
     });
   }
 
+
   @override
   void dispose() {
     _pageController.dispose(); // Dispose the controller to free up resources
@@ -113,9 +114,7 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
       ),
     );
     return Scaffold(
-      drawer: const SafeArea(
-        child: DrawerScreen(),
-      ),
+      drawer: const SafeArea(child:DrawerScreen()),
       drawerScrimColor: Colors.transparent,
       backgroundColor: blackColor,
       key: _scaffoldKey,
