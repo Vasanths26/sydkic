@@ -85,6 +85,16 @@ class _AppointmentPageState extends State<AppointmentPage> {
   DateTime _selectedDay = DateTime.now();
   DateTime _focusedDay = DateTime.now();
 
+  final Map<DateTime, List<String>> _events = {
+    DateTime(2024, 12, 1): ['Event 1', 'Event 2'],
+    DateTime(2024, 12, 2): ['Event 3'],
+    DateTime(2024, 12, 11): ['Event 4', 'Event 5'],
+    DateTime(2024, 12, 21): ['Event 6', 'Event 7'],
+    DateTime(2024, 12, 15): ['Event 8', 'Event 9'],
+    DateTime(2025, 1, 1): ['Event 10', 'Event 11'],
+    DateTime(2025, 1, 6): ['Event 13', 'Event 14'],
+  };
+
   void _toggleExpandCollapse(double dragOffset) {
     setState(() {
       _isExpanded = dragOffset > 0;
@@ -125,90 +135,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 ),
                 child: Column(
                   children: [
-                    // Container(
-                    //   height: 46,
-                    //   padding: const EdgeInsets.only(
-                    //     left: 20,
-                    //     right: 7,
-                    //   ),
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(28),
-                    //     color: blackColor.withOpacity(0.5),
-                    //     border: Border.all(color: primaryColor, width: 1),
-                    //     boxShadow: [
-                    //       BoxShadow(
-                    //           color: Colors.black
-                    //               .withOpacity(0.3), // Light black shadow
-                    //           offset: const Offset(5,
-                    //               5), // Horizontal and vertical shadow position
-                    //           blurRadius: 10,
-                    //           spreadRadius: 0 // Spread radius
-                    //           ),
-                    //     ],
-                    //   ),
-                    //   child: Row(
-                    //     children: [
-                    //       Padding(
-                    //         padding: const EdgeInsets.only(
-                    //           top: 14,
-                    //           bottom: 14,
-                    //         ),
-                    //         child: Icon(Icons.search,
-                    //             color: primaryColor, size: 18),
-                    //       ),
-                    //       const SizedBox(width: 10),
-                    //       Expanded(
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.only(
-                    //               top: 13.5, bottom: 13.5),
-                    //           child: TextFormField(
-                    //             controller: _controller,
-                    //             keyboardType: TextInputType.multiline,
-                    //             style: TextStyle(
-                    //               fontSize: 12,
-                    //               fontWeight: FontWeight.w400,
-                    //               fontFamily: MyStrings.outfit,
-                    //               color: whiteColor,
-                    //             ),
-                    //             decoration: InputDecoration(
-                    //               border: InputBorder.none,
-                    //               hintText: 'Search Name, Number, IG',
-                    //               hintStyle: TextStyle(
-                    //                 color: homeTextColor,
-                    //                 fontFamily: MyStrings.outfit,
-                    //                 fontWeight: FontWeight.w400,
-                    //                 fontSize: 13,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         height: 32,
-                    //         width: 32,
-                    //         padding: const EdgeInsets.all(2),
-                    //         decoration: BoxDecoration(
-                    //           shape: BoxShape.circle,
-                    //           gradient: LinearGradient(
-                    //             colors: [
-                    //               whitecolor.withOpacity(1),
-                    //               primaryColor.withOpacity(1),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //         child: ClipOval(
-                    //           child: Image.asset(
-                    //             'asset/image/round_profile.webp',
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,6 +248,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                 _focusedDay = focusedDay;
                               });
                             },
+                            eventLoader: (day) {
+                              final events = _events[
+                                      DateTime(day.year, day.month, day.day)] ??
+                                  [];
+                              return events;
+                            },
                             onPageChanged: (newfocusedDay) {
                               setState(() {
                                 _focusedDay = DateTime(newfocusedDay.year,
@@ -345,6 +277,24 @@ class _AppointmentPageState extends State<AppointmentPage> {
                               ),
                             ),
                             calendarBuilders: CalendarBuilders(
+                              markerBuilder: (context, date, events) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: events.map((event) {
+                                    return Container(
+                                      width: 6,
+                                      height: 6,
+                                      margin:const EdgeInsets.fromLTRB(0, 0, 2, 0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: blackColor,
+                                        border: Border.all(
+                                            width: 1.2, color: whiteColor),
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              },
                               weekNumberBuilder: (context, day) {
                                 return Center(
                                   child: Column(
@@ -415,11 +365,13 @@ class _AppointmentPageState extends State<AppointmentPage> {
                               cellPadding: const EdgeInsets.all(6),
                               cellAlignment: Alignment.center,
                               markerSize: 4.16,
-                              markersMaxCount: 3,
+                              markersMaxCount: 1,
+                              markersAutoAligned: true,
                               markersAlignment: Alignment.bottomCenter,
                               markerDecoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: blackColor,
+                                border:
+                                    Border.all(width: 1.2, color: whiteColor),
                               ),
                               selectedDecoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -578,6 +530,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     ),
                   ],
                 ),
+              ),
+              Container(
+                height: 80,
               ),
             ],
           ),

@@ -362,19 +362,24 @@ class _SignInScreenState extends State<SignInScreen> {
                           }
                         },
                         child: Center(
-                          child: Container(
-                            height: 50,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: whiteColor,
-                            ),
-                            child: Center(
-                              child: isLoading
-                                  ? CircularProgressIndicator(
-                                      color: primaryColor,
-                                    )
-                                  : Text(
+                          child: isLoading
+                              ? Container(
+                                height:50,
+                                width:50,
+                                decoration:BoxDecoration(color:whiteColor,shape:BoxShape.circle),
+                                child: CircularProgressIndicator(
+                                    color: primaryColor,
+                                  ),
+                              )
+                              : Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: whiteColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
                                       "Sign in",
                                       style: TextStyle(
                                         fontFamily: MyStrings.outfit,
@@ -383,8 +388,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                         fontSize: 16,
                                       ),
                                     ),
-                            ),
-                          ),
+                                  ),
+                                ),
                         ),
                       ),
                       const SizedBox(

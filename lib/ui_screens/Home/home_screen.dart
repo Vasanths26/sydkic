@@ -133,90 +133,6 @@ class _HomePagesState extends State<HomePages> {
                           padding: const EdgeInsets.only(left: 20, bottom: 15),
                           child: Column(
                             children: [
-                              // Container(
-                              //   height: 46,
-                              //   margin: const EdgeInsets.only(right: 20),
-                              //   padding: const EdgeInsets.only(
-                              //     left: 20,
-                              //     right: 7,
-                              //   ),
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.circular(28),
-                              //     color: blackColor.withOpacity(0.5),
-                              //     border:
-                              //         Border.all(color: primaryColor, width: 1),
-                              //     boxShadow: [
-                              //       BoxShadow(
-                              //           color: Colors.black.withOpacity(
-                              //               0.3), // Light black shadow
-                              //           offset: const Offset(5,
-                              //               5), // Horizontal and vertical shadow position
-                              //           blurRadius: 10,
-                              //           spreadRadius: 0 // Spread radius
-                              //           ),
-                              //     ],
-                              //   ),
-                              //   child: Row(
-                              //     children: [
-                              //       Padding(
-                              //         padding:
-                              //             const EdgeInsets.only(top: 14, bottom: 14),
-                              //         child: Icon(Icons.search,
-                              //             color: primaryColor, size: 18),
-                              //       ),
-                              //       const SizedBox(width: 10),
-                              //       Expanded(
-                              //         child: Padding(
-                              //           padding: const EdgeInsets.only(
-                              //               top: 13.5, bottom: 13.5),
-                              //           child: TextFormField(
-                              //             controller: _controller,
-                              //             keyboardType: TextInputType.multiline,
-                              //             style: TextStyle(
-                              //               fontSize: 12,
-                              //               fontWeight: FontWeight.w400,
-                              //               fontFamily: MyStrings.outfit,
-                              //               color: whiteColor,
-                              //             ),
-                              //             decoration: InputDecoration(
-                              //               border: InputBorder.none,
-                              //               hintText: 'Search Name, Number, IG',
-                              //               hintStyle: TextStyle(
-                              //                 color: homeTextColor,
-                              //                 fontFamily: MyStrings.outfit,
-                              //                 fontWeight: FontWeight.w400,
-                              //                 fontSize: 13,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ),
-                              //       Container(
-                              //         height: 32,
-                              //         width: 32,
-                              //         padding: const EdgeInsets.all(2),
-                              //         decoration: BoxDecoration(
-                              //           shape: BoxShape.circle,
-                              //           gradient: LinearGradient(
-                              //             colors: [
-                              //               whitecolor.withOpacity(1),
-                              //               primaryColor.withOpacity(1),
-                              //             ],
-                              //           ),
-                              //         ),
-                              //         child: ClipOval(
-                              //           child: Image.asset(
-                              //             'asset/image/round_profile.webp',
-                              //             fit: BoxFit.cover,
-                              //           ),
-                              //         ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              // const SizedBox(
-                              //   height: 15,
-                              // ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 5, right: 5),
@@ -326,7 +242,7 @@ class _HomePagesState extends State<HomePages> {
                                     alignTop: Alignment.bottomRight,
                                     alignBottom: Alignment.topLeft,
                                   ),
-                                  const SizedBox(width: 15),
+                                  const SizedBox(width: 17.5),
                                   buildGridItem(
                                     icon: icons1[1],
                                     value:
@@ -351,7 +267,7 @@ class _HomePagesState extends State<HomePages> {
                                     alignTop: Alignment.topRight,
                                     alignBottom: Alignment.bottomLeft,
                                   ),
-                                  const SizedBox(width: 15),
+                                  const SizedBox(width: 17.5),
                                   buildGridItem(
                                     icon: icons1[3],
                                     value:
@@ -366,7 +282,8 @@ class _HomePagesState extends State<HomePages> {
                           ),
                         ),
                         const SizedBox(height: 18),
-                        Padding(
+                        Container(
+                          height:90,
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             children: [
@@ -412,7 +329,7 @@ class _HomePagesState extends State<HomePages> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    // width: MediaQuery.of(context).size.width * 0.5,
+                                    width: MediaQuery.of(context).size.width * 0.39,
                                     child: recentChat(),
                                   ),
                                   Container(
@@ -427,14 +344,17 @@ class _HomePagesState extends State<HomePages> {
                                     ),
                                   ),
                                   SizedBox(
-                                    // width: MediaQuery.of(context).size.width / 2,
+                                    width: MediaQuery.of(context).size.width*0.39,
                                     child: recentChat(),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        Container(
+                          height:80,
+                        ),
                       ],
                     ),
                   ),
@@ -494,13 +414,13 @@ class _HomePagesState extends State<HomePages> {
         ),
         const SizedBox(width: 10),
         Padding(
-          padding: EdgeInsets.only(top: 5, bottom: 5),
+          padding: const EdgeInsets.only(top: 5, bottom: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 91,
+                width: MediaQuery.of(context).size.width*0.24,
                 child: Text(
                   'Bessie Cooper',
                   maxLines: 1,

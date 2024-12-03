@@ -217,57 +217,6 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
           ),
         ),
       ),
-      bottomNavigationBar: Stack(
-        children: [
-          Container(
-            alignment: Alignment.bottomCenter,
-            height: 94,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Container(
-              height: 80,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: blackColor,
-                border: Border(
-                  top: BorderSide(
-                    width: 2,
-                    color: primaryColor.withOpacity(1),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 18,
-            child: Container(
-              height: 76,
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceEvenly, // Even spacing
-                crossAxisAlignment:
-                    CrossAxisAlignment.center, // Align items vertically
-                children: List.generate(_icons.length, (index) {
-                  return GestureDetector(
-                    onTap: () => onTabTapped(index),
-                    child: _buildTabItem(
-                      isSelected: _currentIndex == index,
-                      icon: _icons[index],
-                      label: _labels[index],
-                    ),
-                  );
-                }),
-              ),
-            ),
-          ),
-        ],
-      ),
       body: Stack(
         children: [
           PageView(
@@ -284,6 +233,60 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen>
               AssistantScreen(),
               BucketScreen(),
             ],
+          ),
+          Positioned(
+            bottom:0,
+            child:Stack(
+              children: [
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  height: 94,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  child: Container(
+                    height: 80,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: blackColor,
+                      border: Border(
+                        top: BorderSide(
+                          width: 2,
+                          color: primaryColor.withOpacity(1),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 18,
+                  child: Container(
+                    height: 76,
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly, // Even spacing
+                      crossAxisAlignment:
+                      CrossAxisAlignment.center, // Align items vertically
+                      children: List.generate(_icons.length, (index) {
+                        return GestureDetector(
+                          onTap: () => onTabTapped(index),
+                          child: _buildTabItem(
+                            isSelected: _currentIndex == index,
+                            icon: _icons[index],
+                            label: _labels[index],
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
